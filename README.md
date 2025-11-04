@@ -11,7 +11,7 @@ CareerIQ helps users discover careers that align with their personality, skills,
 - Skill validation tests
 - Live industry trends
 
-## 🎯 Key Features
+## 🎯 Key Features 
 
 - ✅ AI-based career recommendation
 - ✅ 24-question personality assessment
