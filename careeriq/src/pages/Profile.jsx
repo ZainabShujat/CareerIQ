@@ -1,11 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
-function Header(){
-  const { user, openAuth } = useContext(AuthContext);
-  // if user exists show name, else show Profile button.
-}
-
 export default function Profile(){
   const { user, openAuth, logout } = useContext(AuthContext);
   if (!user) {
@@ -20,7 +15,7 @@ export default function Profile(){
   return (
     <div className="ciq-container" style={{paddingTop:48}}>
       <h2>Welcome, {user.name}</h2>
-      <p className="muted">Saved results will show here.</p>
+      <p className="muted">Saved results and history would appear here.</p>
       <button onClick={logout} className="small-cta">Log out</button>
     </div>
   );
