@@ -1,0 +1,10 @@
+[
+  {"id":1,"text":"Do you enjoy solving logic problems and puzzles?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"analytical":1}},
+  {"id":2,"text":"Do you prefer working with computers and code?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"tech":1}},
+  {"id":3,"text":"Do you enjoy creative tasks like design or writing?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"creative":1}},
+  {"id":4,"text":"Do you prefer working indoors vs hands-on outdoor work?","type":"choice","options":["Indoors","Hands-on","Either"],"traits":{"indoor":1,"hands_on":1}},
+  {"id":5,"text":"How important is job stability to you?","type":"choice","options":["Very","Somewhat","Not at all"],"traits":{"stability":1}},
+  {"id":6,"text":"Do you enjoy helping and teaching others?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"people":1}},
+  {"id":7,"text":"Would you relocate for a job opportunity?","type":"choice","options":["Yes","Maybe","No"],"traits":{"relocate":1}},
+  {"id":8,"text":"Do you like managing projects, coordinating teams?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"management":1}}
+]
