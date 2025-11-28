@@ -1,10 +1,9 @@
 // src/App.jsx
 import React, { useContext } from "react";
 import "./App.css";
-
-/* Auth context + modal (must exist at these paths) */
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 import ModalAuth from "./components/ModalAuth";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /* small inline SVG components for crisp icons */
 const IconLaptop = () => (
@@ -49,7 +48,7 @@ function ProfileButton(){
   return <button onClick={openAuth} className="ciq-cta">Profile</button>;
 }
 
-export default function App() {
+export function Home() {
   return (
     <AuthProvider>
       <div className="ciq-root">
@@ -227,6 +226,31 @@ export default function App() {
         {/* ModalAuth will be rendered by the AuthProvider context */}
         <ModalAuth />
       </div>
+    </AuthProvider>
+  );
+}
+export default function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+
+        <Routes>
+          {/* Homepage */}
+          <Route path="/" element={<Home />} />
+
+          {/* Pages you created (we’ll fill them later) */}
+          <Route path="/profile" element={<div style={{padding: 40}}>Profile Page</div>} />
+          <Route path="/quiz" element={<div style={{padding: 40}}>Quiz Page</div>} />
+          <Route path="/careers" element={<div style={{padding: 40}}>Careers Page</div>} />
+          <Route path="/insights" element={<div style={{padding: 40}}>Insights Page</div>} />
+          <Route path="/skill-tests" element={<div style={{padding: 40}}>Skill Tests</div>} />
+          <Route path="/about" element={<div style={{padding: 40}}>About</div>} />
+        </Routes>
+
+        {/* global modal */}
+        <ModalAuth />
+
+      </BrowserRouter>
     </AuthProvider>
   );
 }
