@@ -1,10 +1,16 @@
 // src/pages/Home.jsx
 import React from "react";
 import Hero from "../components/Hero";
+import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
+
 
 export default function Home() {
+  
+
   return (
     <div>
+      <BackButton />
       {/* HERO — full width section; inner container centers content */}
       <section className="ciq-hero">
         <div className="ciq-hero-inner ciq-container">

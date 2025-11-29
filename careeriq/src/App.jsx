@@ -4,6 +4,16 @@ import "./App.css";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
 import ModalAuth from "./components/ModalAuth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Quiz from "./pages/Quiz";
+import Results from "./pages/Results";
+import Careers from "./pages/Careers";
+import CareerDetail from "./pages/CareerDetail";
+import Insights from "./pages/Insights";
+import SkillTests from "./pages/SkillTests";
+import About from "./pages/About";
+import Profile from "./pages/Profile";
 
 /* small inline SVG components for crisp icons */
 const IconLaptop = () => (
@@ -30,9 +40,11 @@ const IconChef = () => (
   </svg>
 );
 
-/* ProfileButton: safe usage of AuthContext */
 function ProfileButton(){
-  // if AuthContext isn't available this will be undefined — guard below
+  // useNavigate requires the Router wrapper to exist (we added that earlier).
+  const navigate = useNavigate();
+
+  // safe access to AuthContext (won't crash if context is missing)
   let ctx;
   try {
     ctx = useContext(AuthContext);
@@ -42,9 +54,27 @@ function ProfileButton(){
   const user = ctx?.user;
   const openAuth = ctx?.openAuth || (()=>{ alert("Auth not loaded"); });
 
+  // if signed in -> navigate to profile page
   if (user) {
-    return <button className="ciq-cta">{user.name}</button>;
+    return (
+      <button
+        className="ciq-cta"
+        onClick={() => {
+          // if for any reason navigate is not available, fallback to alert
+          try {
+            navigate("/profile");
+          } catch (err) {
+            console.warn("Router not available:", err);
+            alert("Router not ready — try again");
+          }
+        }}
+      >
+        {user.name}
+      </button>
+    );
   }
+
+  // not signed in -> open auth modal
   return <button onClick={openAuth} className="ciq-cta">Profile</button>;
 }
 
@@ -60,10 +90,12 @@ export function Home() {
             </div>
 
             <nav className="ciq-nav">
-              <button className="ciq-link">Insights</button>
-              <button className="ciq-link">Skill Tests</button>
-              <ProfileButton />
-            </nav>
+              <Link to="/careers" className="ciq-link">Careers</Link>
+              <Link to="/insights" className="ciq-link">Insights</Link>
+              <Link to="/skill-tests" className="ciq-link">Skill Tests</Link>
+                <ProfileButton />
+             </nav>
+
           </div>
         </header>
 
@@ -80,6 +112,10 @@ export function Home() {
               <div className="ciq-cta-row">
                 <button className="ciq-primary">Start Assessment</button>
                 <button className="ciq-secondary">Navigation Guide</button>
+                <Link to="/careers" className="ciq-link" style={{ marginTop: 12, display: "inline-block" }}>
+                 Explore All Careers →
+                </Link>
+
               </div>
 
               {/* Popular in hero */}
@@ -185,7 +221,7 @@ export function Home() {
                   </div>
                   <p className="muted">Build products, systems and services used by millions.</p>
                   <div className="card-foot">
-                    <button className="small-cta">Explore</button>
+                    <Link to="/careers/se" className="small-cta">Explore</Link>
                   </div>
                 </article>
 
@@ -199,7 +235,7 @@ export function Home() {
                   </div>
                   <p className="muted">Clinical practice, research and public health.</p>
                   <div className="card-foot">
-                    <button className="small-cta">Explore</button>
+                    <Link to="/careers/doctor" className="small-cta">Explore</Link>
                   </div>
                 </article>
 
@@ -213,7 +249,7 @@ export function Home() {
                   </div>
                   <p className="muted">Shape learners’ futures in schools and colleges.</p>
                   <div className="card-foot">
-                    <button className="small-cta">Explore</button>
+                    <Link to="/careers/teacher" className="small-cta">Explore</Link>
                   </div>
                 </article>
               </div>
@@ -221,7 +257,7 @@ export function Home() {
           </div>
         </main>
 
-        <footer className="ciq-footer">© 2025 CareerIQ — Indian market data (demo)</footer>
+        <footer className="ciq-footer">© 2025 CareerIQ </footer>
 
         {/* ModalAuth will be rendered by the AuthProvider context */}
         <ModalAuth />
@@ -239,12 +275,15 @@ export default function App() {
           <Route path="/" element={<Home />} />
 
           {/* Pages you created (we’ll fill them later) */}
-          <Route path="/profile" element={<div style={{padding: 40}}>Profile Page</div>} />
-          <Route path="/quiz" element={<div style={{padding: 40}}>Quiz Page</div>} />
-          <Route path="/careers" element={<div style={{padding: 40}}>Careers Page</div>} />
-          <Route path="/insights" element={<div style={{padding: 40}}>Insights Page</div>} />
-          <Route path="/skill-tests" element={<div style={{padding: 40}}>Skill Tests</div>} />
-          <Route path="/about" element={<div style={{padding: 40}}>About</div>} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/careers/:id" element={<CareerDetail />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/insights" element={<Insights />} />
+          <Route path="/skill-tests" element={<SkillTests />} />
+          <Route path="/about" element={<About />} />
+
         </Routes>
 
         {/* global modal */}

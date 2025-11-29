@@ -1,14 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import BackButton from "../components/BackButton";
 
-export default function Quiz(){
+
+
+export default function Quiz() {
+  
+
   return (
-    <div className="ciq-container" style={{paddingTop:48, paddingBottom:80}}>
-      <h2>Assessment</h2>
-      <p className="muted">Interactive quiz will appear here. (Using local questions.json)</p>
-      <div style={{marginTop:14}}>
-        <Link to="/results" className="ciq-primary">Mock finish — view results</Link>
+    <div className="ciq-container" style={{ paddingTop: 48 }}>
+      <BackButton />
+      <h1>Career Assessment</h1>
+      <p className="muted">Your personalised assessment will begin soon.</p>
+
+      <div className="card" style={{ marginTop: 32, padding: 24 }}>
+        <h3>Not Ready Yet</h3>
+        <p>The quiz logic will be added after we finish the pages.</p>
+        <p className="muted">But this page is fully wired.</p>
       </div>
+
+      <button className="ciq-primary" style={{ marginTop: 20 }}>
+        Start Quiz
+      </button>
     </div>
   );
 }

@@ -75,7 +75,7 @@ a{ color:inherit; text-decoration:none; }
   width:100%;
   background:transparent;
   text-align:center;
-  padding-top:110px;
+  padding-top:20px;
   padding-bottom:70px;
 }
 
@@ -183,6 +183,30 @@ a{ color:inherit; text-decoration:none; }
   position:relative;
   overflow:hidden;
 }
+/* make clickable controls obvious */
+.ciq-cta,
+.ciq-link,
+.small-cta,
+.ciq-primary,
+.ciq-secondary,
+.pop-card .small-cta {
+  cursor: pointer;
+}
+
+/* a tiny hover affordance so users know it's interactive */
+.ciq-cta:hover,
+.small-cta:hover,
+.ciq-primary:hover,
+.ciq-link:hover {
+  transform: translateY(-2px);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 6px 18px rgba(6,10,12,0.06);
+}
+
+/* optional: stronger visual for primary */
+.ciq-primary {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
 
 .pop-card::after{
   content:"";
@@ -266,4 +290,73 @@ a{ color:inherit; text-decoration:none; }
   .ciq-grid-two{ grid-template-columns:1fr; }
   .pop-card{ width:100%; }
   .ciq-hero{ padding-top:70px; padding-bottom:50px; }
+}
+
+/* ---------- UI POLISH: buttons, breadcrumbs, cards, tags ---------- */
+
+/* back button small tweaks */
+.back-btn {
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+
+.back-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(6,10,12,0.06); }
+
+/* breadcrumb style (optional usage) */
+.breadcrumbs { font-size: 13px; color: var(--muted); margin-bottom: 14px; display:flex; gap:8px; align-items:center; }
+.breadcrumbs a { color: var(--muted); text-decoration:none; }
+.breadcrumbs .sep { opacity: .6; }
+
+/* card variants */
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 8px 22px rgba(6,10,12,0.04);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(6,10,12,0.08); }
+
+/* career hero / pill */
+.career-hero {
+  display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:18px;
+}
+.career-hero .title { font-size:26px; font-weight:800; }
+.career-hero .meta { color:var(--muted); font-size:14px; }
+
+/* badges & tags */
+.tag {
+  display:inline-block; padding:6px 10px; font-size:13px; border-radius:999px; margin-right:8px;
+  background: rgba(6,160,120,0.08); color: #0f9a73; font-weight:700;
+}
+.tag-muted { background: rgba(6,10,12,0.04); color:var(--muted); font-weight:600; }
+
+/* salary chip */
+.salary-chip {
+  display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:10px;
+  background: linear-gradient(180deg, rgba(6,160,120,0.09), rgba(6,160,120,0.03));
+  color:#065f4b; font-weight:800;
+}
+
+/* cards grid refinement */
+.cards-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+
+/* subtle section header */
+.section-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
+.section-head h2 { margin:0; font-size:20px; font-weight:800; }
+
+/* bookmark badge */
+.bookmark-btn { border:0; background:transparent; cursor:pointer; font-weight:700; color:var(--muted); }
+.bookmark-btn.bookmarked { color:#0f9a73; }
+
+/* responsive tweaks */
+@media (max-width:720px){
+  .ciq-grid { grid-template-columns: 1fr; }
+  .career-hero { flex-direction:column; align-items:flex-start; }
 }
