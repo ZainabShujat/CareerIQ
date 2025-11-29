@@ -3,6 +3,8 @@ import React from "react";
 import Hero from "../components/Hero";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
+import careersData from "../data/careers.json"; // add this at the top of Home.jsx
+import { Link } from "react-router-dom";
 
 
 export default function Home() {
@@ -27,48 +29,24 @@ export default function Home() {
             <div className="popular-wrap" style={{ marginTop: 28 }}>
               <h3 className="popular-title">Popular Careers in India</h3>
               <div className="popular-row">
-                <div className="pop-card">
-                  <div className="pop-left">
-                    <div className="pop-icon">💻</div>
-                    <div>
-                      <div className="pop-name">Software Engineer</div>
-                      <div className="muted pop-sub">Build innovative software solutions</div>
-                    </div>
-                  </div>
-                  <div className="pop-sal-block">
-                    <div className="pop-sal-top">₹8–</div>
-                    <div className="pop-sal-bottom">15L</div>
-                  </div>
-                </div>
-
-                <div className="pop-card">
-                  <div className="pop-left">
-                    <div className="pop-icon">🩺</div>
-                    <div>
-                      <div className="pop-name">Doctor</div>
-                      <div className="muted pop-sub">Save lives and improve health</div>
-                    </div>
-                  </div>
-                  <div className="pop-sal-block">
-                    <div className="pop-sal-top">₹10–</div>
-                    <div className="pop-sal-bottom">25L</div>
-                  </div>
-                </div>
-
-                <div className="pop-card">
-                  <div className="pop-left">
-                    <div className="pop-icon">🍳</div>
-                    <div>
-                      <div className="pop-name">Chef</div>
-                      <div className="muted pop-sub">Create culinary masterpieces</div>
-                    </div>
-                  </div>
-                  <div className="pop-sal-block">
-                    <div className="pop-sal-top">₹4–</div>
-                    <div className="pop-sal-bottom">12L</div>
-                  </div>
-                </div>
-              </div>
+  {careersData.slice(0,3).map((c) => (
+    <Link key={c.id} to={`/careers/${c.slug || c.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <div className="pop-card" role="link">
+        <div className="pop-left">
+          <div className="pop-icon"> {(c.title||"")[0]} </div>
+          <div>
+            <div className="pop-name">{c.title}</div>
+            <div className="muted pop-sub">{c.short}</div>
+          </div>
+        </div>
+        <div className="pop-sal-block">
+          <div className="pop-sal-top">Avg</div>
+          <div className="pop-sal-bottom">{c.salary}</div>
+        </div>
+      </div>
+    </Link>
+  ))}
+</div>
             </div>
 
             {/* placeholder for other sections (we'll fill in after this looks right) */}
