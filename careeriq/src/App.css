@@ -17,6 +17,7 @@
   --shadow-subtle: 0 6px 22px rgba(6,16,15,0.04);
   --maxw: 1280px;
 }
+.ciq-cta { cursor: pointer; }
 
 /* ---------- RESET ---------- */
 *{ box-sizing:border-box; }

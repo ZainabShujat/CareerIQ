@@ -18,6 +18,7 @@ export default function ModalAuth(){
   }
 
   return (
+    
     <div style={{
       position:"fixed", inset:0, zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center",
       background:"rgba(6,10,12,0.45)"

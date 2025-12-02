@@ -2,17 +2,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function BackButton() {
-  const navigate = useNavigate();
-
+export default function BackButton({ to }) {
+  const nav = useNavigate();
   return (
-    <button 
-      onClick={() => navigate(-1)}
+    <button
       className="small-cta back-btn"
-      style={{
-        marginBottom: "20px",
-        display: "inline-block",
-      }}
+      onClick={() => (to ? nav(to) : nav(-1))}
+      style={{ cursor: "pointer" }}
     >
       ← Back
     </button>

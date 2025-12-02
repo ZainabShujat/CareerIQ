@@ -1,94 +1,111 @@
-// careeriq/src/contexts/AuthContext.jsx
-import React, { createContext, useState, useEffect } from "react";
+// src/contexts/AuthContext.jsx
+import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-const RESULTS_KEY = "ciq_results";
-const BOOKMARKS_KEY = "ciq_bookmarks";
-const USER_KEY = "ciq_user";
-
-function readJSON(key, fallback) {
-  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; }
-}
-function writeJSON(key, v) { try { localStorage.setItem(key, JSON.stringify(v)); } catch {} }
+const STORAGE_KEY = "ciq_auth_v1";
+const BOOKMARKS_KEY = "ciq_bookmarks_v1";
+const RESULTS_KEY = "ciq_results_v1";
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);         // { id, name, email }
+  const [user, setUser] = useState(null); // { id, name, email }
   const [authOpen, setAuthOpen] = useState(false);
-  const [authPrefill, setAuthPrefill] = useState(null);
+  const [authTab, setAuthTab] = useState("login"); // optional props from openAuth
 
+  // load saved user
   useEffect(() => {
-    const u = readJSON(USER_KEY, null);
-    setUser(u);
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      try {
+        setUser(JSON.parse(raw));
+      } catch (e) {}
+    }
   }, []);
 
-  function openAuth(prefill) { if (prefill) setAuthPrefill(prefill); setAuthOpen(true); }
-  function closeAuth() { setAuthOpen(false); setAuthPrefill(null); }
+  useEffect(() => {
+    if (user) localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    else localStorage.removeItem(STORAGE_KEY);
+  }, [user]);
 
-  function login({ id, name, email }) {
-    const u = { id: id || `u_${Date.now()}`, name: name || "You", email };
-    writeJSON(USER_KEY, u);
+  // API: openAuth({ tab, email }) — used by ProfileButton or pages to open modal
+  function openAuth(opts = {}) {
+    setAuthTab(opts.tab || "login");
+    setAuthOpen(true);
+  }
+  function closeAuth() {
+    setAuthOpen(false);
+  }
+
+  // simple mock login/signup
+  function login({ email, name }) {
+    // in a real app, call backend. Here we just create a fake user
+    const u = { id: email || "user-"+Date.now(), name: name || email?.split("@")[0] || "User", email };
     setUser(u);
-    closeAuth();
+    setAuthOpen(false);
+    return u;
+  }
+  function guestLogin() {
+    const g = { id: "guest", name: "Guest", email: `guest@ciq.${Date.now()}` };
+    setUser(g);
+    setAuthOpen(false);
+    return g;
   }
 
   function logout() {
-    localStorage.removeItem(USER_KEY);
     setUser(null);
   }
 
-  function upgradeAccount({ name, email }) {
-    const newUser = { id: email, name: name || email.split("@")[0], email };
-    writeJSON(USER_KEY, newUser);
-    setUser(newUser);
-    closeAuth();
-  }
-
-  /* --- Results (save / list / delete) --- */
-  function getResults() {
-    return readJSON(RESULTS_KEY, []);
-  }
-  function saveResult(result) {
-    // result should be an object with id (optional); we'll generate id if missing
-    const current = readJSON(RESULTS_KEY, []);
-    const r = { id: result.id || `r_${Date.now()}`, createdAt: Date.now(), ...result };
-    current.unshift(r);
-    writeJSON(RESULTS_KEY, current);
-    return r;
-  }
-  function deleteResult(resultId) {
-    const current = readJSON(RESULTS_KEY, []);
-    const filtered = current.filter(r=> r.id !== resultId);
-    writeJSON(RESULTS_KEY, filtered);
-  }
-
-  /* --- Bookmarks (toggle / list / check) --- */
+  // bookmarks/results persisted locally
   function getBookmarks() {
-    return readJSON(BOOKMARKS_KEY, []);
-  }
-  function toggleBookmark(careerId) {
-    const list = readJSON(BOOKMARKS_KEY, []);
-    const idx = list.indexOf(careerId);
-    if (idx === -1) {
-      list.push(careerId);
-    } else {
-      list.splice(idx, 1);
+    try {
+      return JSON.parse(localStorage.getItem(BOOKMARKS_KEY)) || [];
+    } catch (e) {
+      return [];
     }
-    writeJSON(BOOKMARKS_KEY, list);
-    return list;
   }
-  function isBookmarked(careerId) {
-    const list = readJSON(BOOKMARKS_KEY, []);
-    return list.includes(careerId);
+  function toggleBookmark(id) {
+    const arr = new Set(getBookmarks());
+    if (arr.has(id)) arr.delete(id);
+    else arr.add(id);
+    const out = [...arr];
+    localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(out));
+    return out;
+  }
+
+  function getResults() {
+    try {
+      return JSON.parse(localStorage.getItem(RESULTS_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function saveResult(r) {
+    const arr = getResults();
+    arr.unshift(r);
+    localStorage.setItem(RESULTS_KEY, JSON.stringify(arr));
+    return arr;
+  }
+  function deleteResult(id) {
+    const arr = getResults().filter(x => x.id !== id);
+    localStorage.setItem(RESULTS_KEY, JSON.stringify(arr));
+    return arr;
   }
 
   return (
     <AuthContext.Provider value={{
-      user, login, logout, openAuth, closeAuth, authOpen, authPrefill, upgradeAccount,
-      /* results */
-      getResults, saveResult, deleteResult,
-      /* bookmarks */
-      getBookmarks, toggleBookmark, isBookmarked
+      user,
+      openAuth,
+      closeAuth,
+      authOpen,
+      authTab,
+      login,
+      logout,
+      guestLogin,
+      getBookmarks,
+      toggleBookmark,
+      getResults,
+      saveResult,
+      deleteResult
     }}>
       {children}
     </AuthContext.Provider>
