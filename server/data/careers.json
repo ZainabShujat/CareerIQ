@@ -1,0 +1,12 @@
+[
+  {"id":"se","title":"Software Engineer","slug":"software-engineer","salary":"₹8–20 LPA","short":"Build software and systems","tags":["tech","software"],"skills":["programming","algorithms"]},
+  {"id":"ds","title":"Data Scientist","slug":"data-scientist","salary":"₹6–30 LPA","short":"Analyze data and build models","tags":["data","ml"],"skills":["python","statistics"]},
+  {"id":"ux","title":"UX Designer","slug":"ux-designer","salary":"₹4–15 LPA","short":"Design user experiences","tags":["design"],"skills":["research","visual-design"]},
+  {"id":"chef","title":"Chef","slug":"chef","salary":"₹3–12 LPA","short":"Create culinary experiences","tags":["hospitality"],"skills":["cooking","time-management"]},
+  {"id":"doctor","title":"Doctor","slug":"doctor","salary":"₹10–40 LPA","short":"Diagnose and treat patients","tags":["healthcare"],"skills":["medicine","decision-making"]},
+  {"id":"teacher","title":"Teacher","slug":"teacher","salary":"₹2–10 LPA","short":"Educate students and mentors","tags":["education"],"skills":["communication","lesson-planning"]},
+  {"id":"mech","title":"Mechanical Engineer","slug":"mechanical-engineer","salary":"₹3–18 LPA","short":"Design machines and systems","tags":["engineering"],"skills":["mechanics","cad"]},
+  {"id":"civil","title":"Civil Engineer","slug":"civil-engineer","salary":"₹3–20 LPA","short":"Work on infrastructure projects","tags":["engineering"],"skills":["structural","site-management"]},
+  {"id":"product","title":"Product Manager","slug":"product-manager","salary":"₹8–30 LPA","short":"Drive product strategy and execution","tags":["business"],"skills":["roadmapping","prioritization"]},
+  {"id":"dataeng","title":"Data Engineer","slug":"data-engineer","salary":"₹6–25 LPA","short":"Build data pipelines","tags":["data","engineering"],"skills":["sql","etl"]}
+]

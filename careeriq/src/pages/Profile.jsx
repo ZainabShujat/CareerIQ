@@ -181,7 +181,6 @@ export default function Profile() {
       {/* ---------------- BOOKMARKS ---------------- */}
       <section style={{ marginTop: 40 }}>
         <h3>Bookmarks</h3>
-
         {bookmarks.length === 0 ? (
           <p className="muted">
             No bookmarked careers. Bookmark them from the homepage or careers
