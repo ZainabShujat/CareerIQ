@@ -34,3 +34,10 @@ careeriq/node_modules/
 # misc
 .DS_Store
 dist/
+
+server/node_modules/
+careeriq/node_modules/
+node_modules/
+dist/
+server/.env
+careeriq/.env
