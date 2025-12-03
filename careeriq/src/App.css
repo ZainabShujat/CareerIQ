@@ -432,3 +432,44 @@ a{ color:inherit; text-decoration:none; }
   aside.card { order: 2; }
   main { order: 1; }
 }
+
+/* Header & Icon strip styles */
+.ciq-header-global { background: #fff; border-bottom: 1px solid #eef3f2; position: sticky; top: 0; z-index: 40; }
+.ciq-header-top { padding: 14px 0; }
+.ciq-header-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.ciq-brand { display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit; }
+.ciq-logo { flex:0 0 auto; border-radius:8px; }
+.ciq-brand-text .ciq-title { font-weight:800; font-size:18px; color:#064e40; line-height:1; }
+.ciq-brand-text .ciq-sub { font-size:10px; color:#6b7b75; letter-spacing:1px; margin-top:2px; }
+
+/* main nav links */
+.ciq-nav-links { display:flex; gap:12px; align-items:center; }
+.ciq-link { color:#064e40; text-decoration:none; padding:6px 8px; font-weight:600; font-size:14px; }
+.ciq-cta { background:#05a37b; color:#fff; padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:700; }
+
+/* icon strip (second row visually inside header) */
+.ciq-header-icons { padding:8px 0 12px; }
+.icon-nav { display:flex; justify-content:flex-end; align-items:center; gap:10px; }
+.icon-nav .icon-link { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:8px; text-decoration:none; color: #345; }
+.icon-nav .icon-link:hover { background:#f1f9f6; color:#065f4b; }
+.icon-link svg { display:block; }
+
+/* small responsive niceties */
+@media (max-width: 780px) {
+  .ciq-header-inner { flex-direction:row; }
+  .ciq-nav-links { display:none; } /* hide text nav on small screens */
+  .icon-nav { justify-content:flex-start; gap:8px; }
+}
+
+
+/* layout for container + grid used on Home */
+
+.ciq-stats { display:flex; gap:12px; justify-content:space-between; margin-top:12px; }
+.ciq-stats .big { font-weight:900; font-size:20px; color:#053b33; }
+.muted { color:#6b7b75; }
+
+.cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:12px; margin-top:12px; }
+.card { background:#fff; padding:14px; border-radius:10px; box-shadow: 0 6px 14px rgba(8,30,20,0.03); }
+.card-head { display:flex; justify-content:space-between; align-items:center; }
+
+
