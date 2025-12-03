@@ -8,9 +8,9 @@
   --card-bg: #9fe0d4;
   --muted: #18554f;
   --heading: #052029;
-  --accent: #0b7f67;
+  --accent: #2d4944;
   --accent-2: #12b886;
-  --pill-bg: #22a86d;
+  --pill-bg: #b0e6cf;
   --radius-xl: 26px;
   --radius-md: 14px;
   --shadow-soft: 0 12px 40px rgba(6,16,15,0.06);
@@ -79,7 +79,7 @@ a{ color:inherit; text-decoration:none; }
   width:100%;
   background:transparent;
   text-align:center;
-  padding-top:20px;
+  padding-top:90px;
   padding-bottom:70px;
 }
 

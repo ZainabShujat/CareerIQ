@@ -107,7 +107,7 @@ export function Home() {
               <Link to="/about" className="ciq-link">About</Link>
 
               {/* profile button (keeps auth modal / profile navigation) */}
-              
+              <ProfileButton />
             </nav>
           </div>
         </header>
@@ -124,7 +124,6 @@ export function Home() {
 
               <div className="ciq-cta-row">
                 <Link to="/quiz"><button className="ciq-primary">Start Assessment</button></Link>
-                <ProfileButton />
                 <button className="ciq-secondary">Navigation Guide</button>
                 <Link to="/careers" className="ciq-link" style={{ marginTop: 12, display: "inline-block" }}>
                  Explore All Careers →
