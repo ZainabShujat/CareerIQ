@@ -14,6 +14,7 @@ import Insights from "./pages/Insights";
 import SkillTests from "./pages/SkillTests";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
+import HomePage from "./pages/Home"; // keep Home as separate file if you use it elsewhere
 
 /* small inline SVG components for crisp icons */
 const IconLaptop = () => (
@@ -41,10 +42,8 @@ const IconChef = () => (
 );
 
 function ProfileButton(){
-  // useNavigate requires the Router wrapper to exist (we added that earlier).
   const navigate = useNavigate();
 
-  // safe access to AuthContext (won't crash if context is missing)
   let ctx;
   try {
     ctx = useContext(AuthContext);
@@ -54,13 +53,11 @@ function ProfileButton(){
   const user = ctx?.user;
   const openAuth = ctx?.openAuth || (()=>{ alert("Auth not loaded"); });
 
-  // if signed in -> navigate to profile page
   if (user) {
     return (
       <button
         className="ciq-cta"
         onClick={() => {
-          // if for any reason navigate is not available, fallback to alert
           try {
             navigate("/profile");
           } catch (err) {
@@ -74,10 +71,12 @@ function ProfileButton(){
     );
   }
 
-  // not signed in -> open auth modal
   return <button onClick={openAuth} className="ciq-cta">Profile</button>;
 }
 
+/* Keep Home as a component that renders the hero/landing UI.
+   If you prefer the inline Home in this file, you can move it back here.
+*/
 export function Home() {
   return (
     <AuthProvider>
@@ -89,13 +88,27 @@ export function Home() {
               <div className="ciq-sub">AI-powered career recommender</div>
             </div>
 
-            <nav className="ciq-nav">
+            {/* center nav: add all the page links you requested */}
+            <nav className="ciq-nav" role="navigation" aria-label="Main navigation">
               <Link to="/careers" className="ciq-link">Careers</Link>
               <Link to="/insights" className="ciq-link">Insights</Link>
               <Link to="/skill-tests" className="ciq-link">Skill Tests</Link>
-                <ProfileButton />
-             </nav>
 
+              {/* industry / category pages */}
+              <Link to="/engineering-careers" className="ciq-link">Engineering</Link>
+              <Link to="/medical-careers" className="ciq-link">Medical</Link>
+              <Link to="/teaching-careers" className="ciq-link">Teaching</Link>
+              <Link to="/culinary-careers" className="ciq-link">Culinary</Link>
+
+              {/* tools & extras */}
+              <Link to="/personality-test" className="ciq-link">Personality Test</Link>
+              <Link to="/happiness-index" className="ciq-link">Happiness Index</Link>
+
+              <Link to="/about" className="ciq-link">About</Link>
+
+              {/* profile button (keeps auth modal / profile navigation) */}
+              
+            </nav>
           </div>
         </header>
 
@@ -110,12 +123,12 @@ export function Home() {
               </p>
 
               <div className="ciq-cta-row">
-                <button className="ciq-primary">Start Assessment</button>
+                <Link to="/quiz"><button className="ciq-primary">Start Assessment</button></Link>
+                <ProfileButton />
                 <button className="ciq-secondary">Navigation Guide</button>
                 <Link to="/careers" className="ciq-link" style={{ marginTop: 12, display: "inline-block" }}>
                  Explore All Careers →
                 </Link>
-
               </div>
 
               {/* Popular in hero */}
@@ -265,6 +278,7 @@ export function Home() {
     </AuthProvider>
   );
 }
+
 export default function App() {
   return (
     <AuthProvider>
@@ -283,6 +297,14 @@ export default function App() {
           <Route path="/insights" element={<Insights />} />
           <Route path="/skill-tests" element={<SkillTests />} />
           <Route path="/about" element={<About />} />
+
+          {/* extra category pages (placeholders - create pages later) */}
+          <Route path="/engineering-careers" element={<Careers />} />
+          <Route path="/medical-careers" element={<Careers />} />
+          <Route path="/teaching-careers" element={<Careers />} />
+          <Route path="/culinary-careers" element={<Careers />} />
+          <Route path="/personality-test" element={<Quiz />} />
+          <Route path="/happiness-index" element={<Results />} />
 
         </Routes>
 

@@ -4,13 +4,13 @@
 
 /* ---------- GLOBAL THEME ---------- */
 :root{
-  --page-bg: #f6fbf9;      
-  --card-bg: #ffffff;
-  --muted: #64748b;
+  --page-bg: #ffffff;      
+  --card-bg: #9fe0d4;
+  --muted: #18554f;
   --heading: #052029;
   --accent: #0b7f67;
   --accent-2: #12b886;
-  --pill-bg: #eefcf6;
+  --pill-bg: #22a86d;
   --radius-xl: 26px;
   --radius-md: 14px;
   --shadow-soft: 0 12px 40px rgba(6,16,15,0.06);
@@ -36,21 +36,24 @@ a{ color:inherit; text-decoration:none; }
 .ciq-container{ max-width:var(--maxw); margin:0 auto; padding:40px 48px; }
 
 /* ---------- HEADER ---------- */
-.ciq-header{
-  position:sticky;
-  top:0;
-  z-index:40;
-  background:transparent;
+.ciq-header {
+  position: fixed;
+  top: 0;
+  width: 94%;
+  background: #ffffff;   /* <-- solid white */
+  z-index: 999;
+  border-bottom: 1px solid #eef2f3; /* optional, subtle clean line */
 }
+
 .ciq-header .ciq-container{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:12px 0;
+  padding:10px 0;
 }
-.ciq-brand{ display:flex; flex-direction:column; gap:2px; }
+.ciq-brand{ display:flex; flex-direction:column; gap:0px; }
 .ciq-title{ font-weight:900; font-size:22px; letter-spacing:-0.2px; }
-.ciq-sub{ font-size:13px; color:var(--muted); }
+.ciq-sub{padding-left:70px; font-size:13px; color:var(--muted); }
 
 .ciq-nav{ display:flex; gap:16px; align-items:center; }
 .ciq-link{
@@ -151,6 +154,7 @@ a{ color:inherit; text-decoration:none; }
   padding-bottom:80px;
 }
 
+
 .ciq-grid-two{
   display:grid;
   grid-template-columns:1fr 380px;
@@ -172,7 +176,7 @@ a{ color:inherit; text-decoration:none; }
 }
 
 .pop-card{
-  background:#fff;
+  background:#c9eae8;
   border-radius:16px;
   padding:18px;
   width:calc(33.333% - 11px);
