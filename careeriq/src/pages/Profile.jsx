@@ -25,7 +25,6 @@ export default function Profile() {
   if (!user) {
     return (
       <div className="ciq-container" style={{ paddingTop: 48 }}>
-      
         <BackButton/>
         <h2>Profile</h2>
         <p className="muted">You are not signed in.</p>

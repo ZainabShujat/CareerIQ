@@ -7,7 +7,7 @@ export default function BackButton({ to }) {
   return (
     <button
       className="small-cta back-btn"
-      onClick={() => (to ? nav(to) : nav("/"))}
+      onClick={() => (to ? nav(to) : nav(-2))}
       style={{ cursor: "pointer" }}
     >
       ← Back
