@@ -3,7 +3,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { requireAuth } from "../utils/authMiddleware.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 const SALT_ROUNDS = 10;

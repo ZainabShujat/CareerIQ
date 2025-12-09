@@ -1,87 +1,141 @@
 // src/pages/Home.jsx
 import React from "react";
-import Hero from "../components/Hero";
-import { useNavigate } from "react-router-dom";
-import BackButton from "../components/BackButton";
-import careersData from "../data/careers.json"; // add this at the top of Home.jsx
 import { Link } from "react-router-dom";
 
-
 export default function Home() {
-  
-
   return (
-    <div>
-      <BackButton />
-      {/* HERO — full width section; inner container centers content */}
-      <section className="ciq-hero">
-        <div className="ciq-hero-inner ciq-container">
-          <Hero />
-        </div>
-      </section>
+    <div className="home-root">
+      {/* Header (we reuse global header in App; this is a page-level wrapper) */}
+      <div className="home-inner">
 
-      {/* MAIN CONTENT (insights + popular) — limited-width container */}
-      <section className="ciq-main-content">
-        <div className="ciq-container ciq-grid-two">
-          {/* Left column: Popular Careers */}
-          <div className="main-left">
-            {/* Popular Careers (we'll refine visuals next) */}
-            <div className="popular-wrap" style={{ marginTop: 28 }}>
-              <h3 className="popular-title">Popular Careers in India</h3>
-              <div className="popular-row">
-  {careersData.slice(0,3).map((c) => (
-    <Link key={c.id} to={`/careers/${c.slug || c.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-      <div className="pop-card" role="link">
-        <div className="pop-left">
-          <div className="pop-icon"> {(c.title||"")[0]} </div>
-          <div>
-            <div className="pop-name">{c.title}</div>
-            <div className="muted pop-sub">{c.short}</div>
+        {/* HERO */}
+        <section id="hero" className="section hero">
+          <div className="container">
+            <div className="pill">CareerIQ — AI-POWERED CAREER MATCHING</div>
+            <h1>Find careers aligned with who you are</h1>
+            <p className="lead">Take a 7-minute assessment and discover careers that match your traits.</p>
+            <div className="cta-row">
+              <Link to="/quiz" className="btn primary">Start Assessment</Link>
+              <a href="#nav-guide" className="btn secondary">Navigation Guide</a>
+              <Link to="/careers" className="btn ghost">Explore All Careers →</Link>
+            </div>
           </div>
-        </div>
-        <div className="pop-sal-block">
-          <div className="pop-sal-top">Avg</div>
-          <div className="pop-sal-bottom">{c.salary}</div>
-        </div>
+        </section>
+
+        {/* LIVE MARKET INSIGHTS + STATS (aside style) */}
+        <section id="insights-aside" className="section insights-aside">
+          <div className="container">
+            <h3>Live Market Insights</h3>
+            <div className="insights-rows">
+              <div className="trend">Data Science & AI — AI & ML hiring surge — ₹8–35 LPA</div>
+              <div className="trend">Cybersecurity — Rising demand — ₹6–30 LPA</div>
+            </div>
+            <div className="stats">
+              <div>100+<div className="muted">Career Options</div></div>
+              <div>24<div className="muted">Questions</div></div>
+              <div>6+<div className="muted">Skill Tests</div></div>
+            </div>
+          </div>
+        </section>
+        {/* POPULAR CAREERS ROW (3 cards) */}
+        <section id="popular-row" className="section popular-row">
+          <div className="container">
+            <h3>Popular Careers in India</h3>
+            <div className="row-cards">
+              <div className="card">Software Engineer — ₹8–15 LPA</div>
+              <div className="card">Doctor — ₹10–25 LPA</div>
+              <div className="card">Teacher — ₹3–12 LPA</div>
+            </div>
+          </div>
+        </section>
+
+        {/* POPULAR GRID (vertical cards) */}
+        <section id="popular-grid" className="section popular-grid">
+          <div className="container">
+            <h3>Popular Roles</h3>
+            <div className="grid-cards">
+              <div className="card">Software Engineer — explore →</div>
+              <div className="card">Doctor — explore →</div>
+              <div className="card">Teacher — explore →</div>
+            </div>
+          </div>
+        </section>
+
+        {/* CATEGORY PREVIEWS (5 categories placeholders) */}
+        <section id="categories" className="section categories">
+          <div className="container">
+            <h3>Top Categories</h3>
+
+            <div className="category-block">
+              <h4>Engineering</h4>
+              <div className="category-preview">[3 cards placeholder]</div>
+            </div>
+
+            <div className="category-block">
+              <h4>Medical</h4>
+              <div className="category-preview">[3 cards placeholder]</div>
+            </div>
+
+            <div className="category-block">
+              <h4>Teaching</h4>
+              <div className="category-preview">[3 cards placeholder]</div>
+            </div>
+
+            <div className="category-block">
+              <h4>Culinary</h4>
+              <div className="category-preview">[3 cards placeholder]</div>
+            </div>
+
+            <div className="category-block">
+              <h4>Civil & Public Service</h4>
+              <div className="category-preview">[3 cards placeholder]</div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* PERSONALITY TEST BANNER */}
+        <section id="personality-banner" className="section personality">
+          <div className="container">
+            <h3>Personality Test — 24 questions</h3>
+            <p>Understand your strengths and see tailored career matches.</p>
+            <Link to="/personality-test" className="btn primary">Take Personality Test</Link>
+          </div>
+        </section>
+
+        {/* HAPPINESS INDEX (placeholder) */}
+        <section id="happiness" className="section happiness">
+          <div className="container">
+            <h3>Happiness • Stability • Money</h3>
+            <p>Adjust sliders and see matching careers (placeholder).</p>
+            <div className="happiness-placeholder">[Happiness index UI goes here]</div>
+          </div>
+        </section>
+
+        {/* TESTIMONIALS */}
+        <section id="testimonials" className="section testimonials">
+          <div className="container">
+            <h3>What people say</h3>
+            <div className="quotes">
+              <blockquote>"CareerIQ helped me decide my next step." — A</blockquote>
+              <blockquote>"Insightful and practical." — B</blockquote>
+              <blockquote>"Fun test; clear results." — C</blockquote>
+            </div>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer className="section footer">
+          <div className="container">
+            <div className="footer-columns">
+              <div>CareerIQ</div>
+              <div>Links: Careers · Tests · Insights · About</div>
+              <div>© 2025 CareerIQ</div>
+            </div>
+          </div>
+        </footer>
+
       </div>
-    </Link>
-  ))}
-</div>
-            </div>
-
-            {/* placeholder for other sections (we'll fill in after this looks right) */}
-          </div>
-
-          {/* Right column: aside / market insights */}
-          <aside className="main-right">
-            <div className="ciq-panel">
-              <h4>Live Market Insights</h4>
-
-              <div className="ciq-trend">
-                <div className="t-left">
-                  <div className="t-title">Data Science & AI</div>
-                  <div className="t-sub">AI & ML hiring surge</div>
-                </div>
-                <div className="t-sal">₹8–35 LPA</div>
-              </div>
-
-              <div className="ciq-trend">
-                <div className="t-left">
-                  <div className="t-title">Cybersecurity</div>
-                  <div className="t-sub">Rising cyber threats</div>
-                </div>
-                <div className="t-sal">₹6–30 LPA</div>
-              </div>
-
-              <div className="ciq-stats" style={{ marginTop: 12 }}>
-                <div><div className="big">100+</div><div className="muted">Career Options</div></div>
-                <div><div className="big">24</div><div className="muted">Questions</div></div>
-                <div><div className="big">6+</div><div className="muted">Skill Tests</div></div>
-              </div>
-            </div>
-          </aside>
-        </div>
-      </section>
     </div>
   );
 }
