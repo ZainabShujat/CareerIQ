@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CareerCard from "../components/CareerCard";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+
 
 export default function Teaching() {
   const tag = "teaching";
@@ -39,7 +39,6 @@ export default function Teaching() {
 
   return (
     <div className="ciq-container" style={{ paddingTop: 48 }}>
-            <Header />
       <Link to="/careers" className="small-cta" style={{ marginBottom: 12 }}>← Back to Careers</Link>
       <h1>Teaching careers</h1>
       <div className="muted" style={{ marginBottom: 16 }}>Roles shaping learners across schools and colleges.</div>

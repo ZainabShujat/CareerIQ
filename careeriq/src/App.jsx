@@ -19,6 +19,13 @@ import Engineering from "./pages/Engineering";
 import Medical from "./pages/Medical";
 import Teaching from "./pages/Teaching";
 import Civil from "./pages/CIvil";  
+// near top imports
+import Category from "./pages/Category";// if you still want specific route
+// ...or just use category route for /category/engineering
+
+// In <Routes> add:
+
+
 
 
 /* App is intentionally slim: providers + router + global modal */
@@ -46,6 +53,7 @@ export default function App() {
           <Route path="/civil-careers" element={<Civil />} />
           <Route path="/personality-test" element={<Quiz />} />
           <Route path="/happiness-index" element={<Results />} />
+          <Route path="/category/:tag" element={<Category />} />
         </Routes>
 
         {/* global modal rendered once at top-level */}
