@@ -13,4 +13,4 @@ const CareerSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model("Career", CareerSchema);
+export default mongoose.model("Career", CareerSchema);

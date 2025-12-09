@@ -1,0 +1,1522 @@
+[
+  {
+    "id": "c1",
+    "slug": "software-engineer-1",
+    "title": "Software Engineer",
+    "salary": "₹4–8 LPA",
+    "short": "Short description for Software Engineer",
+    "long": "Long description for Software Engineer. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c2",
+    "slug": "data-scientist-2",
+    "title": "Data Scientist",
+    "salary": "₹5–9 LPA",
+    "short": "Short description for Data Scientist",
+    "long": "Long description for Data Scientist. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c3",
+    "slug": "ux-designer-3",
+    "title": "UX Designer",
+    "salary": "₹6–10 LPA",
+    "short": "Short description for UX Designer",
+    "long": "Long description for UX Designer. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c4",
+    "slug": "mechanical-engineer-4",
+    "title": "Mechanical Engineer",
+    "salary": "₹7–11 LPA",
+    "short": "Short description for Mechanical Engineer",
+    "long": "Long description for Mechanical Engineer. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c5",
+    "slug": "civil-engineer-5",
+    "title": "Civil Engineer",
+    "salary": "₹8–12 LPA",
+    "short": "Short description for Civil Engineer",
+    "long": "Long description for Civil Engineer. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c6",
+    "slug": "product-manager-6",
+    "title": "Product Manager",
+    "salary": "₹9–13 LPA",
+    "short": "Short description for Product Manager",
+    "long": "Long description for Product Manager. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c7",
+    "slug": "doctor-7",
+    "title": "Doctor",
+    "salary": "₹10–14 LPA",
+    "short": "Short description for Doctor",
+    "long": "Long description for Doctor. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c8",
+    "slug": "chef-8",
+    "title": "Chef",
+    "salary": "₹11–15 LPA",
+    "short": "Short description for Chef",
+    "long": "Long description for Chef. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c9",
+    "slug": "teacher-9",
+    "title": "Teacher",
+    "salary": "₹12–16 LPA",
+    "short": "Short description for Teacher",
+    "long": "Long description for Teacher. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c10",
+    "slug": "data-engineer-10",
+    "title": "Data Engineer",
+    "salary": "₹3–17 LPA",
+    "short": "Short description for Data Engineer",
+    "long": "Long description for Data Engineer. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c11",
+    "slug": "software-engineer-11-11",
+    "title": "Software Engineer 11",
+    "salary": "₹4–18 LPA",
+    "short": "Short description for Software Engineer 11",
+    "long": "Long description for Software Engineer 11. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c12",
+    "slug": "data-scientist-12-12",
+    "title": "Data Scientist 12",
+    "salary": "₹5–19 LPA",
+    "short": "Short description for Data Scientist 12",
+    "long": "Long description for Data Scientist 12. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c13",
+    "slug": "ux-designer-13-13",
+    "title": "UX Designer 13",
+    "salary": "₹6–20 LPA",
+    "short": "Short description for UX Designer 13",
+    "long": "Long description for UX Designer 13. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c14",
+    "slug": "mechanical-engineer-14-14",
+    "title": "Mechanical Engineer 14",
+    "salary": "₹7–21 LPA",
+    "short": "Short description for Mechanical Engineer 14",
+    "long": "Long description for Mechanical Engineer 14. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c15",
+    "slug": "civil-engineer-15-15",
+    "title": "Civil Engineer 15",
+    "salary": "₹8–22 LPA",
+    "short": "Short description for Civil Engineer 15",
+    "long": "Long description for Civil Engineer 15. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c16",
+    "slug": "product-manager-16-16",
+    "title": "Product Manager 16",
+    "salary": "₹9–23 LPA",
+    "short": "Short description for Product Manager 16",
+    "long": "Long description for Product Manager 16. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c17",
+    "slug": "doctor-17-17",
+    "title": "Doctor 17",
+    "salary": "₹10–24 LPA",
+    "short": "Short description for Doctor 17",
+    "long": "Long description for Doctor 17. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c18",
+    "slug": "chef-18-18",
+    "title": "Chef 18",
+    "salary": "₹11–25 LPA",
+    "short": "Short description for Chef 18",
+    "long": "Long description for Chef 18. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c19",
+    "slug": "teacher-19-19",
+    "title": "Teacher 19",
+    "salary": "₹12–26 LPA",
+    "short": "Short description for Teacher 19",
+    "long": "Long description for Teacher 19. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c20",
+    "slug": "data-engineer-20-20",
+    "title": "Data Engineer 20",
+    "salary": "₹3–7 LPA",
+    "short": "Short description for Data Engineer 20",
+    "long": "Long description for Data Engineer 20. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c21",
+    "slug": "software-engineer-21-21",
+    "title": "Software Engineer 21",
+    "salary": "₹4–8 LPA",
+    "short": "Short description for Software Engineer 21",
+    "long": "Long description for Software Engineer 21. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c22",
+    "slug": "data-scientist-22-22",
+    "title": "Data Scientist 22",
+    "salary": "₹5–9 LPA",
+    "short": "Short description for Data Scientist 22",
+    "long": "Long description for Data Scientist 22. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c23",
+    "slug": "ux-designer-23-23",
+    "title": "UX Designer 23",
+    "salary": "₹6–10 LPA",
+    "short": "Short description for UX Designer 23",
+    "long": "Long description for UX Designer 23. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c24",
+    "slug": "mechanical-engineer-24-24",
+    "title": "Mechanical Engineer 24",
+    "salary": "₹7–11 LPA",
+    "short": "Short description for Mechanical Engineer 24",
+    "long": "Long description for Mechanical Engineer 24. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c25",
+    "slug": "civil-engineer-25-25",
+    "title": "Civil Engineer 25",
+    "salary": "₹8–12 LPA",
+    "short": "Short description for Civil Engineer 25",
+    "long": "Long description for Civil Engineer 25. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c26",
+    "slug": "product-manager-26-26",
+    "title": "Product Manager 26",
+    "salary": "₹9–13 LPA",
+    "short": "Short description for Product Manager 26",
+    "long": "Long description for Product Manager 26. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c27",
+    "slug": "doctor-27-27",
+    "title": "Doctor 27",
+    "salary": "₹10–14 LPA",
+    "short": "Short description for Doctor 27",
+    "long": "Long description for Doctor 27. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c28",
+    "slug": "chef-28-28",
+    "title": "Chef 28",
+    "salary": "₹11–15 LPA",
+    "short": "Short description for Chef 28",
+    "long": "Long description for Chef 28. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c29",
+    "slug": "teacher-29-29",
+    "title": "Teacher 29",
+    "salary": "₹12–16 LPA",
+    "short": "Short description for Teacher 29",
+    "long": "Long description for Teacher 29. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c30",
+    "slug": "data-engineer-30-30",
+    "title": "Data Engineer 30",
+    "salary": "₹3–17 LPA",
+    "short": "Short description for Data Engineer 30",
+    "long": "Long description for Data Engineer 30. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c31",
+    "slug": "software-engineer-31-31",
+    "title": "Software Engineer 31",
+    "salary": "₹4–18 LPA",
+    "short": "Short description for Software Engineer 31",
+    "long": "Long description for Software Engineer 31. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c32",
+    "slug": "data-scientist-32-32",
+    "title": "Data Scientist 32",
+    "salary": "₹5–19 LPA",
+    "short": "Short description for Data Scientist 32",
+    "long": "Long description for Data Scientist 32. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c33",
+    "slug": "ux-designer-33-33",
+    "title": "UX Designer 33",
+    "salary": "₹6–20 LPA",
+    "short": "Short description for UX Designer 33",
+    "long": "Long description for UX Designer 33. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c34",
+    "slug": "mechanical-engineer-34-34",
+    "title": "Mechanical Engineer 34",
+    "salary": "₹7–21 LPA",
+    "short": "Short description for Mechanical Engineer 34",
+    "long": "Long description for Mechanical Engineer 34. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c35",
+    "slug": "civil-engineer-35-35",
+    "title": "Civil Engineer 35",
+    "salary": "₹8–22 LPA",
+    "short": "Short description for Civil Engineer 35",
+    "long": "Long description for Civil Engineer 35. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c36",
+    "slug": "product-manager-36-36",
+    "title": "Product Manager 36",
+    "salary": "₹9–23 LPA",
+    "short": "Short description for Product Manager 36",
+    "long": "Long description for Product Manager 36. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c37",
+    "slug": "doctor-37-37",
+    "title": "Doctor 37",
+    "salary": "₹10–24 LPA",
+    "short": "Short description for Doctor 37",
+    "long": "Long description for Doctor 37. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c38",
+    "slug": "chef-38-38",
+    "title": "Chef 38",
+    "salary": "₹11–25 LPA",
+    "short": "Short description for Chef 38",
+    "long": "Long description for Chef 38. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c39",
+    "slug": "teacher-39-39",
+    "title": "Teacher 39",
+    "salary": "₹12–26 LPA",
+    "short": "Short description for Teacher 39",
+    "long": "Long description for Teacher 39. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c40",
+    "slug": "data-engineer-40-40",
+    "title": "Data Engineer 40",
+    "salary": "₹3–7 LPA",
+    "short": "Short description for Data Engineer 40",
+    "long": "Long description for Data Engineer 40. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c41",
+    "slug": "software-engineer-41-41",
+    "title": "Software Engineer 41",
+    "salary": "₹4–8 LPA",
+    "short": "Short description for Software Engineer 41",
+    "long": "Long description for Software Engineer 41. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c42",
+    "slug": "data-scientist-42-42",
+    "title": "Data Scientist 42",
+    "salary": "₹5–9 LPA",
+    "short": "Short description for Data Scientist 42",
+    "long": "Long description for Data Scientist 42. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c43",
+    "slug": "ux-designer-43-43",
+    "title": "UX Designer 43",
+    "salary": "₹6–10 LPA",
+    "short": "Short description for UX Designer 43",
+    "long": "Long description for UX Designer 43. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c44",
+    "slug": "mechanical-engineer-44-44",
+    "title": "Mechanical Engineer 44",
+    "salary": "₹7–11 LPA",
+    "short": "Short description for Mechanical Engineer 44",
+    "long": "Long description for Mechanical Engineer 44. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c45",
+    "slug": "civil-engineer-45-45",
+    "title": "Civil Engineer 45",
+    "salary": "₹8–12 LPA",
+    "short": "Short description for Civil Engineer 45",
+    "long": "Long description for Civil Engineer 45. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c46",
+    "slug": "product-manager-46-46",
+    "title": "Product Manager 46",
+    "salary": "₹9–13 LPA",
+    "short": "Short description for Product Manager 46",
+    "long": "Long description for Product Manager 46. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c47",
+    "slug": "doctor-47-47",
+    "title": "Doctor 47",
+    "salary": "₹10–14 LPA",
+    "short": "Short description for Doctor 47",
+    "long": "Long description for Doctor 47. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c48",
+    "slug": "chef-48-48",
+    "title": "Chef 48",
+    "salary": "₹11–15 LPA",
+    "short": "Short description for Chef 48",
+    "long": "Long description for Chef 48. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c49",
+    "slug": "teacher-49-49",
+    "title": "Teacher 49",
+    "salary": "₹12–16 LPA",
+    "short": "Short description for Teacher 49",
+    "long": "Long description for Teacher 49. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c50",
+    "slug": "data-engineer-50-50",
+    "title": "Data Engineer 50",
+    "salary": "₹3–17 LPA",
+    "short": "Short description for Data Engineer 50",
+    "long": "Long description for Data Engineer 50. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c51",
+    "slug": "software-engineer-51-51",
+    "title": "Software Engineer 51",
+    "salary": "₹4–18 LPA",
+    "short": "Short description for Software Engineer 51",
+    "long": "Long description for Software Engineer 51. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c52",
+    "slug": "data-scientist-52-52",
+    "title": "Data Scientist 52",
+    "salary": "₹5–19 LPA",
+    "short": "Short description for Data Scientist 52",
+    "long": "Long description for Data Scientist 52. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c53",
+    "slug": "ux-designer-53-53",
+    "title": "UX Designer 53",
+    "salary": "₹6–20 LPA",
+    "short": "Short description for UX Designer 53",
+    "long": "Long description for UX Designer 53. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c54",
+    "slug": "mechanical-engineer-54-54",
+    "title": "Mechanical Engineer 54",
+    "salary": "₹7–21 LPA",
+    "short": "Short description for Mechanical Engineer 54",
+    "long": "Long description for Mechanical Engineer 54. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c55",
+    "slug": "civil-engineer-55-55",
+    "title": "Civil Engineer 55",
+    "salary": "₹8–22 LPA",
+    "short": "Short description for Civil Engineer 55",
+    "long": "Long description for Civil Engineer 55. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c56",
+    "slug": "product-manager-56-56",
+    "title": "Product Manager 56",
+    "salary": "₹9–23 LPA",
+    "short": "Short description for Product Manager 56",
+    "long": "Long description for Product Manager 56. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c57",
+    "slug": "doctor-57-57",
+    "title": "Doctor 57",
+    "salary": "₹10–24 LPA",
+    "short": "Short description for Doctor 57",
+    "long": "Long description for Doctor 57. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c58",
+    "slug": "chef-58-58",
+    "title": "Chef 58",
+    "salary": "₹11–25 LPA",
+    "short": "Short description for Chef 58",
+    "long": "Long description for Chef 58. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c59",
+    "slug": "teacher-59-59",
+    "title": "Teacher 59",
+    "salary": "₹12–26 LPA",
+    "short": "Short description for Teacher 59",
+    "long": "Long description for Teacher 59. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c60",
+    "slug": "data-engineer-60-60",
+    "title": "Data Engineer 60",
+    "salary": "₹3–7 LPA",
+    "short": "Short description for Data Engineer 60",
+    "long": "Long description for Data Engineer 60. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c61",
+    "slug": "software-engineer-61-61",
+    "title": "Software Engineer 61",
+    "salary": "₹4–8 LPA",
+    "short": "Short description for Software Engineer 61",
+    "long": "Long description for Software Engineer 61. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c62",
+    "slug": "data-scientist-62-62",
+    "title": "Data Scientist 62",
+    "salary": "₹5–9 LPA",
+    "short": "Short description for Data Scientist 62",
+    "long": "Long description for Data Scientist 62. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c63",
+    "slug": "ux-designer-63-63",
+    "title": "UX Designer 63",
+    "salary": "₹6–10 LPA",
+    "short": "Short description for UX Designer 63",
+    "long": "Long description for UX Designer 63. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c64",
+    "slug": "mechanical-engineer-64-64",
+    "title": "Mechanical Engineer 64",
+    "salary": "₹7–11 LPA",
+    "short": "Short description for Mechanical Engineer 64",
+    "long": "Long description for Mechanical Engineer 64. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c65",
+    "slug": "civil-engineer-65-65",
+    "title": "Civil Engineer 65",
+    "salary": "₹8–12 LPA",
+    "short": "Short description for Civil Engineer 65",
+    "long": "Long description for Civil Engineer 65. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c66",
+    "slug": "product-manager-66-66",
+    "title": "Product Manager 66",
+    "salary": "₹9–13 LPA",
+    "short": "Short description for Product Manager 66",
+    "long": "Long description for Product Manager 66. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c67",
+    "slug": "doctor-67-67",
+    "title": "Doctor 67",
+    "salary": "₹10–14 LPA",
+    "short": "Short description for Doctor 67",
+    "long": "Long description for Doctor 67. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c68",
+    "slug": "chef-68-68",
+    "title": "Chef 68",
+    "salary": "₹11–15 LPA",
+    "short": "Short description for Chef 68",
+    "long": "Long description for Chef 68. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c69",
+    "slug": "teacher-69-69",
+    "title": "Teacher 69",
+    "salary": "₹12–16 LPA",
+    "short": "Short description for Teacher 69",
+    "long": "Long description for Teacher 69. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c70",
+    "slug": "data-engineer-70-70",
+    "title": "Data Engineer 70",
+    "salary": "₹3–17 LPA",
+    "short": "Short description for Data Engineer 70",
+    "long": "Long description for Data Engineer 70. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c71",
+    "slug": "software-engineer-71-71",
+    "title": "Software Engineer 71",
+    "salary": "₹4–18 LPA",
+    "short": "Short description for Software Engineer 71",
+    "long": "Long description for Software Engineer 71. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c72",
+    "slug": "data-scientist-72-72",
+    "title": "Data Scientist 72",
+    "salary": "₹5–19 LPA",
+    "short": "Short description for Data Scientist 72",
+    "long": "Long description for Data Scientist 72. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c73",
+    "slug": "ux-designer-73-73",
+    "title": "UX Designer 73",
+    "salary": "₹6–20 LPA",
+    "short": "Short description for UX Designer 73",
+    "long": "Long description for UX Designer 73. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c74",
+    "slug": "mechanical-engineer-74-74",
+    "title": "Mechanical Engineer 74",
+    "salary": "₹7–21 LPA",
+    "short": "Short description for Mechanical Engineer 74",
+    "long": "Long description for Mechanical Engineer 74. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c75",
+    "slug": "civil-engineer-75-75",
+    "title": "Civil Engineer 75",
+    "salary": "₹8–22 LPA",
+    "short": "Short description for Civil Engineer 75",
+    "long": "Long description for Civil Engineer 75. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c76",
+    "slug": "product-manager-76-76",
+    "title": "Product Manager 76",
+    "salary": "₹9–23 LPA",
+    "short": "Short description for Product Manager 76",
+    "long": "Long description for Product Manager 76. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c77",
+    "slug": "doctor-77-77",
+    "title": "Doctor 77",
+    "salary": "₹10–24 LPA",
+    "short": "Short description for Doctor 77",
+    "long": "Long description for Doctor 77. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c78",
+    "slug": "chef-78-78",
+    "title": "Chef 78",
+    "salary": "₹11–25 LPA",
+    "short": "Short description for Chef 78",
+    "long": "Long description for Chef 78. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c79",
+    "slug": "teacher-79-79",
+    "title": "Teacher 79",
+    "salary": "₹12–26 LPA",
+    "short": "Short description for Teacher 79",
+    "long": "Long description for Teacher 79. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c80",
+    "slug": "data-engineer-80-80",
+    "title": "Data Engineer 80",
+    "salary": "₹3–7 LPA",
+    "short": "Short description for Data Engineer 80",
+    "long": "Long description for Data Engineer 80. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c81",
+    "slug": "software-engineer-81-81",
+    "title": "Software Engineer 81",
+    "salary": "₹4–8 LPA",
+    "short": "Short description for Software Engineer 81",
+    "long": "Long description for Software Engineer 81. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c82",
+    "slug": "data-scientist-82-82",
+    "title": "Data Scientist 82",
+    "salary": "₹5–9 LPA",
+    "short": "Short description for Data Scientist 82",
+    "long": "Long description for Data Scientist 82. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c83",
+    "slug": "ux-designer-83-83",
+    "title": "UX Designer 83",
+    "salary": "₹6–10 LPA",
+    "short": "Short description for UX Designer 83",
+    "long": "Long description for UX Designer 83. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c84",
+    "slug": "mechanical-engineer-84-84",
+    "title": "Mechanical Engineer 84",
+    "salary": "₹7–11 LPA",
+    "short": "Short description for Mechanical Engineer 84",
+    "long": "Long description for Mechanical Engineer 84. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c85",
+    "slug": "civil-engineer-85-85",
+    "title": "Civil Engineer 85",
+    "salary": "₹8–12 LPA",
+    "short": "Short description for Civil Engineer 85",
+    "long": "Long description for Civil Engineer 85. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c86",
+    "slug": "product-manager-86-86",
+    "title": "Product Manager 86",
+    "salary": "₹9–13 LPA",
+    "short": "Short description for Product Manager 86",
+    "long": "Long description for Product Manager 86. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c87",
+    "slug": "doctor-87-87",
+    "title": "Doctor 87",
+    "salary": "₹10–14 LPA",
+    "short": "Short description for Doctor 87",
+    "long": "Long description for Doctor 87. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c88",
+    "slug": "chef-88-88",
+    "title": "Chef 88",
+    "salary": "₹11–15 LPA",
+    "short": "Short description for Chef 88",
+    "long": "Long description for Chef 88. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c89",
+    "slug": "teacher-89-89",
+    "title": "Teacher 89",
+    "salary": "₹12–16 LPA",
+    "short": "Short description for Teacher 89",
+    "long": "Long description for Teacher 89. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c90",
+    "slug": "data-engineer-90-90",
+    "title": "Data Engineer 90",
+    "salary": "₹3–17 LPA",
+    "short": "Short description for Data Engineer 90",
+    "long": "Long description for Data Engineer 90. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c91",
+    "slug": "software-engineer-91-91",
+    "title": "Software Engineer 91",
+    "salary": "₹4–18 LPA",
+    "short": "Short description for Software Engineer 91",
+    "long": "Long description for Software Engineer 91. This is generated to populate UI.",
+    "tags": [
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c92",
+    "slug": "data-scientist-92-92",
+    "title": "Data Scientist 92",
+    "salary": "₹5–19 LPA",
+    "short": "Short description for Data Scientist 92",
+    "long": "Long description for Data Scientist 92. This is generated to populate UI.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c93",
+    "slug": "ux-designer-93-93",
+    "title": "UX Designer 93",
+    "salary": "₹6–20 LPA",
+    "short": "Short description for UX Designer 93",
+    "long": "Long description for UX Designer 93. This is generated to populate UI.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c94",
+    "slug": "mechanical-engineer-94-94",
+    "title": "Mechanical Engineer 94",
+    "salary": "₹7–21 LPA",
+    "short": "Short description for Mechanical Engineer 94",
+    "long": "Long description for Mechanical Engineer 94. This is generated to populate UI.",
+    "tags": [
+      "teaching"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c95",
+    "slug": "civil-engineer-95-95",
+    "title": "Civil Engineer 95",
+    "salary": "₹8–22 LPA",
+    "short": "Short description for Civil Engineer 95",
+    "long": "Long description for Civil Engineer 95. This is generated to populate UI.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c96",
+    "slug": "product-manager-96-96",
+    "title": "Product Manager 96",
+    "salary": "₹9–23 LPA",
+    "short": "Short description for Product Manager 96",
+    "long": "Long description for Product Manager 96. This is generated to populate UI.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c97",
+    "slug": "doctor-97-97",
+    "title": "Doctor 97",
+    "salary": "₹10–24 LPA",
+    "short": "Short description for Doctor 97",
+    "long": "Long description for Doctor 97. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "data"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c98",
+    "slug": "chef-98-98",
+    "title": "Chef 98",
+    "salary": "₹11–25 LPA",
+    "short": "Short description for Chef 98",
+    "long": "Long description for Chef 98. This is generated to populate UI.",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c99",
+    "slug": "teacher-99-99",
+    "title": "Teacher 99",
+    "salary": "₹12–26 LPA",
+    "short": "Short description for Teacher 99",
+    "long": "Long description for Teacher 99. This is generated to populate UI.",
+    "tags": [
+      "civil"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  },
+  {
+    "id": "c100",
+    "slug": "data-engineer-100-100",
+    "title": "Data Engineer 100",
+    "salary": "₹3–7 LPA",
+    "short": "Short description for Data Engineer 100",
+    "long": "Long description for Data Engineer 100. This is generated to populate UI.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "communication",
+      "problem solving"
+    ]
+  }
+]

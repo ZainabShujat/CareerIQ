@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const resultSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -7,4 +7,5 @@ const resultSchema = new mongoose.Schema({
   data: mongoose.Schema.Types.Mixed // store matches / score / answers
 });
 
-module.exports = mongoose.model('Result', resultSchema);
+// ensure a default export so `import Result from "../models/Result.js"` works
+export default mongoose.model("Result", resultSchema);

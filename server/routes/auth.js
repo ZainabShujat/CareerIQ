@@ -3,7 +3,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { requireAuth } from "../middleware/authMiddleware.js";
+import { auth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 const SALT_ROUNDS = 10;
@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
 });
 
 // GET /api/auth/me (protected)
-router.get("/me", requireAuth, (req, res) => {
+router.get("/me", auth, (req, res) => {
   const u = req.user;
   res.json({ id: u._id, name: u.name, email: u.email, createdAt: u.createdAt });
 });
