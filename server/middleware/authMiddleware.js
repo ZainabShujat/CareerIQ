@@ -1,6 +1,8 @@
 // server/middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+console.log("AuthProvider instance:", Math.random());
+
 
 /**
  * Named export `auth` — use as: import { auth } from "../middleware/authMiddleware.js"

@@ -39,3 +39,6 @@ mongoose
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err);
   });
+import userRoutes from "./routes/user.js";
+// after your other route registrations (and after app has express.json())
+app.use("/api/user", userRoutes);

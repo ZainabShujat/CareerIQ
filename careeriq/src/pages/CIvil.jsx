@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CareerCard from "../components/CareerCard";
 import { Link } from "react-router-dom";
 
+
 export default function Civil() {
   const tag = "civil";
   const [careers, setCareers] = useState([]);

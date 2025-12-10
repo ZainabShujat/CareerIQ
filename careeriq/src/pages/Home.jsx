@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 import React, { useContext } from "react";
-import { Link, Routes, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 /* Small icon components used on the homepage */
@@ -28,37 +28,26 @@ const IconChef = () => (
   </svg>
 );
 
-/* ProfileButton: uses AuthContext and navigates to /profile when user exists */
-function ProfileButton(){
+/* ProfileButton: always navigates to /profile. Profile page will show auth or profile. */
+function ProfileButton() {
   const navigate = useNavigate();
-  let ctx;
-  try {
-    ctx = useContext(AuthContext);
-  } catch (e) {
-    ctx = null;
-  }
-  const user = ctx?.user;
-  const openAuth = ctx?.openAuth || (()=>{ alert("Auth not loaded"); });
+  const ctx = useContext(AuthContext);
 
-  if (user) {
-    return (
-      <button
-        className="ciq-cta"
-        onClick={() => {
-          try {
-            navigate("/profile");
-          } catch (err) {
-            console.warn("Router not available:", err);
-            alert("Router not ready — try again");
-          }
-        }}
-      >
-        {user.name}
-      </button>
-    );
-  }
-
-  return <button onClick={openAuth} className="ciq-cta">Profile</button>;
+  return (
+    <button
+      className="ciq-cta"
+      onClick={() => {
+        try {
+          navigate("/profile");
+        } catch (err) {
+          console.warn("Router not available:", err);
+          alert("Router not ready — try again");
+        }
+      }}
+    >
+      {ctx?.user ? ctx.user.name : "You"}
+    </button>
+  );
 }
 
 export default function Home() {
@@ -71,25 +60,22 @@ export default function Home() {
             <div className="ciq-sub">AI-powered career recommender</div>
           </div>
 
-          {/* center nav: add all the page links you requested */}
+          {/* main nav — includes direct category links so the nav doesn't redirect to generic page */}
           <nav className="ciq-nav" role="navigation" aria-label="Main navigation">
             <Link to="/careers" className="ciq-link">Careers</Link>
             <Link to="/insights" className="ciq-link">Insights</Link>
             <Link to="/skill-tests" className="ciq-link">Skill Tests</Link>
 
-            {/* industry / category pages */}
             <Link to="/engineering-careers" className="ciq-link">Engineering</Link>
             <Link to="/medical-careers" className="ciq-link">Medical</Link>
             <Link to="/teaching-careers" className="ciq-link">Teaching</Link>
             <Link to="/culinary-careers" className="ciq-link">Culinary</Link>
-            <Link to="/civil-careers" className="ciq-link">Civil & Infrastructure</Link>
-            {/* tools & extras */}
+            <Link to="/civil-careers" className="ciq-link">Civil</Link>
+
             <Link to="/personality-test" className="ciq-link">Personality Test</Link>
             <Link to="/happiness-index" className="ciq-link">Happiness Index</Link>
-
             <Link to="/about" className="ciq-link">About</Link>
 
-            {/* profile button (keeps auth modal / profile navigation) */}
             <ProfileButton />
           </nav>
         </div>
@@ -109,16 +95,16 @@ export default function Home() {
               <Link to="/quiz"><button className="ciq-primary">Start Assessment</button></Link>
               <button className="ciq-secondary">Navigation Guide</button>
               <Link to="/careers" className="ciq-link" style={{ marginTop: 12, display: "inline-block" }}>
-               Explore All Careers →
+                Explore All Careers →
               </Link>
             </div>
 
-            {/* Popular in hero */}
+            {/* Popular in hero (keeps the same visual layout you designed) */}
             <div className="popular-wrap">
               <h3 className="popular-title">Popular Careers in India</h3>
 
               <div className="popular-row">
-                <Link to="/engineering-careers" style={{textDecoration: 'none'}}>
+                <Link to="/engineering-careers" style={{textDecoration: 'none'}} className="pop-link">
                   <div className="pop-card">
                     <div className="pop-left">
                       <div className="pop-icon"><IconLaptop /></div>
@@ -134,7 +120,7 @@ export default function Home() {
                   </div>
                 </Link>
 
-                <Link to="/medical-careers" style={{textDecoration: 'none'}}>
+                <Link to="/medical-careers" style={{textDecoration: 'none'}} className="pop-link">
                   <div className="pop-card">
                     <div className="pop-left">
                       <div className="pop-icon"><IconDoctor /></div>
@@ -150,7 +136,7 @@ export default function Home() {
                   </div>
                 </Link>
 
-                <Link to="/culinary-careers" style={{textDecoration: 'none'}}>
+                <Link to="/culinary-careers" style={{textDecoration: 'none'}} className="pop-link">
                   <div className="pop-card">
                     <div className="pop-left">
                       <div className="pop-icon"><IconChef /></div>

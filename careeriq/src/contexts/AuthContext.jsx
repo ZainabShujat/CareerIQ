@@ -1,113 +1,162 @@
 // src/contexts/AuthContext.jsx
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 
 export const AuthContext = createContext();
 
-const STORAGE_KEY = "ciq_auth_v1";
-const BOOKMARKS_KEY = "ciq_bookmarks_v1";
-const RESULTS_KEY = "ciq_results_v1";
+// Helper: read/write token
+const TOKEN_KEY = "ciq_token";
+const getToken = () => localStorage.getItem(TOKEN_KEY);
+const setToken = (t) => (t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY));
+
+// Helper: small fetch wrapper that includes Authorization if token is present
+// replace existing fetchWithAuth in src/contexts/AuthContext.jsx
+const API_BASE = import.meta.env.VITE_API_BASE || ""; // e.g. "http://localhost:4000"
+
+async function fetchWithAuth(pathOrUrl, opts = {}) {
+  // if user passed a relative path, build full url using API_BASE
+  const url = pathOrUrl.startsWith("http") ? pathOrUrl : `${API_BASE}${pathOrUrl}`;
+  const token = getToken();
+  const headers = { "Content-Type": "application/json", ...(opts.headers || {}) };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  const res = await fetch(url, { ...opts, headers });
+  const text = await res.text();
+  let data;
+  try { data = text ? JSON.parse(text) : {}; } catch (e) { data = text; }
+  if (!res.ok) {
+    const err = new Error(data?.error || res.statusText || "Request failed");
+    err.status = res.status;
+    err.body = data;
+    throw err;
+  }
+  return data;
+}
+
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null); // { id, name, email }
   const [authOpen, setAuthOpen] = useState(false);
-  const [authTab, setAuthTab] = useState("login"); // optional props from openAuth
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // validates token on mount
 
-  // load saved user
+  // Open/close modal
+  const openAuth = useCallback((opts = {}) => {
+    // optionally pass { tab: "signup" } etc
+    setAuthOpen(true);
+    // could also persist tab selection if you want
+  }, []);
+  const closeAuth = useCallback(() => setAuthOpen(false), []);
+
+  // Load / validate token on app start
   useEffect(() => {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
+    let mounted = true;
+    async function init() {
+      setLoading(true);
+      const token = getToken();
+      if (!token) {
+        if (mounted) { setUser(null); setLoading(false); }
+        return;
+      }
       try {
-        setUser(JSON.parse(raw));
-      } catch (e) {}
+        // call protected endpoint to validate and load user
+        const me = await fetchWithAuth("/api/auth/me", { method: "GET" });
+        if (mounted) setUser(me);
+      } catch (err) {
+        // token invalid => purge
+        console.warn("Auth init failed:", err);
+        setToken(null);
+        if (mounted) setUser(null);
+      } finally {
+        if (mounted) setLoading(false);
+      }
     }
+    init();
+    return () => { mounted = false; };
   }, []);
 
-  useEffect(() => {
-    if (user) localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-    else localStorage.removeItem(STORAGE_KEY);
-  }, [user]);
+  // login: accepts either credentials {email,password} or a local user object (guest)
+  const login = useCallback(async (payload) => {
+    // guest/local mode: if payload has no password and has id/email, treat as local
+    if (payload && !payload.password && (payload.id || payload.email) && payload.name) {
+      // local-only user (ModalAuth uses this for Continue as guest)
+      setUser({ id: payload.id, name: payload.name, email: payload.email });
+      setToken(null); // no JWT stored
+      setAuthOpen(false);
+      return { user: payload };
+    }
 
-  // API: openAuth({ tab, email }) — used by ProfileButton or pages to open modal
-  function openAuth(opts = {}) {
-    setAuthTab(opts.tab || "login");
-    setAuthOpen(true);
-  }
-  function closeAuth() {
+    // otherwise expect { email, password }
+    const { email, password } = payload || {};
+    if (!email || !password) throw new Error("email & password required for login");
+    const data = await fetchWithAuth("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
+    // server returns { token, user }
+    if (data.token) setToken(data.token);
+    if (data.user) setUser(data.user);
     setAuthOpen(false);
-  }
+    return data.user;
+  }, []);
 
-  // simple mock login/signup
-  function login({ email, name }) {
-    // in a real app, call backend. Here we just create a fake user
-    const u = { id: email || "user-"+Date.now(), name: name || email?.split("@")[0] || "User", email };
-    setUser(u);
+  // signup (calls backend then signs in)
+  const signup = useCallback(async ({ name, email, password }) => {
+    if (!name || !email || !password) throw new Error("name, email, password required");
+    const data = await fetchWithAuth("/api/auth/signup", {
+      method: "POST",
+      body: JSON.stringify({ name, email, password }),
+    });
+    if (data.token) setToken(data.token);
+    if (data.user) setUser(data.user);
     setAuthOpen(false);
-    return u;
-  }
-  function guestLogin() {
-    const g = { id: "guest", name: "Guest", email: `guest@ciq.${Date.now()}` };
-    setUser(g);
-    setAuthOpen(false);
-    return g;
-  }
+    return data.user;
+  }, []);
 
-  function logout() {
+  // logout
+  const logout = useCallback(() => {
     setUser(null);
-  }
+    setToken(null);
+    // optionally redirect to home in your UI
+  }, []);
 
-  // bookmarks/results persisted locally
-  function getBookmarks() {
+  // convenience: fetch /api/user/me (full profile route)
+  const fetchProfile = useCallback(async () => {
     try {
-      return JSON.parse(localStorage.getItem(BOOKMARKS_KEY)) || [];
+      const profile = await fetchWithAuth("/api/user/me", { method: "GET" });
+      return profile;
     } catch (e) {
-      return [];
+      // if 401, logout locally
+      if (e.status === 401) logout();
+      throw e;
     }
-  }
-  function toggleBookmark(id) {
-    const arr = new Set(getBookmarks());
-    if (arr.has(id)) arr.delete(id);
-    else arr.add(id);
-    const out = [...arr];
-    localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(out));
-    return out;
-  }
+  }, [logout]);
 
-  function getResults() {
-    try {
-      return JSON.parse(localStorage.getItem(RESULTS_KEY)) || [];
-    } catch (e) {
-      return [];
-    }
-  }
-  function saveResult(r) {
-    const arr = getResults();
-    arr.unshift(r);
-    localStorage.setItem(RESULTS_KEY, JSON.stringify(arr));
-    return arr;
-  }
-  function deleteResult(id) {
-    const arr = getResults().filter(x => x.id !== id);
-    localStorage.setItem(RESULTS_KEY, JSON.stringify(arr));
-    return arr;
-  }
+  // placeholders used by Profile.jsx — implement as needed
+  const getResults = useCallback(async () => {
+    // implement: fetch saved results
+    return [];
+  }, []);
+  const getBookmarks = useCallback(async () => {
+    // implement: fetch bookmarks
+    return [];
+  }, []);
+  const saveResult = useCallback(async (r) => {
+    // implement: POST saved result
+    return true;
+  }, []);
 
-  return (
-    <AuthContext.Provider value={{
-      user,
-      openAuth,
-      closeAuth,
-      authOpen,
-      authTab,
-      login,
-      logout,
-      guestLogin,
-      getBookmarks,
-      toggleBookmark,
-      getResults,
-      saveResult,
-      deleteResult
-    }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    authOpen,
+    openAuth,
+    closeAuth,
+    user,
+    loading,
+    login,
+    signup,
+    logout,
+    fetchProfile,
+    getResults,
+    getBookmarks,
+    saveResult,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -28,6 +28,53 @@ html,body,#root{
 }
 a{ color:inherit; text-decoration:none; }
 
+/* paste into src/index.css or App.css */
+.text-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6eef0;
+  font-size: 14px;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+}
+.text-input:focus { border-color: #12b886; box-shadow: 0 6px 18px rgba(18,184,134,0.08); }
+
+.muted { color: #64748b; font-size: 13px; margin-bottom: 6px; }
+
+.ciq-primary {
+  background: linear-gradient(90deg,#12b886,#0fa678);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.ciq-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.ciq-secondary {
+  background: white;
+  border: 1px solid #e6eef0;
+  color: #0f172a;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.back-button {
+  background: transparent;
+  border: 1px solid #e6eef0;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+/* small card shadow variable used above */
+:root {
+  --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  --ciq-dark: #0f172a;
+  --ciq-muted: #64748b;
+}
+
+
 /* ---------- BASE LAYOUT ---------- */
 .ciq-root { min-height:100vh; }
 .ciq-container {
