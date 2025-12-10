@@ -20,7 +20,7 @@ import Culinary from "./pages/Culinary";
 import Engineering from "./pages/Engineering";
 import Medical from "./pages/Medical";
 import Teaching from "./pages/Teaching";
-import Civil from "./pages/Civil";
+import Civil from "./pages/CIvil";
 import Category from "./pages/Category";
 
 export default function App() {
