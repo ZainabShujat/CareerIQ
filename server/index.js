@@ -2,6 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+console.log(">>> SERVER STARTING, NODE env:", process.env.NODE_ENV);
+console.log(">>> OPENAI_KEY present at startup:", !!process.env.OPENAI_KEY);
+
 
 dotenv.config();
 
@@ -14,10 +17,10 @@ import authRoutes from "./routes/Auth.js";
 import careerRoutes from "./routes/careers.js";
 app.use("/api/careers", careerRoutes);
 
-import aiRoutes from "./routes/ai.js";
 app.use("/api/auth", authRoutes);
+import aiRoutes from "./routes/ai.js";   // <- add if missing
+app.use("/api/ai", aiRoutes);           // <- add if missing
 
-app.use("/api/ai", aiRoutes);
 
 
 

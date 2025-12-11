@@ -1,4 +1,6 @@
 // server/routes/ai.js
+
+console.log("🔎 ai route file loaded — OPENAI_KEY present?", !!process.env.OPENAI_KEY);
 import express from "express";
 import fetch from "node-fetch"; // if using node18+ fetch exists; otherwise install node-fetch
 import rateLimit from "express-rate-limit";
@@ -51,7 +53,7 @@ router.post("/insights", limiter, async (req, res) => {
     }
 
     const payload = {
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages: [
         { role: "system", content: "You are a helpful career guidance assistant for college students." },
         { role: "user", content: prompt },
