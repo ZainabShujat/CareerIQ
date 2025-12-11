@@ -100,7 +100,7 @@ router.post("/chat", limiter, async (req, res) => {
     if (!key) return res.status(400).json({ error: "OPENAI_KEY not configured on server" });
 
     const payload = {
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages,
       max_tokens: 500,
       temperature: 0.9,
