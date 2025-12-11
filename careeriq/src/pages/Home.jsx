@@ -252,14 +252,14 @@ export default function Home() {
       <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
         Browse 150+ careers auto-categorized into engineering, design, finance, medical and more.
       </p>
-      <a href="/careers" style={{
+      <Link to="/careers" style={{
         padding: "8px 14px",
         border: "1px solid #cfd8d4",
         borderRadius: "8px",
         fontSize: "14px",
         color: "#1a3c34",
         textDecoration: "none"
-      }}>Start exploring →</a>
+      }}>Start exploring →</Link>
     </div>
 
     {/* 2 — Skill Tests */}
@@ -274,14 +274,14 @@ export default function Home() {
       <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
         Check how strong you are in reasoning, analytical thinking, verbal, and domain skills.
       </p>
-      <a href="/skill-tests" style={{
+      <Link to="/skill-tests" style={{
         padding: "8px 14px",
         border: "1px solid #cfd8d4",
         borderRadius: "8px",
         fontSize: "14px",
         color: "#1a3c34",
         textDecoration: "none"
-      }}>Try tests →</a>
+      }}>Try tests →</Link>
     </div>
 
     {/* 3 — Personality Test */}
@@ -296,14 +296,14 @@ export default function Home() {
       <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
         Understand how your personality matches different roles and work styles.
       </p>
-      <a href="/quiz" style={{
+      <Link to="/quiz" style={{
         padding: "8px 14px",
         border: "1px solid #cfd8d4",
         borderRadius: "8px",
         fontSize: "14px",
         color: "#1a3c34",
         textDecoration: "none"
-      }}>Take quiz →</a>
+      }}>Take quiz →</Link>
     </div>
 
     {/* 4 — Insights */}
@@ -318,14 +318,14 @@ export default function Home() {
       <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
         See personalised analysis combining your tests + personality + career interests.
       </p>
-      <a href="/insights" style={{
+      <Link to="/insights" style={{
         padding: "8px 14px",
         border: "1px solid #cfd8d4",
         borderRadius: "8px",
         fontSize: "14px",
         color: "#1a3c34",
         textDecoration: "none"
-      }}>View insights →</a>
+      }}>View insights →</Link>
     </div>
 
   </div>
