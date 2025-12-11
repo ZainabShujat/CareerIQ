@@ -1,80 +1,72 @@
-// src/pages/PersonalityTest.jsx (replace previous PersonalityTest)
+// src/pages/Quiz.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import BackButton from "../components/BackButton";
 
-const makeQuestions = () => {
-  const arr = [];
-  for (let i = 1; i <= 12; i++) {
-    arr.push({ id: `p${i}`, text: `Q${i}: sample statement — rate 1-5` });
-  }
-  return arr;
-};
+const QUESTIONS = Array.from({ length: 24 }).map((_, i) => ({
+  id: i + 1,
+  text: `Question ${i + 1}: How much do you enjoy task ${i + 1}? (1-5)`
+}));
 
-export default function PersonalityTest() {
-  const navigate = useNavigate();
-  const questions = makeQuestions();
-  const [answers, setAnswers] = useState({});
+export default function Quiz() {
+  const [answers, setAnswers] = useState(Array(24).fill(3));
+  const [submitted, setSubmitted] = useState(false);
+  const [tests, setTests] = useState(null);
 
-  function setVal(id, val) {
-    setAnswers((a) => ({ ...a, [id]: val }));
+  function setAnswer(idx, val) {
+    const next = [...answers];
+    next[idx] = Number(val);
+    setAnswers(next);
   }
 
-  async function submit() {
-    if (Object.keys(answers).length < questions.length) {
-      alert("Please answer all questions");
-      return;
-    }
+  function submit() {
+    // simple scoring: group answers into 4 buckets representing skills
+    const buckets = {
+      programming: 0,
+      data: 0,
+      design: 0,
+      teaching: 0
+    };
+    answers.forEach((a, i) => {
+      const key = i % 4 === 0 ? "programming" : i % 4 === 1 ? "data" : i % 4 === 2 ? "design" : "teaching";
+      buckets[key] += a;
+    });
+    // convert to 0-100
+    const scores = {};
+    Object.keys(buckets).forEach(k => {
+      scores[k] = Math.round((buckets[k] / (5 * 6)) * 100);
+    });
 
-    const payload = { answers, takenAt: new Date().toISOString() };
+    // pick topSkill
+    const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const topSkill = sorted[0][0];
 
-    try {
-      const res = await fetch("/api/results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || "Failed to save result");
-      }
-
-      const json = await res.json();
-      // if backend returns a result id, go to result detail, else to /results
-      const id = json.id || json._id;
-      if (id) navigate(`/results/${id}`);
-      else navigate("/results");
-    } catch (e) {
-      console.error(e);
-      alert("Unable to save result: " + (e.message || ""));
-    }
+    const testsObj = { scores, topSkill, topScore: scores[topSkill] };
+    setTests(testsObj);
+    setSubmitted(true);
   }
 
   return (
-    <div className="ciq-container" style={{ paddingTop: 48 }}>
-      <BackButton />
-      <h1>Personality Test</h1>
-      <div className="muted">12-question assessment — takes ~5 minutes.</div>
+    <div className="p-4">
+      <h2 className="text-xl font-semibold mb-3">Personality / Skill Quiz</h2>
 
-      <div style={{ marginTop: 18 }}>
-        {questions.map((q, i) => (
-          <div key={q.id} style={{ marginBottom: 12, background: "#fff", padding: 12, borderRadius: 8 }}>
-            <div style={{ fontWeight: 700 }}>{i + 1}. {q.text}</div>
-            <div style={{ marginTop: 8, display: "flex", gap: 8 }}>
-              {[1, 2, 3, 4, 5].map((v) => (
-                <label key={v} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <input type="radio" name={q.id} checked={answers[q.id] === v} onChange={() => setVal(q.id, v)} /> {v}
-                </label>
-              ))}
+      {!submitted && (
+        <>
+          {QUESTIONS.map((q, i) => (
+            <div key={q.id} className="mb-2">
+              <div>{q.text}</div>
+              <input type="range" min="1" max="5" value={answers[i]} onChange={(e) => setAnswer(i, e.target.value)} />
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+          <button onClick={submit} className="btn mt-3">Submit</button>
+        </>
+      )}
 
-      <div style={{ marginTop: 18 }}>
-        <button className="ciq-primary" onClick={submit}>Submit</button>
-      </div>
+      {submitted && tests && (
+        <div className="mt-4 bg-white p-4 rounded shadow">
+          <h3>Results</h3>
+          <div>Top skill: <b>{tests.topSkill}</b> ({tests.topScore}%)</div>
+          <pre className="mt-2">{JSON.stringify(tests, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 }

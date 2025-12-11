@@ -1,52 +1,47 @@
+// server/index.js
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-console.log(">>> SERVER STARTING, NODE env:", process.env.NODE_ENV);
-console.log(">>> OPENAI_KEY present at startup:", !!process.env.OPENAI_KEY);
 
-
-dotenv.config();
+dotenv.config(); // load .env first
 
 const app = express();
-// If app is behind a proxy (Render, Vercel etc.) we must trust proxy for rate-limit
-app.set('trust proxy', 1);
 
+// trust proxy for hosted env (Render/Vercel) so rate limiter uses req.ip correctly
+app.set("trust proxy", 1);
 
-// middlewares
 app.use(cors());
 app.use(express.json());
+
+// import routes
 import authRoutes from "./routes/Auth.js";
 import careerRoutes from "./routes/careers.js";
-app.use("/api/careers", careerRoutes);
+import userRoutes from "./routes/user.js";
+import aiRoutes from "./routes/ai.js";
 
 app.use("/api/auth", authRoutes);
-import aiRoutes from "./routes/ai.js";   // <- add if missing
-app.use("/api/ai", aiRoutes);           // <- add if missing
-
-
-
+app.use("/api/careers", careerRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/ai", aiRoutes);
 
 // basic test route
 app.get("/", (req, res) => {
   res.json({ message: "CareerIQ backend running 🚀" });
 });
 
-// connect to MongoDB
+// connect to MongoDB and start
 mongoose
-  .connect(process.env.MONGO_URI, {
-    dbName: "careeriq",
-  })
+  .connect(process.env.MONGO_URI, { dbName: "careeriq" })
   .then(() => {
     console.log("✅ Connected to MongoDB");
-    // start server only *after* DB connects
     app.listen(process.env.PORT || 4000, () => {
       console.log(`🚀 Server running on port ${process.env.PORT || 4000}`);
+      console.log("🔎 ai route file loaded — OPENAI_KEY present?", !!process.env.OPENAI_KEY);
     });
   })
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err);
   });
-import userRoutes from "./routes/user.js";
-// after your other route registrations (and after app has express.json())
-app.use("/api/user", userRoutes);
+
+export default app;
