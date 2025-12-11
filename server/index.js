@@ -25,7 +25,12 @@ app.use("/api/careers", careerRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/results", require("./routes/results"));
+import resultsRoutes from "./routes/results.js";
+app.use("/api/results", resultsRoutes);
 
+
+import personalityRoutes from "./routes/personality.js";
+app.use("/api/personality", personalityRoutes);
 
 // basic test route
 app.get("/", (req, res) => {

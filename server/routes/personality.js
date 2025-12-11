@@ -4,25 +4,20 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-// POST /api/results
+// POST /api/personality
 router.post("/", auth, async (req, res) => {
   try {
-    const { testId, score, details } = req.body;
+    const { scores, answers, timestamp } = req.body;
 
-    if (!testId || score === undefined) {
-      return res.status(400).json({ error: "Missing testId or score" });
-    }
+    if (!scores) return res.status(400).json({ error: "Scores are required" });
 
     const user = await User.findById(req.user._id);
-
-    const result = { testId, score, details };
-    user.results.push(result);
-
+    user.personality = { scores, answers, timestamp };
     await user.save();
 
-    res.json({ success: true, results: user.results });
+    res.json({ success: true, personality: user.personality });
   } catch (err) {
-    console.error("Skill Result Save Error:", err);
+    console.error("Personality Save Error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });

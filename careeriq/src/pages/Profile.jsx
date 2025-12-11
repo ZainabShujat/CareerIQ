@@ -11,6 +11,8 @@ export default function Profile() {
     openAuth,
     logout,
   } = useContext(AuthContext);
+  const results = user?.results || [];
+const personality = user?.personality || null;
 
   const [profile, setProfile] = useState({
     name: "",

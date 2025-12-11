@@ -89,7 +89,7 @@ export default function Home() {
             <div className="ciq-pill">CareerIQ — AI-POWERED CAREER MATCHING</div>
             <h1 className="ciq-h1">Find careers aligned with who you are</h1>
             <p className="ciq-lead">
-              Take a 7-minute assessment and discover careers that match your traits, with salary & work-life insights tailored to India.
+              Take a 2-minute assessment and discover careers that match your traits, with salary & work-life insights tailored to India.
             </p>
 
             <div className="ciq-cta-row">

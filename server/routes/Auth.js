@@ -49,9 +49,18 @@ router.post("/login", async (req, res) => {
 });
 
 // GET /api/auth/me (protected)
-router.get("/me", auth, (req, res) => {
-  const u = req.user;
-  res.json({ id: u._id, name: u.name, email: u.email, createdAt: u.createdAt });
+router.get("/me", auth, async (req, res) => {
+  const u = await User.findById(req.user._id).lean();
+  res.json({
+    id: u._id,
+    name: u.name,
+    email: u.email,
+    createdAt: u.createdAt,
+    personality: u.personality || null,
+    results: u.results || [],
+    happinessIndex: u.happinessIndex || null
+  });
 });
+
 
 export default router;
