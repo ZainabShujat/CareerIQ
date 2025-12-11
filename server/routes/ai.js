@@ -2,7 +2,7 @@
 
 console.log("🔎 ai route file loaded — OPENAI_KEY present?", !!process.env.OPENAI_KEY);
 import express from "express";
-import fetch from "node-fetch"; // if using node18+ fetch exists; otherwise install node-fetch
+import fetch from "undici"; // if using node18+ fetch exists; otherwise install node-fetch
 import rateLimit from "express-rate-limit";
 
 const router = express.Router();
@@ -70,6 +70,22 @@ router.post("/insights", limiter, async (req, res) => {
       },
       body: JSON.stringify(payload),
     });
+    if (!r.ok) {
+  const txt = await r.text();
+  try {
+    const err = JSON.parse(txt);
+    if (err?.error?.code === "insufficient_quota" || err?.error?.type === "insufficient_quota") {
+      return res.json({
+        recommendations: [{ title: "General Specialist", confidence: "medium", reason: "Fallback — quota" }],
+        strengths: ["Adaptive"], weaknesses: ["Needs practice"],
+        actionPlan: ["Build 1 project"], resources: ["free courses"],
+        promptUsed: prompt, _warning: "OpenAI quota — fallback used"
+      });
+    }
+  } catch(e){}
+  return res.status(502).json({ error: "OpenAI error", details: txt });
+}
+
 
     if (!r.ok) {
       const text = await r.text();

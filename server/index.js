@@ -9,6 +9,9 @@ console.log(">>> OPENAI_KEY present at startup:", !!process.env.OPENAI_KEY);
 dotenv.config();
 
 const app = express();
+// If app is behind a proxy (Render, Vercel etc.) we must trust proxy for rate-limit
+app.set('trust proxy', 1);
+
 
 // middlewares
 app.use(cors());
