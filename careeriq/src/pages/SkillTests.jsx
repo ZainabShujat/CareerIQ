@@ -49,6 +49,7 @@ function Runner({ testId, onClose }) {
       answers,
       takenAt: new Date().toISOString()
     };
+    localStorage.setItem("ciq_latest_tests", JSON.stringify(payload));
     fetch("/api/tests", {
       method: "POST",
       headers: {"Content-Type":"application/json"},

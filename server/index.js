@@ -14,8 +14,10 @@ import authRoutes from "./routes/Auth.js";
 import careerRoutes from "./routes/careers.js";
 app.use("/api/careers", careerRoutes);
 
-
+import aiRoutes from "./routes/ai.js";
 app.use("/api/auth", authRoutes);
+
+app.use("/api/ai", aiRoutes);
 
 
 

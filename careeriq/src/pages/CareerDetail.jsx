@@ -1,94 +1,109 @@
 // src/pages/CareerDetail.jsx
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import careers from "../data/careers.json";
 import BackButton from "../components/BackButton";
-import { AuthContext } from "../contexts/AuthContext";
 
 export default function CareerDetail() {
-  const { id } = useParams();
-  const career = careers.find((c) => c.slug === id || String(c.id) === String(id));
-  const { toggleBookmark, getBookmarks, openAuth, user } = useContext(AuthContext);
+  const { slug } = useParams();
+  const [career, setCareer] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!career) {
-    return (
-      <div className="ciq-container" style={{ paddingTop: 48 }}>
-        <BackButton />
-        <h2>Not found</h2>
-        <p className="muted">We couldn't find that career.</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    let mounted = true;
+    // try backend first
+    fetch("/api/careers")
+      .then((r) => r.json())
+      .then((list) => {
+        if (!mounted) return;
+        const found = (list || []).find((c) => (c.slug || c.id) === slug);
+        if (found) setCareer(found);
+        else {
+          // fallback to local file
+          try {
+            // eslint-disable-next-line
+            const local = require("../data/careers.json");
+            const foundLocal = (local || []).find((c) => (c.slug || c.id) === slug);
+            setCareer(foundLocal || null);
+          } catch (e) {
+            setCareer(null);
+          }
+        }
+      })
+      .catch(() => {
+        try {
+          // eslint-disable-next-line
+          const local = require("../data/careers.json");
+          const foundLocal = (local || []).find((c) => (c.slug || c.id) === slug);
+          setCareer(foundLocal || null);
+        } catch (e) {
+          setCareer(null);
+        }
+      })
+      .finally(() => mounted && setLoading(false));
 
-  const bookmarked = (getBookmarks ? getBookmarks() : []).includes(career.id);
+    return () => (mounted = false);
+  }, [slug]);
 
-  function handleSave() {
-    if (!user) {
-      return openAuth({ tab: "signup" });
-    }
-    toggleBookmark(career.id);
-    // optionally show a toast
-    alert(bookmarked ? "Removed from bookmarks" : "Saved to bookmarks");
-  }
+  if (loading) return <div className="ciq-container" style={{ paddingTop: 48 }}>Loading…</div>;
+  if (!career) return (
+    <div className="ciq-container" style={{ paddingTop: 48 }}>
+      <BackButton />
+      <h1>Career not found</h1>
+      <p className="muted">Try browsing the careers list.</p>
+      <Link to="/careers" className="small-cta">Back to careers</Link>
+    </div>
+  );
 
   return (
     <div className="ciq-container" style={{ paddingTop: 48 }}>
       <BackButton />
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", gap: 16 }}>
-        <div>
-          <h1 style={{ margin: 0 }}>{career.title}</h1>
-          <div className="muted" style={{ marginTop: 6 }}>
-            {(career.tags || []).join(" • ")}
+      <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
+        <div style={{ flex: 1 }}>
+          <h1 style={{ marginTop: 0 }}>{career.title}</h1>
+          <div className="muted">{career.salary}</div>
+          <div style={{ marginTop: 16 }}>
+            <h3>About this role</h3>
+            <p className="muted">{career.long || career.short}</p>
           </div>
-          <div style={{ marginTop: 10, fontWeight: 700 }}>{career.salary || "Salary info not available"}</div>
-        </div>
 
-        <div style={{ display: "flex", gap: 8 }}>
-          <button className="ciq-primary" onClick={() => alert("Start the skills test (TODO)")}>
-            Take relevant skill test
-          </button>
-          <button className="small-cta" onClick={handleSave}>
-            {bookmarked ? "Unsave" : "Save to profile"}
-          </button>
-        </div>
-      </div>
-
-      <section style={{ marginTop: 20, background: "#fff", padding: 18, borderRadius: 10 }}>
-        <h3>Description</h3>
-        <p style={{ marginTop: 8 }}>{career.long || career.short || "No long description yet."}</p>
-
-        {career.responsibilities && (
-          <>
-            <h4 style={{ marginTop: 12 }}>Typical Responsibilities</h4>
+          <div style={{ marginTop: 16 }}>
+            <h3>Typical responsibilities</h3>
             <ul>
-              {career.responsibilities.map((r, i) => (
-                <li key={i}>{r}</li>
-              ))}
+              {(career.responsibilities || [
+                "Work on domain-specific tasks",
+                "Collaborate with team",
+                "Deliver results"
+              ]).map((r, i) => <li key={i} className="muted">{r}</li>)}
             </ul>
-          </>
-        )}
+          </div>
 
-        {career.pathways && (
-          <>
-            <h4 style={{ marginTop: 12 }}>Career Pathways</h4>
-            <div className="muted">{career.pathways.join(" → ")}</div>
-          </>
-        )}
-
-        {career.skills && (
-          <>
-            <h4 style={{ marginTop: 12 }}>Key skills</h4>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8 }}>
-              {career.skills.map((s) => (
-                <span key={s} className="tag">{s}</span>
-              ))}
+          <div style={{ marginTop: 16 }}>
+            <h3>Suggested skills</h3>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {(career.skills || []).map((s) => <div key={s} className="tag">{s}</div>)}
             </div>
-          </>
-        )}
-      </section>
+          </div>
+        </div>
 
-      <div style={{ marginTop: 18 }}>
-        <Link to="/careers" className="small-cta">← Back to careers</Link>
+        <aside style={{ width: 320 }}>
+          <div className="card" style={{ padding: 14 }}>
+            <h4 style={{ marginTop: 0 }}>Career snapshot</h4>
+            <div style={{ marginTop: 8 }}>
+              <div className="muted">Tags</div>
+              <div style={{ marginTop: 6 }}>{(career.tags || []).join(", ")}</div>
+            </div>
+
+            <div style={{ marginTop: 12 }}>
+              <div className="muted">Estimated salary</div>
+              <div style={{ marginTop: 6, fontWeight: 700 }}>{career.salary || "—"}</div>
+            </div>
+
+            <div style={{ marginTop: 12 }}>
+              <Link to="/quiz" className="ciq-primary" style={{ display: "block", textAlign: "center" }}>Check fit — Take test</Link>
+              <Link to="/insights" className="small-cta" style={{ display: "block", marginTop: 8, textAlign: "center" }}>Explore insights</Link>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
-// src/pages/Careers.jsx
-import React, { useState, useMemo, useContext, useEffect } from "react";
+// src/pages/Careers.jsx (replace existing file — keep your CSS/classes)
+import React, { useState, useMemo } from "react";
 import careersData from "../data/careers.json";
 import CareerCard from "../components/CareerCard";
 import BackButton from "../components/BackButton";
-import { AuthContext } from "../contexts/AuthContext";
 
 const SALARY_BUCKETS = [
   { id: "lt5", label: "Less than ₹5 LPA", min: 0, max: 5 },
@@ -19,30 +18,9 @@ function parseSalaryMin(salaryStr) {
 }
 
 export default function Careers() {
-  const { toggleBookmark, getBookmarks } = useContext(AuthContext) || {};
   const [query, setQuery] = useState("");
   const [activeTags, setActiveTags] = useState([]);
   const [salaryBucket, setSalaryBucket] = useState("");
-const [bookmarks, setBookmarks] = useState([]);
-
-// When loading bookmarks from context, coerce to array:
-useEffect(() => {
-  try {
-    const raw = getBookmarks ? getBookmarks() : [];
-    // getBookmarks might return a Promise or an object; coerce safely:
-    if (raw && typeof raw.then === "function") {
-      // if it's a promise, resolve it
-      raw.then((r) => setBookmarks(Array.isArray(r) ? r : []))
-         .catch(() => setBookmarks([]));
-    } else {
-      setBookmarks(Array.isArray(raw) ? raw : []);
-    }
-  } catch (err) {
-    console.warn("Failed to load bookmarks:", err);
-    setBookmarks([]);
-  }
-}, [getBookmarks]);
-
 
   const allTags = useMemo(() => {
     const s = new Set();
@@ -85,15 +63,6 @@ useEffect(() => {
     setQuery("");
     setActiveTags([]);
     setSalaryBucket("");
-  }
-
-  function handleBookmarkToggle(careerId) {
-    if (!toggleBookmark) {
-      alert("Sign in to save bookmarks (or open the auth modal).");
-      return;
-    }
-    toggleBookmark(careerId);
-    setBookmarks(getBookmarks ? getBookmarks() : []);
   }
 
   return (
@@ -154,25 +123,11 @@ useEffect(() => {
               {allTags.map((t) => {
                 const active = activeTags.includes(t);
                 return (
-                  <button
-                    key={t}
-                    onClick={() => toggleTag(t)}
-                    className={`tag ${active ? "tag--active" : ""}`}
-                    style={{ cursor: "pointer" }}
-                  >
+                  <button key={t} onClick={() => toggleTag(t)} className={`tag ${active ? "tag--active" : ""}`} style={{ cursor: "pointer" }}>
                     {t}
                   </button>
                 );
               })}
-            </div>
-          </div>
-
-          <div style={{ marginTop: 12 }}>
-            <div style={{ fontSize: 13, color: "var(--muted)", marginBottom: 8 }}>Bookmarked</div>
-            <div>
-              <div className="muted" style={{ fontSize: 13 }}>
-                {bookmarks.length === 0 ? "No bookmarks yet." : `${bookmarks.length} saved`}
-              </div>
             </div>
           </div>
         </aside>
@@ -202,17 +157,7 @@ useEffect(() => {
                 <div className="muted">No careers match those filters. Try clearing filters.</div>
               </div>
             ) : (
-              filtered.map((c) => (
-                <CareerCard
-                  key={c.id || c.slug}
-                  career={c}
-                  onBookmark={() => handleBookmarkToggle(c.id || c.slug)}
-                  // when rendering CareerCard
-                  bookmarked={Array.isArray(bookmarks) && (bookmarks.includes(c.id || c.slug))}
-                  
-
-                />
-              ))
+              filtered.map((c) => <CareerCard key={c.id || c.slug} career={c} />)
             )}
           </div>
         </main>
