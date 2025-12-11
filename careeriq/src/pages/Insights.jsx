@@ -1,7 +1,9 @@
 // src/pages/Insights.jsx
 import React, { useEffect, useState, useContext } from "react";
+import { useLocation } from "react-router-dom"; // <-- NEW
 import careersData from "../data/careers.json";
 import { AuthContext } from "../contexts/AuthContext";
+import backbutton from "../components/BackButton";
 
 const styles = {
   page: { maxWidth: 1100, margin: "0 auto", padding: 28, fontFamily: "'Inter', sans-serif" },
@@ -36,11 +38,13 @@ function normalize(v, max = 10) {
 
 export default function Insights() {
   const { user } = useContext(AuthContext);
+  const location = useLocation(); // <-- NEW
+
+  // prefer personality passed via navigation state (freshly POSTed), then user.personality, then null
+  const passedPersonality = location?.state?.personality || null;
+  const personality = passedPersonality || user?.personality || null; // <-- REPLACED
 
   const [ranked, setRanked] = useState([]);
-
-  // Extract personality result if stored
-  const personality = user?.personality || null;
 
   // Convert backend results → skills object
   const skills = user?.results?.length
@@ -99,6 +103,7 @@ export default function Insights() {
 
   return (
     <div style={styles.page}>
+      <BackButton />
       <h1 style={styles.heading}>Your Insights</h1>
       <div style={styles.subtitle}>
         Combined view of your personality test and skill tests. Results update as you take more tests.

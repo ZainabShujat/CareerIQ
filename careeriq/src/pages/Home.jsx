@@ -63,7 +63,7 @@ export default function Home() {
         <div className="ciq-container">
           <div className="ciq-brand">
             <div className="ciq-title">CareerIQ</div>
-            <div className="ciq-sub">AI-powered career recommender</div>
+            <div className="ciq-sub">career predictor & recommender</div>
           </div>
 
           {/* main nav — includes direct category links so the nav doesn't redirect to generic page */}
@@ -78,6 +78,15 @@ export default function Home() {
             <Link to="/about" className="ciq-link">About</Link>
 
             <ProfileButton />
+            {/* add this inside the header container (Home.jsx) near your nav/profile */}
+<button
+  className="mobile-toggle"
+  aria-label="Toggle navigation"
+  onClick={() => document.body.classList.toggle('mobile-nav-open')}
+>
+  <span className="hamburger-inner" />
+</button>
+
           </nav>
         </div>
       </header>
@@ -86,7 +95,7 @@ export default function Home() {
         <div className="ciq-container ciq-grid">
           {/* HERO */}
           <section className="ciq-hero">
-            <div className="ciq-pill">CareerIQ — AI-POWERED CAREER MATCHING</div>
+            <div className="ciq-pill">CareerIQ — SKILL BASED CAREER MATCHING</div>
             <h1 className="ciq-h1">Find careers aligned with who you are</h1>
             <p className="ciq-lead">
               Take a 2-minute assessment and discover careers that match your traits, with salary & work-life insights tailored to India.

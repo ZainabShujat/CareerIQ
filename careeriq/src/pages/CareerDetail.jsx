@@ -67,7 +67,15 @@ export default function CareerDetail() {
   const leftCol = { flex: 1, minWidth: 0 };
   const rightCol = { width: 260, flexShrink: 0 };
   const sidebarCard = { padding: 16, borderRadius: 10, background: "#f8faf7", border: "1px solid #e6efe9", textAlign: "center" };
-  const title = { fontSize: 36, fontWeight: 700, margin: "0 0 8px 0" };
+  const title = {
+    fontSize: 36,
+    fontWeight: 700,
+    margin: "0 0 8px 0",
+    background: "linear-gradient(135deg, #072827, #06a77d)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text"
+  };
   const subtitle = { color: "#556b62", marginBottom: 8, lineHeight: 1.4 };
   const sectionHeading = { fontSize: 18, fontWeight: 700, margin: "18px 0 10px 0" };
   const chip = { display: "inline-block", padding: "6px 10px", borderRadius: 999, background: "#f1f6f3", border: "1px solid #e6efe9", fontSize: 13, marginRight: 8, marginBottom: 8 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import careersData from "../data/careers.json";
+import BackButton from "../components/BackButton";
 
 function matchScore(career, sliders) {
   const salaryNum = (() => {
@@ -28,6 +29,7 @@ function matchScore(career, sliders) {
 export default function Results() {
   const [sliders, setSliders] = useState({ salary: 70, stress: 40, worklife: 60 });
   const [sorted, setSorted] = useState([]);
+  const [hoveredCard, setHoveredCard] = useState(null); // NEW
 
   const careers = Array.isArray(careersData) ? careersData : [];
 
@@ -42,71 +44,92 @@ export default function Results() {
   const panelStyle = { background: "#fff", padding: 14, borderRadius: 10, boxShadow: "0 1px 4px rgba(10,20,15,0.04)", border: "1px solid #eef7f2" };
 
   return (
-    <div style={containerStyle}>
-      <h1 style={{ fontSize: 28, marginBottom: 10 }}>Your Results & Happiness Index</h1>
-      <p style={{ color: '#556', marginTop: 0, marginBottom: 18 }}>Adjust sliders to reflect your preferences. Matches update live.</p>
+    <div className="ciq-root">
+      <div style={containerStyle}>
+        <BackButton />
+        <h1 style={{ fontSize: 28, marginBottom: 10 }}>Your Results & Happiness Index</h1>
+        <p style={{ color: '#556', marginTop: 0, marginBottom: 18 }}>Adjust sliders to reflect your preferences. Matches update live.</p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 18, alignItems: 'start' }}>
-        {/* LEFT: sliders + quick summary */}
-        <aside style={panelStyle}>
-          <h3 style={{ marginTop: 0 }}>Preferences</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 18, alignItems: 'start' }}>
+          {/* LEFT: sliders + quick summary */}
+          <aside style={panelStyle}>
+            <h3 style={{ marginTop: 0 }}>Preferences</h3>
 
-          <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Salary preference: <strong>{sliders.salary}</strong></label>
-            <input type="range" min="0" max="100" value={sliders.salary}
-              onChange={(e) => setSliders(s => ({ ...s, salary: Number(e.target.value) }))} style={{ width: '100%' }} />
-          </div>
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Salary preference: <strong>{sliders.salary}</strong></label>
+              <input type="range" min="0" max="100" value={sliders.salary}
+                onChange={(e) => setSliders(s => ({ ...s, salary: Number(e.target.value) }))} style={{ width: '100%' }} />
+            </div>
 
-          <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Stress tolerance: <strong>{sliders.stress}</strong></label>
-            <input type="range" min="0" max="100" value={sliders.stress}
-              onChange={(e) => setSliders(s => ({ ...s, stress: Number(e.target.value) }))} style={{ width: '100%' }} />
-          </div>
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Stress tolerance: <strong>{sliders.stress}</strong></label>
+              <input type="range" min="0" max="100" value={sliders.stress}
+                onChange={(e) => setSliders(s => ({ ...s, stress: Number(e.target.value) }))} style={{ width: '100%' }} />
+            </div>
 
-          <div style={{ marginBottom: 8 }}>
-            <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Work-life balance: <strong>{sliders.worklife}</strong></label>
-            <input type="range" min="0" max="100" value={sliders.worklife}
-              onChange={(e) => setSliders(s => ({ ...s, worklife: Number(e.target.value) }))} style={{ width: '100%' }} />
-          </div>
+            <div style={{ marginBottom: 8 }}>
+              <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Work-life balance: <strong>{sliders.worklife}</strong></label>
+              <input type="range" min="0" max="100" value={sliders.worklife}
+                onChange={(e) => setSliders(s => ({ ...s, worklife: Number(e.target.value) }))} style={{ width: '100%' }} />
+            </div>
 
-          <div style={{ marginTop: 12, fontSize: 13, color: '#666' }}>
-            <div><strong>Top match</strong>: {sorted[0]?.title || '—'}</div>
-            <div style={{ marginTop: 6 }}>Matches are computed by comparing your sliders against typical role attributes.</div>
-          </div>
-        </aside>
+            <div style={{ marginTop: 12, fontSize: 13, color: '#666' }}>
+              <div><strong>Top match</strong>: {sorted[0]?.title || '—'}</div>
+              <div style={{ marginTop: 6 }}>Matches are computed by comparing your sliders against typical role attributes.</div>
+            </div>
+          </aside>
 
-        {/* RIGHT: matches list */}
-        <main>
-          <section style={{ marginBottom: 12 }}>
-            <h2 style={{ margin: '0 0 8px 0' }}>Top career matches</h2>
-            <div style={{ color: '#444', marginBottom: 6 }}>Results shown below — click a career to view details (if available).</div>
-          </section>
+          {/* RIGHT: matches list */}
+          <main>
+            <section style={{ marginBottom: 12 }}>
+              <h2 style={{ margin: '0 0 8px 0' }}>Top career matches</h2>
+              <div style={{ color: '#444', marginBottom: 6 }}>Results shown below — click a career to view details (if available).</div>
+            </section>
 
-          <div style={{ display: 'grid', gap: 12 }}>
-            {sorted.length === 0 ? (
-              <div style={panelStyle}>No careers available.</div>
-            ) : (
-              sorted.slice(0, 30).map((c) => (
-                <article key={c.id || c.slug} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'flex-start', ...panelStyle }}>
-                  <div style={{ minWidth: 0 }}>
-                    <h3 style={{ margin: 0, fontSize: 16 }}>{c.title}</h3>
-                    <p style={{ margin: '6px 0', color: '#556' }}>{c.short}</p>
-                    <div style={{ fontSize: 13, color: '#777' }}>{(c.tags || []).join(', ')}</div>
-                  </div>
+            <div style={{ display: 'grid', gap: 12 }}>
+              {sorted.length === 0 ? (
+                <div style={panelStyle}>No careers available.</div>
+              ) : (
+                sorted.slice(0, 30).map((c, idx) => (
+                  <div
+                    key={c.id}
+                    style={{
+                      animation: `slideInUp 0.5s ease-out ${idx * 0.06}s both`
+                    }}
+                    onMouseEnter={() => setHoveredCard(c.id)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                  >
+                    <div style={{
+                      background: "#fff",
+                      borderRadius: 16,
+                      padding: 20,
+                      boxShadow: hoveredCard === c.id
+                        ? "0 20px 60px rgba(6, 95, 75, 0.15)"
+                        : "0 8px 20px rgba(6, 10, 12, 0.04)",
+                      transition: "all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                      transform: hoveredCard === c.id ? "translateY(-8px)" : "translateY(0)"
+                    }}>
+                      <div style={{ minWidth: 0 }}>
+                        <h3 style={{ margin: 0, fontSize: 16 }}>{c.title}</h3>
+                        <p style={{ margin: '6px 0', color: '#556' }}>{c.short}</p>
+                        <div style={{ fontSize: 13, color: '#777' }}>{(c.tags || []).join(', ')}</div>
+                      </div>
 
-                  <div style={{ textAlign: 'right', minWidth: 110 }}>
-                    <div style={{ fontWeight: 700 }}>{c.salary || '—'}</div>
-                    <div style={{ marginTop: 8, fontSize: 13, color: c.match >= 75 ? '#14632a' : c.match >= 50 ? '#b76' : '#666' }}>{`Match ${c.match}%`}</div>
-                    <div style={{ marginTop: 8 }}>
-                      {/* optionally link to career detail if route exists */}
-                      <a href={`/careers/${c.slug || c.id}`} style={{ fontSize: 13, color: '#065f4b', textDecoration: 'none' }}>View</a>
+                      <div style={{ textAlign: 'right', minWidth: 110 }}>
+                        <div style={{ fontWeight: 700 }}>{c.salary || '—'}</div>
+                        <div style={{ marginTop: 8, fontSize: 13, color: c.match >= 75 ? '#14632a' : c.match >= 50 ? '#b76' : '#666' }}>{`Match ${c.match}%`}</div>
+                        <div style={{ marginTop: 8 }}>
+                          {/* optionally link to career detail if route exists */}
+                          <a href={`/careers/${c.slug || c.id}`} style={{ fontSize: 13, color: '#065f4b', textDecoration: 'none' }}>View</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </article>
-              ))
-            )}
-          </div>
-        </main>
+                ))
+              )}
+            </div>
+          </main>
+        </div>
       </div>
 
       {/* Accessibility + small footer note */}

@@ -189,13 +189,15 @@ async function handleSave(e) {
               width: 110,
               height: 110,
               borderRadius: 18,
-              background: "linear-gradient(180deg,#e9f7f2,#f6fffb)",
+              background: "linear-gradient(135deg, #e6f9f1, #d4f1e6)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               fontWeight: 800,
               fontSize: 40,
-              color: "var(--ciq-dark)"
+              color: "#065f4b",
+              boxShadow: "0 10px 30px rgba(6, 160, 120, 0.12)",
+              transition: "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)"
             }}>
               {profile.name ? profile.name[0].toUpperCase() : "U"}
             </div>
@@ -221,7 +223,13 @@ async function handleSave(e) {
           {/* layout grid: form (left) | summary (right) */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 20, alignItems: "start" }}>
             {/* Form card */}
-            <form onSubmit={handleSave} style={{ background: "white", padding: 22, borderRadius: 12, boxShadow: "var(--card-shadow)" }}>
+            <form onSubmit={handleSave} style={{
+              background: "#fff",
+              padding: 22,
+              borderRadius: 16,
+              boxShadow: "0 10px 30px rgba(6, 95, 75, 0.06)",
+              border: "1px solid rgba(6, 95, 75, 0.04)"
+            }}>
               <div style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",

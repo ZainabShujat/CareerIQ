@@ -1,8 +1,13 @@
 // src/pages/Quiz.jsx
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext"; // ⭐ needed for backend save
-import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import BackButton from "../components/BackButton";
+
+/*
+Matrix-style quiz — saves personality summary into localStorage
+Key: careerIQ_personality
+*/
 
 const questions = [
   "I enjoy meeting new people",
@@ -80,23 +85,23 @@ const styles = {
 
 export default function Quiz() {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext); // ⭐ detects logged-in user
-
+  <BackButton />
+  const { user } = useContext(AuthContext); // <-- NEW
   const [answers, setAnswers] = useState(() => questions.map(() => 0));
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const rowRefs = useRef([]); // ⭐ For autoscroll
+  const rowRefs = useRef([]); // ⭐ AUTOSCROLL REF ARRAY
 
   const answeredCount = useMemo(() => answers.filter(a => a > 0).length, [answers]);
 
-  // ⭐ Smooth scroll to next question
+  // ⭐ smooth autoscroll helper
   const scrollToRow = (i) => {
     setTimeout(() => {
       rowRefs.current[i]?.scrollIntoView({
         behavior: "smooth",
         block: "center"
       });
-    }, 120);
+    }, 100);
   };
 
   const setAnswer = (qIndex, value) => {
@@ -104,6 +109,7 @@ export default function Quiz() {
     updated[qIndex] = Number(value);
     setAnswers(updated);
 
+    // NEXT QUESTION autoscroll
     const next = Math.min(qIndex + 1, questions.length - 1);
     setActiveIndex(next);
     scrollToRow(next);
@@ -115,7 +121,6 @@ export default function Quiz() {
     scrollToRow(0);
   };
 
-  // Your original trait mapping remains untouched
   const computeTraits = (ans) => {
     const groups = {
       Analytical: [3, 20, 10],
@@ -127,7 +132,7 @@ export default function Quiz() {
     const scores = {};
     for (const key in groups) {
       const values = groups[key].map(i => Number(ans[i] || 0)).filter(v => v > 0);
-      scores[key] = values.length ? Number((values.reduce((a, b) => a + b) / values.length).toFixed(2)) : 0;
+      scores[key] = values.length ? Number((values.reduce((a,b)=>a+b) / values.length).toFixed(2)) : 0;
     }
     return scores;
   };
@@ -135,7 +140,7 @@ export default function Quiz() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ⭐ require all questions answered
+    // require all questions answered
     if (answers.includes(0)) {
       alert("Please answer all questions before submitting.");
       return;
@@ -149,14 +154,13 @@ export default function Quiz() {
       timestamp: new Date().toISOString()
     };
 
-    // ⭐ Save locally ALWAYS
+    // always save locally
     localStorage.setItem("careerIQ_personality", JSON.stringify(payload));
 
-    // ⭐ Save to backend IF logged in
-    if (user) {
+    // if logged in (token present), try POSTing to backend /api/personality
+    const token = localStorage.getItem("ciq_token");
+    if (token) {
       try {
-        const token = localStorage.getItem("ciq_token");
-
         const res = await fetch("/api/personality", {
           method: "POST",
           headers: {
@@ -166,15 +170,20 @@ export default function Quiz() {
           body: JSON.stringify(payload)
         });
 
-        if (!res.ok) {
-          console.error("Backend error");
+        if (res.ok) {
+          const json = await res.json();
+          // navigate and pass the saved personality from backend (so Insights has immediate data)
+          return navigate("/insights", { state: { personality: json.personality || payload } });
+        } else {
+          console.error("Backend returned error saving personality:", res.status);
         }
       } catch (err) {
-        console.error("Network error", err);
+        console.error("Network error saving personality:", err);
       }
     }
 
-    navigate("/insights");
+    // fallback: navigate and pass local payload so Insights can display right away
+    navigate("/insights", { state: { personality: payload } });
   };
 
   return (
@@ -189,8 +198,9 @@ export default function Quiz() {
         </div>
 
         <div style={styles.progressBlock}>
-          <div style={{ fontSize: 14, color: "#2f5547", fontWeight: 700 }}>
-            {answeredCount} / {questions.length} answered
+          <div style={{ fontSize: 14, color: "#2f5547", fontWeight: 700 }}>{answeredCount} / {questions.length} answered</div>
+          <div style={{ marginTop: 8 }}>
+            <button style={styles.topBtn} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Top</button>
           </div>
         </div>
       </div>
@@ -213,7 +223,7 @@ export default function Quiz() {
               {questions.map((q, qi) => (
                 <React.Fragment key={qi}>
                   <div
-                    ref={(el) => (rowRefs.current[qi] = el)}
+                    ref={(el) => (rowRefs.current[qi] = el)} // ⭐ AUTOSCROLL ROW REF
                     style={{
                       ...styles.questionCell,
                       background: qi === activeIndex ? "#f6fbf7" : "white",
@@ -228,14 +238,14 @@ export default function Quiz() {
                     <div style={{ fontWeight: 600 }}>{qi + 1}. {q}</div>
                   </div>
 
-                  {[1, 2, 3, 4, 5].map((opt) => (
-                    <div key={opt} style={styles.radioCell}>
+                  {Array.from({ length: 5 }).map((_, oi) => (
+                    <div key={oi} style={styles.radioCell}>
                       <input
                         type="radio"
                         name={`q-${qi}`}
-                        value={opt}
-                        checked={answers[qi] === opt}
-                        onChange={() => setAnswer(qi, opt)}
+                        value={oi + 1}
+                        checked={answers[qi] === (oi + 1)}
+                        onChange={(e) => setAnswer(qi, e.target.value)}
                         style={styles.radioInput}
                       />
                     </div>
@@ -248,7 +258,7 @@ export default function Quiz() {
           </div>
         </div>
 
-        
+        <div style={styles.helpText}>Press ↑/↓ to move</div>
 
         <div style={styles.buttonsRow}>
           <button type="button" onClick={reset} style={styles.resetBtn}>Reset</button>
