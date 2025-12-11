@@ -11,7 +11,6 @@ import Results from "./pages/Results";
 import Careers from "./pages/Careers";
 import CareerDetail from "./pages/CareerDetail";
 import Insights from "./pages/Insights";
-import Chatbot from "./pages/Chatbot"
 import SkillTests from "./pages/SkillTests";
 // App.jsx (or your routes file)
 import SkillTestRunner from "./pages/SkillTestRunner"; // create next
@@ -43,7 +42,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/personality-test" element={<Quiz />} />
           <Route path="/happiness-index" element={<Results />} />
-          <Route path="/chatbot" element={<Chatbot />} />
+          
 
           {/* Category routes (explicit named pages) */}
            <Route path="/skill-tests" element={<SkillTests />} />

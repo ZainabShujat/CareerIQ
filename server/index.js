@@ -18,15 +18,13 @@ app.use(express.json());
 import authRoutes from "./routes/Auth.js";
 import careerRoutes from "./routes/careers.js";
 import userRoutes from "./routes/user.js";
-import aiRoutes from "./routes/ai.js";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/careers", careerRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/ai", aiRoutes);
-app.use("/api/results", require("./routes/results"));
-import resultsRoutes from "./routes/results.js";
-app.use("/api/results", resultsRoutes);
+
+import resultsRouter from "./routes/results.js";
+app.use("/api/results", resultsRouter);
 
 
 import personalityRoutes from "./routes/personality.js";
