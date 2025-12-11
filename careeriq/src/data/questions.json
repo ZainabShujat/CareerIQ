@@ -1,10 +1,218 @@
-[
-  {"id":1,"text":"Do you enjoy solving logic problems and puzzles?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"analytical":1}},
-  {"id":2,"text":"Do you prefer working with computers and code?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"tech":1}},
-  {"id":3,"text":"Do you enjoy creative tasks like design or writing?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"creative":1}},
-  {"id":4,"text":"Do you prefer working indoors vs hands-on outdoor work?","type":"choice","options":["Indoors","Hands-on","Either"],"traits":{"indoor":1,"hands_on":1}},
-  {"id":5,"text":"How important is job stability to you?","type":"choice","options":["Very","Somewhat","Not at all"],"traits":{"stability":1}},
-  {"id":6,"text":"Do you enjoy helping and teaching others?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"people":1}},
-  {"id":7,"text":"Would you relocate for a job opportunity?","type":"choice","options":["Yes","Maybe","No"],"traits":{"relocate":1}},
-  {"id":8,"text":"Do you like managing projects, coordinating teams?","type":"scale","options":["Not at all","A little","Somewhat","Strongly"],"traits":{"management":1}}
-]
+{
+  "generatedAt": "2025-12-11T00:00:00.000Z",
+  "meta": {
+    "mode": "MCQ-mixed",
+    "notes": "Scores are MCQ; each question has one correct option. Score per test = (correctCount / totalQuestions) * 5"
+  },
+  "tests": [
+    {
+      "id": "analytical",
+      "title": "Analytical Reasoning",
+      "questions": [
+        {"id":"a1","text":"Which number completes the series: 2, 6, 12, 20, ?","options":["30","24","28","26"],"correct":2},
+        {"id":"a2","text":"From the statements: All X are Y. Some Y are Z. Which conclusion is valid?","options":["All X are Z","Some X may be Z","No X is Z","All Z are X"],"correct":1},
+        {"id":"a3","text":"If the cost of 3 pens and 2 notebooks is 230 and a pen costs 30 more than a notebook, price of a notebook?","options":["40","50","70","80"],"correct":1},
+        {"id":"a4","text":"Find the odd one out: [alpha: numeric mapping]  A=1 B=2 C=3 ... Which word has different total: CAT, DOG, BEE, FOX?","options":["CAT","DOG","BEE","FOX"],"correct":3},
+        {"id":"a5","text":"A is twice as old as B. After 5 years, sum of ages = 45. Current age of A?","options":["20","25","30","15"],"correct":0},
+        {"id":"a6","text":"If x*y = x + 2y, what is 3 * 4?","options":["11","8","3","10"],"correct":0},
+        {"id":"a7","text":"Which of these rules produces the sequence: 1, 4, 9, 16?","options":["n^2","n*(n+1)","2n^2","n^2 + 1"],"correct":0},
+        {"id":"a8","text":"If product of two positive integers is 36 and their difference is 3, numbers are:","options":["6 and 6","9 and 4","12 and 3","18 and 2"],"correct":1},
+        {"id":"a9","text":"Choose which conclusion follows: Some M are N. All N are P. Thus:","options":["Some M are P","No M are P","All M are P","Cannot say"],"correct":0},
+        {"id":"a10","text":"If 5x + 3 = 2x + 12, x equals:","options":["3","5","2","4"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "logical",
+      "title": "Logical Reasoning",
+      "questions": [
+        {"id":"l1","text":"Find the missing figure in a simple pattern sequence (A,B,C,?). Which rule is typical?","options":["rotation","size change","color swap","random"],"correct":0},
+        {"id":"l2","text":"If '>>' means minus and '++' means times, what is 6 >> 2 ++ 3?","options":["12","8","18","24"],"correct":2},
+        {"id":"l3","text":"Which statement makes the set true: {x| x divisible by 6 and 9}?","options":["x divisible by 54","x divisible by 18","x divisible by 15","x divisible by 12"],"correct":1},
+        {"id":"l4","text":"Choose the best next item: □ ▲ ○ □ ▲ ○ □ ?","options":["▲","○","□","★"],"correct":2},
+        {"id":"l5","text":"If yesterday was Thursday, what day will it be in 100 days?","options":["Sunday","Monday","Tuesday","Saturday"],"correct":2},
+        {"id":"l6","text":"Which word is logically related differently: Apple, Banana, Carrot, Grape?","options":["Apple","Banana","Carrot","Grape"],"correct":2},
+        {"id":"l7","text":"Which of these is a valid syllogism?","options":["If p→q and q→r then p→r","If p→q and r→p then r→q","If p→q and q→p then p=q","None"],"correct":0},
+        {"id":"l8","text":"Determine next number: 3, 5, 11, 21, 43, ?","options":["85","87","86","81"],"correct":0},
+        {"id":"l9","text":"In a logic grid, 'If not A then B' is equivalent to:","options":["If not B then A","If not B then not A","If A then not B","If B then not A"],"correct":1},
+        {"id":"l10","text":"From these shapes choose which pairs are mirror images: (simple visual reasoning)","options":["1 & 3","2 & 4","1 & 2","3 & 4"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "verbal",
+      "title": "Verbal Reasoning",
+      "questions": [
+        {"id":"v1","text":"Choose the best synonym for 'mitigate':","options":["worsen","alleviate","ignore","delay"],"correct":1},
+        {"id":"v2","text":"Pick the sentence without grammatical error:","options":["She and I went","Her and I went","She and me went","I and she went"],"correct":0},
+        {"id":"v3","text":"Inference: 'All commuters take trains; some commuters read.' Which is true?","options":["Some train riders read","All who read commute","Some who commute don't take trains","None"],"correct":0},
+        {"id":"v4","text":"Choose the word opposite of 'opaque':","options":["translucent","dense","dark","coarse"],"correct":0},
+        {"id":"v5","text":"Best brief summary of: 'Company cut costs by optimizing supply routes'","options":["Company grew staff","Company reduced expenses","Company expanded routes","Company lost money"],"correct":1},
+        {"id":"v6","text":"Replace passive voice: 'The report was prepared by the team' → active:","options":["The team prepared the report","The report prepared the team","Prepared was the team","The team was report"],"correct":0},
+        {"id":"v7","text":"Choose correct punctuation: She said ___ I will come.","options":[";","—",":",","],"correct":2},
+        {"id":"v8","text":"Analogy: 'Bird is to nest as bee is to ___'","options":["hive","flower","honey","wing"],"correct":0},
+        {"id":"v9","text":"Meaning from context: 'Their plan is tentative' — most likely meaning:","options":["final","temporary","rigid","secret"],"correct":1},
+        {"id":"v10","text":"Choose best concise rewrite: 'Due to the fact that' → ?","options":["Because","Although","However","Since when"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "quantitative",
+      "title": "Quantitative Aptitude",
+      "questions": [
+        {"id":"q1","text":"If 60% of x = 120, x = ?","options":["200","180","240","150"],"correct":0},
+        {"id":"q2","text":"A sells for $60 after 20% discount. Original price?","options":["$66","$72","$75","$80"],"correct":1},
+        {"id":"q3","text":"If ratio a:b = 2:3 and a+b=25, a=?","options":["10","12","11","9"],"correct":2},
+        {"id":"q4","text":"Compound interest on 1000 at 10% yearly for 2 years (approx)?","options":["210","121","110","200"],"correct":0},
+        {"id":"q5","text":"Average of five numbers is 12. If one number 10 removed, new average is 11. What was sum originally?","options":["60","55","50","65"],"correct":0},
+        {"id":"q6","text":"If speed increases by 25%, time decreases by:","options":["20%","25%","80%","10%"],"correct":0},
+        {"id":"q7","text":"A invests 2000 for 2 years at simple interest 5% p.a. interest?","options":["200","250","100","300"],"correct":0},
+        {"id":"q8","text":"Solve: 3/4 of 80 = ?","options":["60","40","20","45"],"correct":0},
+        {"id":"q9","text":"If x^2 = 49, x could be:","options":["7 only","-7 only","7 or -7","0"],"correct":2},
+        {"id":"q10","text":"If probability of event is 0.2, odds against event occurring are:","options":["4:1","1:4","0.8","2:5"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "spatial",
+      "title": "Spatial Reasoning",
+      "questions": [
+        {"id":"s1","text":"Which 2D net folds into a cube? (visual)","options":["A","B","C","D"],"correct":0},
+        {"id":"s2","text":"Which shape is rotation of the first?","options":["1","2","3","4"],"correct":2},
+        {"id":"s3","text":"If object turned 90° clockwise, which view matches?","options":["I","II","III","IV"],"correct":1},
+        {"id":"s4","text":"Which figure is mirror image of given shape?","options":["A","B","C","D"],"correct":3},
+        {"id":"s5","text":"Which 3D object matches the shadow?","options":["cube","cylinder","cone","pyramid"],"correct":1}
+      ]
+    },
+
+    {
+      "id": "attention",
+      "title": "Attention to Detail",
+      "questions": [
+        {"id":"ad1","text":"Which line contains a spelling error?","options":["accomodate","accommodate","accomadate","accommodete"],"correct":0},
+        {"id":"ad2","text":"Find the number different: 1742, 1743, 1744, 1742","options":["1742 (1)","1743","1744","1742 (2)"],"correct":1},
+        {"id":"ad3","text":"Which invoice total is incorrectly summed? (simple numbers)","options":["42.50","45.00","42.55","43.25"],"correct":2},
+        {"id":"ad4","text":"Compare sequences: which pair matches exactly?","options":["A&B","A&C","B&D","C&D"],"correct":0},
+        {"id":"ad5","text":"Spot the different symbol among: © ® ℗ ™","options":["©","®","℗","™"],"correct":2}
+      ]
+    },
+
+    {
+      "id": "decision_speed",
+      "title": "Decision-Making Speed",
+      "questions": [
+        {"id":"ds1","text":"If two tasks conflict, you should first:","options":["Do easier one","Check deadlines","Ask boss","Ignore"],"correct":1},
+        {"id":"ds2","text":"Client asks urgent fix and QA asks to freeze. Best immediate action:","options":["Prioritize client","Seek quick meeting","Ignore client","Cancel QA"],"correct":1},
+        {"id":"ds3","text":"You lack data but need decision now: choose","options":["Estimate and act","Wait until perfect","Abort project","Delegate forever"],"correct":0},
+        {"id":"ds4","text":"A bug affects 1% users but critical. You should:","options":["Hotfix","Ignore","Schedule later","Announce only"],"correct":0},
+        {"id":"ds5","text":"If you must choose between speed and quality with deadline, best is:","options":["Speed always","Quality always","Balance & communicate","Cancel"],"correct":2}
+      ]
+    },
+
+    {
+      "id": "creativity",
+      "title": "Creativity & Divergent Thinking",
+      "questions": [
+        {"id":"c1","text":"Which alternative gives the most original use for a paperclip?","options":["Holding paper","Unclogging glue","DIY phone stand","Bookmark"],"correct":2},
+        {"id":"c2","text":"Given a problem, pick the option that is the least conventional but plausible:","options":["Same process","New tool trial","Ignore problem","Outsource immediately"],"correct":1},
+        {"id":"c3","text":"Which idea best increases product delight at low cost?","options":["Big redesign","Micro-interactions","More meetings","Branding only"],"correct":1},
+        {"id":"c4","text":"Choose the most divergent solution to reduce waiting time:","options":["More staff","Redesign flow","Close earlier","Charge more"],"correct":1},
+        {"id":"c5","text":"Pick the option that shows lateral thinking for reuse of waste:","options":["Landfill","Energy recovery","Re-design packaging for reuse","Burn"],"correct":2}
+      ]
+    },
+
+    {
+      "id": "emotional",
+      "title": "Emotional Intelligence",
+      "questions": [
+        {"id":"e1","text":"Colleague looks upset after a meeting; best response:","options":["Ignore","Ask privately if they are okay","Tell them to focus","Report to manager"],"correct":1},
+        {"id":"e2","text":"When getting critical feedback you feel defensive; best first step:","options":["Argue back","Listen and reflect","Cry","Email later angrily"],"correct":1},
+        {"id":"e3","text":"A team member is silent in meeting; you should:","options":["Call them out angrily","Invite their view gently","Assume they agree","Ignore"],"correct":1},
+        {"id":"e4","text":"If someone makes a mistake publicly, best action:","options":["Publicly blame","Privately coach","Promote them","Fire them"],"correct":1},
+        {"id":"e5","text":"You notice recurring tension between two teammates; you:","options":["Arrange mediation","Pick a side","Stay out","Blame both publicly"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "communication",
+      "title": "Communication Clarity",
+      "questions": [
+        {"id":"cm1","text":"Choose the clearest subject line for an email about meeting time:","options":["Meeting 3pm Tue","Hi team","Important","FYI"],"correct":0},
+        {"id":"cm2","text":"Which sentence is concise?","options":["Due to the fact that","Because","As a matter of fact","It is the case that"],"correct":1},
+        {"id":"cm3","text":"You must give bad news; best tone is:","options":["Blunt","Empathetic and clear","Joking","Vague"],"correct":1},
+        {"id":"cm4","text":"For readability, prefer:","options":["Dense paragraphs","Short bullets","Long sentences","All caps"],"correct":1},
+        {"id":"cm5","text":"Choose best rewrite: 'We are of the opinion that' →","options":["We think","We are of opinion","It is thought by us","This is our opinion"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "tech",
+      "title": "Tech Literacy / Digital Reasoning",
+      "questions": [
+        {"id":"t1","text":"What's a URL used for?","options":["Storing files","Addressing web resources","Encrypting data","Compressing images"],"correct":1},
+        {"id":"t2","text":"What is 'API' short for?","options":["Application Programming Interface","App Product Index","Automatic Programming Input","Application Private Interface"],"correct":0},
+        {"id":"t3","text":"What is version control used for?","options":["Track changes in code","Delete old files","Encrypt data","Speed up servers"],"correct":0},
+        {"id":"t4","text":"What is a database used for?","options":["Designing logos","Storing structured data","Running UI tests","Editing videos"],"correct":1},
+        {"id":"t5","text":"Which file extension likely contains code?","options":[".docx",".xlsx",".js",".mp3"],"correct":2}
+      ]
+    },
+
+    {
+      "id": "data",
+      "title": "Data Interpretation",
+      "questions": [
+        {"id":"d1","text":"A chart shows sales rising 10% from 100 to 110. Which statement is true?","options":["Absolute increase 10","Relative increase 10%","Both","None"],"correct":1},
+        {"id":"d2","text":"If median > mean in income data, distribution likely:","options":["Left-skewed","Right-skewed","Symmetric","Uniform"],"correct":0},
+        {"id":"d3","text":"A table shows category A has 40 of 200 total → percent?","options":["20%","25%","40%","80%"],"correct":0},
+        {"id":"d4","text":"If correlation = 0.9 between variables X and Y:","options":["Strong positive relation","No relation","Strong negative","Impossible"],"correct":0},
+        {"id":"d5","text":"Which visual best shows part-to-whole?","options":["Bar chart","Scatter plot","Pie chart","Histogram"],"correct":2},
+        {"id":"d6","text":"On an axis, which change is faster: 50→100 or 200→300?","options":["50→100","200→300","Same","Need more info"],"correct":2},
+        {"id":"d7","text":"If dataset has outliers, best summary measure is:","options":["Mean","Mode","Median","None"],"correct":2},
+        {"id":"d8","text":"Which shows distribution shape?","options":["Histogram","Line item","Table","Footnote"],"correct":0},
+        {"id":"d9","text":"If conversion rate decreases but traffic increases, revenue effect depends on:","options":["Only conversion","Only traffic","Both conversion & traffic","Neither"],"correct":2},
+        {"id":"d10","text":"Which is correct: 'Significant' result means:","options":["Practical importance","Statistical evidence","Guaranteed effect","No effect"],"correct":1}
+      ]
+    },
+
+    {
+      "id": "business",
+      "title": "Business Acumen",
+      "questions": [
+        {"id":"b1","text":"If revenue > expenses, company has:","options":["Loss","Profit","Debt","Break-even"],"correct":1},
+        {"id":"b2","text":"Which improves gross margin?","options":["Lower cost of goods sold","Increase advertising","Decrease price","Increase headcount"],"correct":0},
+        {"id":"b3","text":"If ROI < cost of capital, invest?","options":["Yes","No","Maybe later","Ignore"],"correct":1},
+        {"id":"b4","text":"A backlog increases; best managerial response:","options":["Hire without plan","Prioritize & resource","Ignore","Delay all work"],"correct":1},
+        {"id":"b5","text":"Which is a KPI for customer success?","options":["Churn rate","Lunch menu","Brand logo","Color palette"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "customer",
+      "title": "Customer Orientation",
+      "questions": [
+        {"id":"cu1","text":"If customer reports repeated issue, best step:","options":["Apologize & fix","Blame customer","Delay response","Close ticket"],"correct":0},
+        {"id":"cu2","text":"Prioritizing customer requests, you should consider:","options":["Impact & frequency","Random order","Only high-paying customers","Ignore requests"],"correct":0},
+        {"id":"cu3","text":"A customer is upset; you should first:","options":["Listen & empathize","Defend product","Ignore","Escalate immediately"],"correct":0},
+        {"id":"cu4","text":"To improve satisfaction, best metric to monitor:","options":["Customer NPS","Internal email count","Office parties","Remote work days"],"correct":0},
+        {"id":"cu5","text":"Service recovery after failure should be:","options":["Quick and generous","Slow but polite","Ignore the user","Only apology"],"correct":0}
+      ]
+    },
+
+    {
+      "id": "situational",
+      "title": "Situational Judgement (Adaptability & Judgement)",
+      "questions": [
+        {"id":"sg1","text":"A sudden supplier delay threatens deadline; you should:","options":["Communicate early & propose alternatives","Hide the problem","Blame supplier publicly","Cancel project"],"correct":0},
+        {"id":"sg2","text":"Your team disagrees on approach; you should:","options":["Force decision alone","Facilitate discussion & align","Delay indefinitely","Pick random option"],"correct":1},
+        {"id":"sg3","text":"Company asks for quick pivot; you have low resources:","options":["Pivot with minimal viable change","Refuse pivot","Do full overhaul","Take no action"],"correct":0},
+        {"id":"sg4","text":"If asked to do work outside role, best response:","options":["Assess & propose boundaries","Refuse angrily","Accept all without question","Ignore"],"correct":0},
+        {"id":"sg5","text":"Under tight ambiguity, you should:","options":["Clarify assumptions and act","Wait for perfect clarity","Blame others","Do nothing"],"correct":0},
+        {"id":"sg6","text":"If data contradicts your view, you should:","options":["Re-check and update view","Ignore data","Force narrative","Hide it"],"correct":0},
+        {"id":"sg7","text":"When priorities shift, you should:","options":["Re-evaluate deliverables with team","Stick to original plan","Complain","Resign"],"correct":0},
+        {"id":"sg8","text":"If a quick low-risk test can validate idea, you:","options":["Run the test","Wait for full plan","Skip testing","Outsource without validation"],"correct":0},
+        {"id":"sg9","text":"If two good options exist, you should:","options":["Weight impact & choose","Flip a coin","Always choose cheaper","Always choose faster"],"correct":0},
+        {"id":"sg10","text":"To handle unexpected customer complaint:","options":["Acknowledge, investigate, respond","Ignore and hope it resolves","Deflect blame","Close ticket"],"correct":0}
+      ]
+    }
+  ]
+}

@@ -104,7 +104,7 @@ body {
 .ciq-header .ciq-container {
   display:flex;
   align-items:center;
-  gap:24px;
+  gap:140px;
   height:84px;
 }
 .ciq-brand { display:flex; align-items:center; gap:14px; }
