@@ -1,75 +1,84 @@
-// src/pages/Results.jsx
 import React, { useState, useEffect } from "react";
-import CareerCard from "../components/CareerCard.jsx";
-
-const sampleCareers = [
-  { id: 1, name: "Frontend Developer", salary: 80, stress: 40, worklife: 60 },
-  { id: 2, name: "Data Analyst", salary: 70, stress: 50, worklife: 55 },
-  { id: 3, name: "UX Designer", salary: 65, stress: 30, worklife: 75 },
-  { id: 4, name: "Project Manager", salary: 75, stress: 70, worklife: 45 },
-  // replace with careers-100.json mapping when available
-];
+import careersData from "../data/careers.json";
 
 function matchScore(career, sliders) {
-  // lower distance is better. transform to score 0-100
-  const ds = Math.abs((career.salary || 50) - (sliders.salary || 50));
-  const dt = Math.abs((career.stress || 50) - (sliders.stress || 50));
-  const dw = Math.abs((career.worklife || 50) - (sliders.worklife || 50));
-  const maxDistance = 150; // 3 * 50
+  // attempt to normalize salary to a 0-100 scale if it's numeric-like
+  const salaryNum = (() => {
+    if (!career.salary) return 50;
+    const s = String(career.salary).match(/\d+/);
+    return s ? Math.min(100, Math.max(0, Number(s[0]))) : 50;
+  })();
+
+  const stress = career.stress ?? 50;
+  const worklife = career.worklife ?? 50;
+
+  const ds = Math.abs(salaryNum - (sliders.salary || 50));
+  const dt = Math.abs(stress - (sliders.stress || 50));
+  const dw = Math.abs(worklife - (sliders.worklife || 50));
+  const maxDistance = 150;
   const dist = ds + dt + dw;
   const score = Math.round(((maxDistance - dist) / maxDistance) * 100);
-  return score;
+  return Math.max(0, Math.min(100, score));
 }
 
 export default function Results() {
   const [sliders, setSliders] = useState({ salary: 70, stress: 40, worklife: 60 });
   const [sorted, setSorted] = useState([]);
 
+  const careers = Array.isArray(careersData) && careersData.length ? careersData : [];
+
   useEffect(() => {
-    // compute scores and sort descending
-    const withScore = sampleCareers.map(c => ({ ...c, match: matchScore(c, sliders) }));
+    const withScore = careers.map(c => ({ ...c, match: matchScore(c, sliders) }));
     withScore.sort((a, b) => b.match - a.match);
     setSorted(withScore);
-  }, [sliders]);
+  }, [sliders, careers]);
+
+  useEffect(() => {
+    // Also load latest quiz from localStorage and optionally compute aggregated happiness — optional
+    const tests = JSON.parse(localStorage.getItem("ciq_latest_tests") || "null");
+    // if (tests) { ... }
+  }, []);
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">Happiness Index</h2>
+    <div className="p-6 max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Your Results & Happiness Index</h1>
 
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <section className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
-          <label>Salary: {sliders.salary}</label>
+          <label className="block mb-2">Salary preference: {sliders.salary}</label>
           <input type="range" min="0" max="100" value={sliders.salary}
             onChange={(e) => setSliders(s => ({ ...s, salary: Number(e.target.value) }))} />
         </div>
         <div>
-          <label>Stress: {sliders.stress}</label>
+          <label className="block mb-2">Stress tolerance: {sliders.stress}</label>
           <input type="range" min="0" max="100" value={sliders.stress}
             onChange={(e) => setSliders(s => ({ ...s, stress: Number(e.target.value) }))} />
         </div>
         <div>
-          <label>Work-life: {sliders.worklife}</label>
+          <label className="block mb-2">Work-life balance: {sliders.worklife}</label>
           <input type="range" min="0" max="100" value={sliders.worklife}
             onChange={(e) => setSliders(s => ({ ...s, worklife: Number(e.target.value) }))} />
         </div>
-      </div>
+      </section>
 
-      <div>
-        <h3 className="mb-2">Matches</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {sorted.map(c => (
-            <div key={c.id} className="bg-white p-4 rounded shadow">
-              <div className="flex justify-between items-center">
-                <div>
-                  <strong>{c.name}</strong>
-                  <div className="text-sm text-muted">Match: {c.match}%</div>
-                </div>
-                <div className="text-sm">{c.match >= 75 ? "Great fit" : c.match >= 50 ? "Okay" : "Consider other roles"}</div>
+      <section>
+        <h2 className="text-2xl mb-4">Top career matches</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          {sorted.slice(0, 20).map(c => (
+            <div key={c.id || c.slug} className="p-4 border rounded-lg bg-white shadow-sm flex justify-between items-center">
+              <div>
+                <h3 className="text-lg font-semibold">{c.title}</h3>
+                <p className="text-sm text-slate-600">{c.short}</p>
+                <div className="text-xs text-slate-500 mt-2">{c.tags && c.tags.join(", ")}</div>
+              </div>
+              <div className="text-right">
+                <div className="font-bold">{c.salary || "—"}</div>
+                <div className="text-sm text-slate-500">Match {c.match}%</div>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

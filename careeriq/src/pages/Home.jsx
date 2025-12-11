@@ -2,6 +2,12 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+// top of file
+import CategoriesGrid from "../components/CategoriesGrid";
+
+// inside the Home component's JSX, wherever you want categories to appear:
+
+
 
 /* Small icon components used on the homepage */
 const IconLaptop = () => (
@@ -66,12 +72,7 @@ export default function Home() {
             <Link to="/insights" className="ciq-link">Insights</Link>
             <Link to="/skill-tests" className="ciq-link">Skill Tests</Link>
 
-            <Link to="/engineering-careers" className="ciq-link">Engineering</Link>
-            <Link to="/medical-careers" className="ciq-link">Medical</Link>
-            <Link to="/teaching-careers" className="ciq-link">Teaching</Link>
-            <Link to="/culinary-careers" className="ciq-link">Culinary</Link>
-            <Link to="/civil-careers" className="ciq-link">Civil</Link>
-
+            
             <Link to="/personality-test" className="ciq-link">Personality Test</Link>
             <Link to="/happiness-index" className="ciq-link">Happiness Index</Link>
             <Link to="/about" className="ciq-link">About</Link>
@@ -154,45 +155,7 @@ export default function Home() {
               </div>
             </div>
           </section>
-
-          {/* ASIDE */}
-          <aside className="ciq-aside">
-            <div className="ciq-panel">
-              <h4>Live Market Insights</h4>
-
-              <div className="ciq-trend">
-                <div className="t-left">
-                  <div className="t-title">Data Science & AI</div>
-                  <div className="t-sub">AI & ML hiring surge</div>
-                </div>
-                <div className="t-sal">₹8–35 LPA</div>
-              </div>
-
-              <div className="ciq-trend">
-                <div className="t-left">
-                  <div className="t-title">Cybersecurity</div>
-                  <div className="t-sub">Rising cyber threats</div>
-                </div>
-                <div className="t-sal">₹6–30 LPA</div>
-              </div>
-
-              <div className="ciq-stats">
-                <div>
-                  <div className="big">100+</div>
-                  <div className="muted">Career Options</div>
-                </div>
-                <div>
-                  <div className="big">24</div>
-                  <div className="muted">Questions</div>
-                </div>
-                <div>
-                  <div className="big">6+</div>
-                  <div className="muted">Skill Tests</div>
-                </div>
-              </div>
-            </div>
-          </aside>
-
+          
           {/* POPULAR GRID */}
           <section className="ciq-popular">
             <h2>Popular Careers in India</h2>
@@ -241,6 +204,134 @@ export default function Home() {
               </article>
             </div>
           </section>
+          {/* ------------------ HOW TO USE SECTION ------------------ */}
+<section style={{
+  padding: "50px 20px",
+  maxWidth: "1100px",
+  margin: "0 auto",
+  marginTop: "40px",
+  marginBottom: "60px",
+  fontFamily: "'Inter', sans-serif"
+}}>
+  <h2 style={{
+    fontSize: "32px",
+    fontWeight: 700,
+    marginBottom: "20px",
+    textAlign: "center"
+  }}>
+    How to use CareerIQ
+  </h2>
+
+  <p style={{
+    fontSize: "16px",
+    color: "#5f6f66",
+    textAlign: "center",
+    maxWidth: "700px",
+    margin: "0 auto 40px auto",
+    lineHeight: 1.6
+  }}>
+    New here? No worries. CareerIQ helps you discover your strengths, explore roles, 
+    and understand exactly where you fit. Follow these steps:
+  </p>
+
+  <div style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gap: "24px"
+  }}>
+    
+    {/* 1 — Browse Careers */}
+    <div style={{
+      padding: "20px",
+      background: "white",
+      border: "1px solid #e6efe9",
+      borderRadius: "12px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.04)"
+    }}>
+      <h3 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "6px" }}>1. Explore Careers</h3>
+      <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
+        Browse 150+ careers auto-categorized into engineering, design, finance, medical and more.
+      </p>
+      <a href="/careers" style={{
+        padding: "8px 14px",
+        border: "1px solid #cfd8d4",
+        borderRadius: "8px",
+        fontSize: "14px",
+        color: "#1a3c34",
+        textDecoration: "none"
+      }}>Start exploring →</a>
+    </div>
+
+    {/* 2 — Skill Tests */}
+    <div style={{
+      padding: "20px",
+      background: "white",
+      border: "1px solid #e6efe9",
+      borderRadius: "12px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.04)"
+    }}>
+      <h3 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "6px" }}>2. Take Skill Tests</h3>
+      <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
+        Check how strong you are in reasoning, analytical thinking, verbal, and domain skills.
+      </p>
+      <a href="/skill-tests" style={{
+        padding: "8px 14px",
+        border: "1px solid #cfd8d4",
+        borderRadius: "8px",
+        fontSize: "14px",
+        color: "#1a3c34",
+        textDecoration: "none"
+      }}>Try tests →</a>
+    </div>
+
+    {/* 3 — Personality Test */}
+    <div style={{
+      padding: "20px",
+      background: "white",
+      border: "1px solid #e6efe9",
+      borderRadius: "12px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.04)"
+    }}>
+      <h3 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "6px" }}>3. Personality Test</h3>
+      <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
+        Understand how your personality matches different roles and work styles.
+      </p>
+      <a href="/quiz" style={{
+        padding: "8px 14px",
+        border: "1px solid #cfd8d4",
+        borderRadius: "8px",
+        fontSize: "14px",
+        color: "#1a3c34",
+        textDecoration: "none"
+      }}>Take quiz →</a>
+    </div>
+
+    {/* 4 — Insights */}
+    <div style={{
+      padding: "20px",
+      background: "white",
+      border: "1px solid #e6efe9",
+      borderRadius: "12px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.04)"
+    }}>
+      <h3 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "6px" }}>4. Get Insights</h3>
+      <p style={{ color: "#56645f", fontSize: "15px", marginBottom: "12px" }}>
+        See personalised analysis combining your tests + personality + career interests.
+      </p>
+      <a href="/insights" style={{
+        padding: "8px 14px",
+        border: "1px solid #cfd8d4",
+        borderRadius: "8px",
+        fontSize: "14px",
+        color: "#1a3c34",
+        textDecoration: "none"
+      }}>View insights →</a>
+    </div>
+
+  </div>
+</section>
+
+          <CategoriesGrid max={12} />
         </div>
       </main>
 

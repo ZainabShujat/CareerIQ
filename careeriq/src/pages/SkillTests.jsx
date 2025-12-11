@@ -60,7 +60,7 @@ function Runner({ testId, onClose }) {
     }).catch(e => { console.error(e); alert("Save failed"); });
   }
 
-  if (loading) return <div>Loading test…</div>;
+  if (loading) return <div>Loading test…</div>
   return (
     <div style={{ marginTop:12 }}>
       <button className="small-cta" onClick={onClose}>← Back</button>

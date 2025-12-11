@@ -16,11 +16,6 @@ import About from "./pages/About";
 import Profile from "./pages/Profile";
 
 /* Category pages (create simple placeholder pages if missing) */
-import Culinary from "./pages/Culinary";
-import Engineering from "./pages/Engineering";
-import Medical from "./pages/Medical";
-import Teaching from "./pages/Teaching";
-import Civil from "./pages/CIvil";
 import Category from "./pages/Category";
 
 export default function App() {
@@ -44,14 +39,10 @@ export default function App() {
           <Route path="/happiness-index" element={<Results />} />
 
           {/* Category routes (explicit named pages) */}
-          <Route path="/engineering-careers" element={<Engineering />} />
-          <Route path="/medical-careers" element={<Medical />} />
-          <Route path="/teaching-careers" element={<Teaching />} />
-          <Route path="/culinary-careers" element={<Culinary />} />
-          <Route path="/civil-careers" element={<Civil />} />
 
           {/* Generic category route that reads a tag param (e.g. /category/engineering) */}
           <Route path="/category/:tag" element={<Category />} />
+
         </Routes>
 
         {/* global modal rendered once at top-level */}

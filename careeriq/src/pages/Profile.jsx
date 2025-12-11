@@ -283,10 +283,7 @@ async function handleSave(e) {
                 <p className="muted" style={{ margin: 0 }}>No saved results yet. Complete an assessment to generate matches.</p>
               </div>
 
-              <div style={{ background: "white", padding: 18, borderRadius: 12, boxShadow: "var(--card-shadow)" }}>
-                <h4 style={{ marginTop: 0, marginBottom: 8 }}>Bookmarks</h4>
-                <p className="muted" style={{ margin: 0 }}>No bookmarked careers. Bookmark from homepage/careers list.</p>
-              </div>
+            
 
               <div style={{ background: "linear-gradient(180deg,#fff,#fbfffd)", padding: 14, borderRadius: 12, border: "1px solid #eef7f2" }}>
                 <h5 style={{ margin: "0 0 6px 0" }}>Quick actions</h5>

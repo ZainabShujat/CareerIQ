@@ -10,7 +10,7 @@ export default function BackButton({ to }) {
       onClick={() => (to ? nav(to) : nav("/"))}
       style={{ cursor: "pointer" }}
     >
-      ← Back
+      ← Home
     </button>
   );
 }

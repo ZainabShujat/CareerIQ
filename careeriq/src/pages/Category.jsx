@@ -1,66 +1,105 @@
-// src/pages/Category.jsx
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import CareerCard from "../components/CareerCard";
+import React, { useMemo, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import careersData from "../data/careers.json";
 
-/*
-Route usage:
-  <Route path="/category/:tag" element={<Category />} />
-  header links: /category/engineering etc
-*/
+export default function Category() {
+  console.log("🔥 Correct Category.jsx is now rendering");
 
-export default function Category(){
-  const { tag } = useParams(); // e.g. "engineering"
-  const [careers, setCareers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { tag } = useParams();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    let mounted = true;
-    setLoading(true);
+  const filtered = useMemo(() => {
+    const t = (tag || "").toLowerCase();
+    const q = query.toLowerCase();
 
-    fetch("/api/careers")
-      .then(r => r.json())
-      .then(data => {
-        if (!mounted) return;
-        const filtered = (data || []).filter(c => {
-          const tags = (c.tags || []).map(t => (t||"").toLowerCase());
-          return tags.includes((tag||"").toLowerCase());
-        });
-        setCareers(filtered);
-      })
-      .catch(() => {
-        // fallback to local file for dev
-        try {
-          // eslint-disable-next-line
-          const local = require("../data/careers.json");
-          const filtered = (local || []).filter(c => {
-            const tags = (c.tags || []).map(t => (t||"").toLowerCase());
-            return tags.includes((tag||"").toLowerCase());
-          });
-          mounted && setCareers(filtered);
-        } catch (e) {
-          console.error("No careers found", e);
-        }
-      })
-      .finally(() => mounted && setLoading(false));
+    return careersData.filter(c => {
+      const tags = (c.tags || []).map(t => t.toLowerCase());
+      const matchesTag = tags.includes(t);
+      const matchesQuery =
+        c.title.toLowerCase().includes(q) ||
+        c.short.toLowerCase().includes(q);
 
-    return () => { mounted = false; };
-  }, [tag]);
+      return matchesTag && matchesQuery;
+    });
+  }, [tag, query]);
+
+  const card = {
+    padding: 20,
+    marginBottom: 20,
+    borderRadius: 16,
+    background: "white",
+    border: "1px solid #e4ece7",
+    boxShadow: "0 6px 18px rgba(0,0,0,0.04)",
+  };
+
+  const grid = {
+    display: "grid",
+    gap: 20,
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+  };
 
   return (
-    <div className="ciq-container" style={{ paddingTop: 48 }}>
-      <Link to="/" className="small-cta" style={{ marginBottom: 12 }}>← Home</Link>
-      <h1 style={{ textTransform: "capitalize" }}>{tag || "Careers"}</h1>
-      <div className="muted" style={{ marginBottom: 18 }}>
-        Browse careers tagged {tag}.
-      </div>
+    <div style={{ padding: "32px 20px", maxWidth: 1200, margin: "0 auto" }}>
+      <button
+        onClick={() => navigate(-1)}
+        style={{
+          padding: "6px 14px",
+          borderRadius: 8,
+          border: "1px solid #cbd5d1",
+          background: "white",
+          marginBottom: 20,
+          cursor: "pointer",
+        }}
+      >
+        ← Back
+      </button>
 
-      {loading ? <div>Loading…</div> : (
-        careers.length === 0 ? <div className="muted">No careers found for {tag}.</div> :
-        <div className="cards">
-          {careers.map(c => <CareerCard key={c.id || c.slug} career={c} />)}
-        </div>
-      )}
+      <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 6, textTransform: "capitalize" }}>
+        {tag}
+      </h1>
+      <p style={{ color: "#6b7280" }}>{filtered.length} roles</p>
+
+      <input
+        type="text"
+        placeholder="Search in this category"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        style={{
+          width: "260px",
+          padding: "10px 14px",
+          borderRadius: 8,
+          border: "1px solid #cbd5d1",
+          marginTop: 16,
+          marginBottom: 32,
+        }}
+      />
+
+      <div style={grid}>
+        {filtered.map((c) => (
+          <div key={c.slug} style={card}>
+            <h2 style={{ fontSize: 20, fontWeight: 600 }}>{c.title}</h2>
+            <p style={{ color: "#64748b", marginBottom: 12 }}>{c.short}</p>
+
+            <div style={{ fontSize: 14, marginBottom: 16 }}>
+              <strong>{c.salary}</strong>
+            </div>
+
+            <button
+              onClick={() => navigate(`/careers/${c.slug}`)}
+              style={{
+                padding: "8px 14px",
+                borderRadius: 8,
+                border: "1px solid #94a3b8",
+                background: "#f8fafc",
+                cursor: "pointer",
+              }}
+            >
+              View
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
