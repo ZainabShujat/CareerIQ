@@ -1,12 +1,8 @@
 // src/pages/Quiz.jsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
-/*
-Matrix-style quiz — wired to save a personality summary into localStorage
-Key: careerIQ_personality
-Structure saved: { scores: {Analytical, Social, Structured, Creative}, answers: [...], timestamp }
-*/
+import { AuthContext } from "../contexts/AuthContext"; // ⭐ needed for backend save
+import { useContext } from "react";
 
 const questions = [
   "I enjoy meeting new people",
@@ -44,7 +40,7 @@ const optionLabels = [
 ];
 
 const styles = {
-  page: { maxWidth: 1100, margin: "0 auto", padding: 28, fontFamily: "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial" },
+  page: { maxWidth: 1100, margin: "0 auto", padding: 28 },
   stickyHeader: {
     position: "sticky",
     top: 12,
@@ -84,44 +80,43 @@ const styles = {
 
 export default function Quiz() {
   const navigate = useNavigate();
-  const [answers, setAnswers] = useState(() => questions.map(() => 0)); // 0 = unanswered
+  const { user } = useContext(AuthContext); // ⭐ detects logged-in user
+
+  const [answers, setAnswers] = useState(() => questions.map(() => 0));
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const rowRefs = useRef([]); // ⭐ For autoscroll
 
   const answeredCount = useMemo(() => answers.filter(a => a > 0).length, [answers]);
 
+  // ⭐ Smooth scroll to next question
+  const scrollToRow = (i) => {
+    setTimeout(() => {
+      rowRefs.current[i]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }, 120);
+  };
+
   const setAnswer = (qIndex, value) => {
-    const copy = [...answers];
-    copy[qIndex] = Number(value);
-    setAnswers(copy);
+    const updated = [...answers];
+    updated[qIndex] = Number(value);
+    setAnswers(updated);
+
+    const next = Math.min(qIndex + 1, questions.length - 1);
+    setActiveIndex(next);
+    scrollToRow(next);
   };
 
   const reset = () => {
     setAnswers(questions.map(() => 0));
     setActiveIndex(0);
+    scrollToRow(0);
   };
 
-  /* keyboard shortcuts */
-  React.useEffect(() => {
-    const handleKey = (e) => {
-      if (["INPUT","TEXTAREA"].includes(document.activeElement.tagName)) return;
-      if (e.key >= "1" && e.key <= "5") {
-        setAnswer(activeIndex, Number(e.key));
-        setActiveIndex((prev) => Math.min(prev + 1, questions.length - 1));
-      }
-      if (e.key === "ArrowDown") setActiveIndex((i) => Math.min(i + 1, questions.length - 1));
-      if (e.key === "ArrowUp") setActiveIndex((i) => Math.max(i - 1, 0));
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [activeIndex]);
-
-  /* Trait mapping:
-     Analytical: Q4 (idx 3), Q21 (idx 20), Q11 (idx 10)
-     Social: Q1 (0), Q2 (1), Q5 (4), Q17 (16)
-     Structured: Q3 (2), Q8 (7), Q15 (14), Q23 (22)
-     Creative: Q7 (6), Q13 (12), Q16 (15), Q22 (21)
-  */
-  const computeTraits = (answersArr) => {
+  // Your original trait mapping remains untouched
+  const computeTraits = (ans) => {
     const groups = {
       Analytical: [3, 20, 10],
       Social: [0, 1, 4, 16],
@@ -131,30 +126,54 @@ export default function Quiz() {
 
     const scores = {};
     for (const key in groups) {
-      const idxs = groups[key];
-      const vals = idxs.map(i => Number(answersArr[i] || 0)).filter(v => v > 0);
-      const avg = vals.length ? (vals.reduce((a,b) => a+b, 0) / vals.length) : 0;
-      scores[key] = Number(avg.toFixed(2));
+      const values = groups[key].map(i => Number(ans[i] || 0)).filter(v => v > 0);
+      scores[key] = values.length ? Number((values.reduce((a, b) => a + b) / values.length).toFixed(2)) : 0;
     }
     return scores;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // compute trait scores
+
+    // ⭐ require all questions answered
+    if (answers.includes(0)) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
     const scores = computeTraits(answers);
+
     const payload = {
       scores,
       answers,
       timestamp: new Date().toISOString()
     };
-    // save to localStorage
-    try {
-      localStorage.setItem("careerIQ_personality", JSON.stringify(payload));
-    } catch (err) {
-      console.warn("localStorage failed", err);
+
+    // ⭐ Save locally ALWAYS
+    localStorage.setItem("careerIQ_personality", JSON.stringify(payload));
+
+    // ⭐ Save to backend IF logged in
+    if (user) {
+      try {
+        const token = localStorage.getItem("ciq_token");
+
+        const res = await fetch("/api/personality", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          console.error("Backend error");
+        }
+      } catch (err) {
+        console.error("Network error", err);
+      }
     }
-    // navigate to insights
+
     navigate("/insights");
   };
 
@@ -170,9 +189,8 @@ export default function Quiz() {
         </div>
 
         <div style={styles.progressBlock}>
-          <div style={{ fontSize: 14, color: "#2f5547", fontWeight: 700 }}>{answeredCount} / {questions.length} answered</div>
-          <div style={{ marginTop: 8 }}>
-            <button style={styles.topBtn} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Top</button>
+          <div style={{ fontSize: 14, color: "#2f5547", fontWeight: 700 }}>
+            {answeredCount} / {questions.length} answered
           </div>
         </div>
       </div>
@@ -181,7 +199,7 @@ export default function Quiz() {
         <div style={styles.tableWrap}>
           <div style={{ padding: 12 }}>
             <div style={styles.grid}>
-              <div style={{ paddingLeft: 8, fontWeight: 700, color: "#123326" }}>Statements</div>
+              <div style={{ paddingLeft: 8, fontWeight: 700 }}>Statements</div>
               {optionLabels.map((label, i) => (
                 <div key={i} style={styles.headerCell}>
                   <div style={styles.headerLabelSmall}>{label}</div>
@@ -195,27 +213,30 @@ export default function Quiz() {
               {questions.map((q, qi) => (
                 <React.Fragment key={qi}>
                   <div
+                    ref={(el) => (rowRefs.current[qi] = el)}
                     style={{
                       ...styles.questionCell,
                       background: qi === activeIndex ? "#f6fbf7" : "white",
                       borderRadius: qi === activeIndex ? 8 : 0,
                       cursor: "pointer"
                     }}
-                    onClick={() => setActiveIndex(qi)}
+                    onClick={() => {
+                      setActiveIndex(qi);
+                      scrollToRow(qi);
+                    }}
                   >
                     <div style={{ fontWeight: 600 }}>{qi + 1}. {q}</div>
                   </div>
 
-                  {Array.from({ length: 5 }).map((_, oi) => (
-                    <div key={oi} style={styles.radioCell}>
+                  {[1, 2, 3, 4, 5].map((opt) => (
+                    <div key={opt} style={styles.radioCell}>
                       <input
                         type="radio"
                         name={`q-${qi}`}
-                        value={oi + 1}
-                        checked={answers[qi] === (oi + 1)}
-                        onChange={(e) => setAnswer(qi, e.target.value)}
+                        value={opt}
+                        checked={answers[qi] === opt}
+                        onChange={() => setAnswer(qi, opt)}
                         style={styles.radioInput}
-                        aria-label={`${q} — ${optionLabels[oi]}`}
                       />
                     </div>
                   ))}
@@ -227,9 +248,7 @@ export default function Quiz() {
           </div>
         </div>
 
-        <div style={styles.helpText}>
-          Keyboard shortcuts: press 1–5 to answer the active row; use ↑ / ↓ to move rows.
-        </div>
+        
 
         <div style={styles.buttonsRow}>
           <button type="button" onClick={reset} style={styles.resetBtn}>Reset</button>

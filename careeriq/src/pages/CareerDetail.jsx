@@ -157,8 +157,7 @@ export default function CareerDetail() {
             <div style={{ fontSize: 20, fontWeight: 700, marginTop: 6 }}>{career.salary || "—"}</div>
 
             <div style={{ marginTop: 12, display: "flex", gap: 8, justifyContent: "center" }}>
-              <a href={`/careers/${encodeURIComponent(career.slug)}`} style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #cfd8d4", background: "#fff", textDecoration: "none" }}>Open</a>
-              </div>
+            </div>
           </div>
         </aside>
       </div>

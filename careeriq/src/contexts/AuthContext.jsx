@@ -38,6 +38,7 @@ async function fetchWithAuth(pathOrUrl, opts = {}) {
 }
 
 export function AuthProvider({ children }) {
+  
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

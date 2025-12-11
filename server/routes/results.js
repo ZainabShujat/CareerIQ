@@ -1,16 +1,33 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Result = require('../models/Result');
-const auth = require('../middleware/authMiddleware');
+const auth = require("../middleware/authMiddleware");
 
-router.get('/', auth, async (req,res)=>{
-  const docs = await Result.find({ userId: req.user._id }).sort({ createdAt: -1 }).lean();
-  res.json(docs);
-});
+router.post("/", auth, async (req, res) => {
+  try {
+    const user = req.user;
+    const { testId, score, details } = req.body;
 
-router.delete('/:id', auth, async (req,res)=>{
-  await Result.deleteOne({ _id: req.params.id, userId: req.user._id });
-  res.json({ ok: true });
+    if (!testId || score === undefined) {
+      return res.status(400).json({ error: "Missing fields" });
+    }
+
+    // Store inside user.results array
+    user.results = user.results || [];
+    user.results.push({
+      testId,
+      score,
+      details,
+      takenAt: new Date()
+    });
+
+    await user.save();
+
+    return res.json({ success: true, results: user.results });
+
+  } catch (err) {
+    console.error("Save results error:", err);
+    return res.status(500).json({ error: "Server error" });
+  }
 });
 
 module.exports = router;

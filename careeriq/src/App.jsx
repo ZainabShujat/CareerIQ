@@ -12,6 +12,11 @@ import Careers from "./pages/Careers";
 import CareerDetail from "./pages/CareerDetail";
 import Insights from "./pages/Insights";
 import SkillTests from "./pages/SkillTests";
+// App.jsx (or your routes file)
+import SkillTestRunner from "./pages/SkillTestRunner"; // create next
+
+// inside your <Routes>:
+
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 
@@ -39,6 +44,8 @@ export default function App() {
           <Route path="/happiness-index" element={<Results />} />
 
           {/* Category routes (explicit named pages) */}
+           <Route path="/skill-tests" element={<SkillTests />} />
+          <Route path="/skill-tests/:testId" element={<SkillTestRunner />} />
 
           {/* Generic category route that reads a tag param (e.g. /category/engineering) */}
           <Route path="/category/:tag" element={<Category />} />

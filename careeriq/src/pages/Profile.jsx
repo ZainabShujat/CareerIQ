@@ -146,7 +146,7 @@ async function handleSave(e) {
               className="ciq-primary"
               style={{ padding: "14px 34px", borderRadius: 28 }}
             >
-              Sign in / Sign up
+              Sign in / Create account 
             </button>
 
             <button

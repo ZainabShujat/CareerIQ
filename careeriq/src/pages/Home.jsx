@@ -94,7 +94,6 @@ export default function Home() {
 
             <div className="ciq-cta-row">
               <Link to="/quiz"><button className="ciq-primary">Start Assessment</button></Link>
-              <button className="ciq-secondary">Navigation Guide</button>
               <Link to="/careers" className="ciq-link" style={{ marginTop: 12, display: "inline-block" }}>
                 Explore All Careers →
               </Link>

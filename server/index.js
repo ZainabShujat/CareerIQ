@@ -24,6 +24,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/careers", careerRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/results", require("./routes/results"));
+
 
 // basic test route
 app.get("/", (req, res) => {

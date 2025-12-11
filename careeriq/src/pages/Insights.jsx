@@ -1,15 +1,7 @@
 // src/pages/Insights.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import careersData from "../data/careers.json";
-
-/*
-Upgraded Insights:
-- Reads careerIQ_personality and careerIQ_skills from localStorage
-- Computes a simple combined "fit" score for each career:
-    fit = weighted_sum( personality_match * personality_weight, skill_match * skill_weight )
-  where matches are computed via keyword overlap and normalized scores.
-- Ranks careers by fit and shows the top matches with explanation.
-*/
+import { AuthContext } from "../contexts/AuthContext";
 
 const styles = {
   page: { maxWidth: 1100, margin: "0 auto", padding: 28, fontFamily: "'Inter', sans-serif" },
@@ -21,7 +13,7 @@ const styles = {
   careerCard: { padding: 12, borderRadius: 10, background: "#f8fbf7", border: "1px solid #e6efe9", marginBottom: 10 }
 };
 
-// trait -> keywords (same as before, but slightly expanded)
+// Keywords used for personality scoring
 const traitKeywords = {
   Analytical: ["data", "analyst", "quant", "research", "ml", "scientist", "analytics", "engineer"],
   Social: ["teacher", "counsel", "therap", "mentor", "care", "social", "community", "hr"],
@@ -29,7 +21,7 @@ const traitKeywords = {
   Creative: ["design", "ux", "creative", "artist", "designer", "product", "ux", "visual"]
 };
 
-// skill -> keywords to match career tags/titles (basic)
+// Keywords used for skill test mapping
 const skillKeywords = {
   analytical: ["data", "analysis", "analytics", "ml", "research"],
   verbal: ["communication", "content", "writing", "teacher", "trainer"],
@@ -37,73 +29,71 @@ const skillKeywords = {
   domain: ["hospitality", "medical", "culinary", "civil", "teaching", "finance"]
 };
 
-function normalize(v, max = 5) {
+function normalize(v, max = 10) {
   if (!v) return 0;
-  return Math.min(Math.max(v / max, 0), 1);
+  return Math.min(Math.max(v / max, 0), 1); // now skills are scored 0–10
 }
 
 export default function Insights() {
-  const [personality, setPersonality] = useState(null);
-  const [skills, setSkills] = useState(null);
+  const { user } = useContext(AuthContext);
+
   const [ranked, setRanked] = useState([]);
 
-  useEffect(() => {
-    // load personality & skills
-    try {
-      const rawP = localStorage.getItem("careerIQ_personality");
-      if (rawP) setPersonality(JSON.parse(rawP));
-    } catch (e) { console.warn(e); }
+  // Extract personality result if stored
+  const personality = user?.personality || null;
 
-    try {
-      const rawS = localStorage.getItem("careerIQ_skills");
-      if (rawS) setSkills(JSON.parse(rawS));
-    } catch (e) { console.warn(e); }
-  }, []);
+  // Convert backend results → skills object
+  const skills = user?.results?.length
+    ? {
+        scores: user.results.reduce((acc, r) => {
+          acc[r.testId] = r.score;
+          return acc;
+        }, {})
+      }
+    : null;
 
+  // Compute rankings
   useEffect(() => {
     if (!careersData) return;
-    // build vectorized career keywords
+
     const careerItems = careersData.map(c => {
       const title = (c.title || "").toLowerCase();
       const tags = (c.tags || []).join(" ").toLowerCase();
-      const text = title + " " + tags + " " + (c.short || "");
+      const text = title + " " + tags + " " + (c.short || "").toLowerCase();
       return { ...c, _text: text };
     });
 
-    // compute match score for each career
     const computeForCareer = (c) => {
-      // personality match: sum of (trait score normalized * presence of trait keywords)
+      // Personality scoring
       let personalityScore = 0;
-      if (personality && personality.scores) {
+      if (personality?.scores) {
         for (const trait of Object.keys(personality.scores)) {
-          const ks = traitKeywords[trait] || [];
-          const present = ks.some(k => c._text.includes(k)) ? 1 : 0;
-          personalityScore += normalize(personality.scores[trait]) * present;
+          const kw = traitKeywords[trait] || [];
+          const present = kw.some(k => c._text.includes(k)) ? 1 : 0;
+          personalityScore += (personality.scores[trait] / 5) * present;
         }
-        // normalize by number of traits so it's 0..1-ish
-        personalityScore = personalityScore / Object.keys(personality.scores).length;
+        personalityScore /= Object.keys(personality.scores).length || 1;
       }
 
-      // skills match: for each skill that exists in skills.scores, check keywords
+      // Skill scoring
       let skillScore = 0;
-      if (skills && skills.scores) {
-        // map skill keys to our skillKeywords mapping
+      if (skills?.scores) {
         for (const [skillKey, val] of Object.entries(skills.scores)) {
-          const keywords = skillKeywords[skillKey] || [];
-          const present = keywords.some(k => c._text.includes(k)) ? 1 : 0;
+          const kw = skillKeywords[skillKey] || [];
+          const present = kw.some(k => c._text.includes(k)) ? 1 : 0;
           skillScore += normalize(val) * present;
         }
-        skillScore = skillScore / (Object.keys(skills.scores).length || 1);
+        skillScore /= Object.keys(skills.scores).length || 1;
       }
 
-      // final fit: weigh personality 40%, skills 60% (tweakable)
-      const finalFit = (0.4 * personalityScore) + (0.6 * skillScore);
+      const finalFit = 0.4 * personalityScore + 0.6 * skillScore;
+
       return { career: c, personalityScore, skillScore, fit: finalFit };
     };
 
     const results = careerItems.map(computeForCareer);
-    // sort descending
     results.sort((a, b) => b.fit - a.fit);
+
     setRanked(results);
   }, [personality, skills]);
 
@@ -115,87 +105,92 @@ export default function Insights() {
       </div>
 
       <div style={styles.resultsGrid}>
+        {/* LEFT SIDE — CAREER RECOMMENDATIONS */}
         <div style={styles.main}>
           <div style={styles.card}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div style={{ fontWeight: 700 }}>Top career matches</div>
-              <div style={{ color: "#355a4f", fontWeight: 700 }}>{ranked.length} roles scored</div>
+              <div style={{ fontWeight: 700, color: "#355a4f" }}>{ranked.length} roles scored</div>
             </div>
 
             <div style={{ marginTop: 12 }}>
               {ranked.slice(0, 8).map(r => (
-                <div key={r.career.id} style={{ marginBottom: 10 }}>
-                  <div style={styles.careerCard}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <div style={{ fontWeight: 700 }}>{r.career.title}</div>
-                      <div style={{ color: "#2f5547", fontWeight: 700 }}>{(r.career.salary || "")}</div>
-                    </div>
-                    <div style={{ color: "#516a61", marginTop: 6 }}>{r.career.short}</div>
-                    <div style={{ marginTop: 8, fontSize: 13, color: "#3b5a50" }}>
-                      Fit: {(r.fit * 100).toFixed(0)}% • personality {(r.personalityScore*100).toFixed(0)}% • skills {(r.skillScore*100).toFixed(0)}%
-                    </div>
-                    <div style={{ marginTop: 8 }}>
-                      <a href={`/careers/${encodeURIComponent(r.career.slug)}`} style={{ color: "#1a3c34", fontWeight: 700, textDecoration: "none" }}>View role →</a>
-                    </div>
+                <div key={r.career.id} style={styles.careerCard}>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div style={{ fontWeight: 700 }}>{r.career.title}</div>
+                    <div style={{ fontWeight: 700, color: "#2f5547" }}>{r.career.salary}</div>
+                  </div>
+
+                  <div style={{ marginTop: 6, color: "#516a61" }}>{r.career.short}</div>
+
+                  <div style={{ marginTop: 8, fontSize: 13, color: "#3b5a50" }}>
+                    Fit {Math.round(r.fit * 100)}% • Personality {Math.round(r.personalityScore * 100)}% • Skills {Math.round(r.skillScore * 100)}%
+                  </div>
+
+                  <div style={{ marginTop: 8 }}>
+                    <a href={`/careers/${r.career.slug}`} style={{ fontWeight: 700, color: "#1a3c34", textDecoration: "none" }}>
+                      View role →
+                    </a>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Explanation Card */}
           <div style={styles.card}>
             <div style={{ fontWeight: 700 }}>How the ranking works</div>
             <div style={{ marginTop: 8, color: "#4b6b60" }}>
-              We look at keywords in career titles & tags and compare them to:
-              <ul>
-                <li>Which traits you scored high on (personality)</li>
-                <li>Which tests you scored well on (skills)</li>
-              </ul>
-              Then we compute a simple weighted fit score (skills weighted higher). This is an MVP — we can make it smarter (TF-IDF, vector embeddings, user preferences).
+              We compare your personality strengths and skill test performance with keywords in career descriptions.
+              Skills have higher weight than personality. This is an MVP — we can later upgrade to vector models or embeddings.
             </div>
           </div>
         </div>
 
+        {/* RIGHT SIDE — PERSONALITY + SKILL SUMMARY */}
         <div>
+          {/* Personality Summary */}
           <div style={styles.card}>
             <div style={{ fontWeight: 700 }}>Personality summary</div>
             {personality ? (
               <div style={{ marginTop: 10 }}>
-                {Object.entries(personality.scores).map(([k,v]) => (
-                  <div key={k} style={{ marginBottom: 8 }}>
+                {Object.entries(personality.scores).map(([trait, val]) => (
+                  <div key={trait} style={{ marginBottom: 10 }}>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <div style={{ fontWeight: 700 }}>{k}</div>
-                      <div>{v}</div>
+                      <div style={{ fontWeight: 700 }}>{trait}</div>
+                      <div>{val}/5</div>
                     </div>
-                    <div style={{ height: 8, background: "#edf6ef", borderRadius: 8, marginTop: 6 }}>
-                      <div style={{ width: `${(v/5)*100}%`, height: 8, background: "#1a3c34", borderRadius: 8 }} />
+                    <div style={{ height: 8, background: "#edf6ef", borderRadius: 8 }}>
+                      <div style={{ width: `${(val / 5) * 100}%`, height: 8, background: "#1a3c34", borderRadius: 8 }} />
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div style={{ marginTop: 10, color: "#6b7a70" }}>No personality results saved. Take the personality test first.</div>
+              <div style={{ marginTop: 10, color: "#6b7a70" }}>No personality results yet.</div>
             )}
           </div>
 
+          {/* Skill Summary */}
           <div style={{ ...styles.card, marginTop: 12 }}>
             <div style={{ fontWeight: 700 }}>Skill scores</div>
-            {skills ? (
+
+            {skills?.scores ? (
               <div style={{ marginTop: 10 }}>
-                {Object.entries(skills.scores).map(([k,v]) => (
-                  <div key={k} style={{ marginBottom: 8 }}>
+                {Object.entries(skills.scores).map(([test, val]) => (
+                  <div key={test} style={{ marginBottom: 10 }}>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <div style={{ fontWeight: 700 }}>{k}</div>
-                      <div>{v}</div>
+                      <div style={{ fontWeight: 700 }}>{test}</div>
+                      <div>{val}/10</div>
                     </div>
-                    <div style={{ height: 8, background: "#edf6ef", borderRadius: 8, marginTop: 6 }}>
-                      <div style={{ width: `${(v/5)*100}%`, height: 8, background: "#1a3c34", borderRadius: 8 }} />
+                    <div style={{ height: 8, background: "#edf6ef", borderRadius: 8 }}>
+                      <div style={{ width: `${(val / 10) * 100}%`, height: 8, background: "#1a3c34", borderRadius: 8 }} />
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div style={{ marginTop: 10, color: "#6b7a70" }}>No skill tests taken yet. Try the Skill Tests page.</div>
+              <div style={{ marginTop: 10, color: "#6b7a70" }}>No skill tests taken yet.</div>
             )}
           </div>
         </div>
@@ -203,5 +198,3 @@ export default function Insights() {
     </div>
   );
 }
-
-

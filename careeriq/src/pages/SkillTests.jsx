@@ -1,160 +1,215 @@
 // src/pages/SkillTests.jsx
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext"; // adjust path if needed
+import testsBank from "../data/questions.json"; // your uploaded bank (contains .tests array)
 
-/*
-SkillTests:
-- Provides four short tests (Analytical, Verbal, Logical, Domain)
-- Each test is 5 quick MCQs (sample questions); you can replace them with real questions later
-- On submit the component computes a normalized score (0..5) for each test
-- Saves payload to localStorage under key: "careerIQ_skills"
-- Navigates to /insights after submit
-*/
-
-const TEST_DEFS = [
-  { id: "analytical", title: "Analytical Reasoning", short: "Data, patterns, logic" },
-  { id: "verbal", title: "Verbal Reasoning", short: "Language & comprehension" },
-  { id: "logical", title: "Logical Reasoning", short: "Puzzles & sequences" },
-  { id: "domain", title: "Domain Knowledge", short: "Practical / field knowledge" }
-];
-
-// simple sample questions (5 per test) — replace with real content later
-const makeSampleQs = (testId) => {
-  return Array.from({ length: 5 }).map((_, i) => ({
-    id: `${testId}-q${i+1}`,
-    text: `(${testId}) Sample Q${i+1}: Pick the best answer.`,
-    options: ["A", "B", "C", "D"],
-    // for now we mark option 0 as correct for scoring demo — change as needed
-    correct: 0
-  }));
-};
+/**
+ * SkillTests page
+ *
+ * - Shows the grid of available skill tests (using testsBank.tests).
+ * - When a user clicks "Start":
+ *    - if logged in -> navigate to the test route: /skill-tests/:testId
+ *    - if NOT logged in -> open a modal prompting sign-in (with redirect after login)
+ *
+ * Notes:
+ * - This file intentionally does NOT force full-page gating; it keeps the list visible
+ *   and only prompts for login when the user attempts to start a test (this is what
+ *   you asked for: personality test stays open-to-all; skill tests require login).
+ * - If you *do* want the whole page gated instead, replace the main return with the
+ *   commented-out early-return block near the top (see comment).
+ */
 
 export default function SkillTests() {
+  const { user, openAuth } = useContext(AuthContext);
+// null if not logged in
   const navigate = useNavigate();
-  const [activeTest, setActiveTest] = useState(null);
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({});
 
-  useEffect(() => {
-    if (!activeTest) return;
-    // generate sample questions for the selected test
-    setQuestions(makeSampleQs(activeTest));
-    setAnswers({});
-  }, [activeTest]);
+  // modal state when trying to start a test while not logged in
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [selectedTestId, setSelectedTestId] = useState(null);
 
-  function startTest(id) {
-    setActiveTest(id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  // safe guard for data shape
+  const tests = Array.isArray(testsBank?.tests) ? testsBank.tests : [];
 
-  function pick(qid, idx) {
-    setAnswers(a => ({ ...a, [qid]: idx }));
-  }
+  // If you wanted the *entire page* to be visible only when logged in,
+  // you could use this early-return pattern (uncomment to use):
+  //
+  // if (!user) {
+  //   return (
+  //     <div className="ciq-container" style={{ padding: 28, maxWidth: 900, margin: "0 auto" }}>
+  //       <h1>Skill Tests</h1>
+  //       <p style={{ color: "#556b62" }}>
+  //         Skill tests need you to sign in so we can save your results to your profile.
+  //       </p>
+  //       <div style={{ display: "flex", gap: 12 }}>
+  //         <Link to="/login"><button style={{ padding: "10px 14px" }}>Sign in / Create account</button></Link>
+  //         <button onClick={() => navigate("/")} style={{ padding: "10px 14px" }}>Back to home</button>
+  //       </div>
+  //       <div style={{ marginTop: 18, color: "#6b7a70" }}>
+  //         (Personality test remains available without login.)
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  //
+  // I left it commented because you asked: "don't make it ask to login no matter what" -> we only ask when starting a test.
 
-  function scoreAndSave() {
-    // score: count equals to correct (demo); produce 0..5 normalized value
-    let correctCount = 0;
-    questions.forEach(q => {
-      if (answers[q.id] === q.correct) correctCount++;
-    });
-    const score = Number((correctCount).toFixed(2)); // 0..5 integer
-    // load existing saved skills if any
-    const raw = localStorage.getItem("careerIQ_skills");
-    const previous = raw ? JSON.parse(raw) : { scores: {}, history: [] };
-
-    // update
-    previous.scores = { ...previous.scores, [activeTest]: score };
-    previous.history = previous.history || [];
-    previous.history.unshift({
-      testId: activeTest,
-      score,
-      total: questions.length,
-      answers,
-      takenAt: new Date().toISOString()
-    });
-
-    try {
-      localStorage.setItem("careerIQ_skills", JSON.stringify(previous));
-    } catch (e) {
-      console.warn("save failed", e);
+  function onStartClick(testId) {
+    if (user) {
+      // logged in => go straight to the test page
+      navigate(`/skill-tests/${testId}`);
+      return;
     }
-    // done
-    alert(`Saved ${activeTest} — score ${score}/${questions.length}`);
-    setActiveTest(null);
+    // not logged in => prompt sign-in modal with test id stored
+    setSelectedTestId(testId);
+    setShowLoginModal(true);
   }
 
-  function submitAllAndFinish() {
-    // compute current test score if active
-    if (activeTest) scoreAndSave();
-    // after saving, go to insights
-    navigate("/insights");
+  // Navigate to login page and forward the intended test route as next param
+  function handleGoToLogin() {
+    const next = selectedTestId ? `/skill-tests/${selectedTestId}` : "/skill-tests";
+    navigate(`/login?next=${encodeURIComponent(next)}`);
   }
 
-  // quick UI
+  // If you prefer a "continue as guest" option, implement it here.
+  // For now we gate skill tests behind login (only modal is shown).
+
   return (
-    <div className="ciq-container" style={{ padding: 28, maxWidth: 1100, margin: "0 auto", fontFamily: "'Inter', sans-serif" }}>
-      <button onClick={() => navigate(-1)} style={{ marginBottom: 12, padding: "8px 12px" }}>← Back</button>
-      <h1 style={{ marginTop: 0 }}>Skill Tests</h1>
-      <p style={{ color: "#556b62" }}>Complete short skill tests to get domain scores. You can take tests in any order. Results will be combined with your personality profile in Insights.</p>
+    <div className="ciq-container" style={{ padding: 28, maxWidth: 1200, margin: "0 auto" }}>
+      <button onClick={() => navigate(-1)} style={{ marginBottom: 12 }}>← Back</button>
 
-      {!activeTest ? (
-        <>
-          <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", marginTop: 18 }}>
-            {TEST_DEFS.map(t => (
-              <div key={t.id} style={{ padding: 16, borderRadius: 12, background: "#fff", border: "1px solid #e6efe9" }}>
-                <div style={{ fontWeight: 700 }}>{t.title}</div>
-                <div style={{ color: "#6b7a70", marginTop: 6 }}>{t.short}</div>
-                <div style={{ marginTop: 12, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ color: "#768a83" }}>5 questions</div>
-                  <div>
-                    <button onClick={() => startTest(t.id)} style={{ padding: "8px 12px", borderRadius: 8, cursor: "pointer" }}>Start</button>
-                  </div>
-                </div>
-              </div>
-            ))}
+      <h1 style={{ fontSize: 42, margin: "6px 0 12px 0" }}>Skill Tests</h1>
+      <p style={{ color: "#556b62", maxWidth: 880, marginBottom: 20 }}>
+        Complete short skill tests to get domain scores. You can take tests in any order.
+        Results will be combined with your personality profile in Insights.
+        (Skill tests are saved to your profile — sign in to store results.)
+      </p>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          gap: 18,
+        }}
+      >
+        {tests.length === 0 && (
+          <div style={{ gridColumn: "1/-1", color: "#6b7a70" }}>
+            No tests found in the data file. Make sure data/questions.json exports {"{ tests: [...] }"}.
           </div>
+        )}
 
-          <div style={{ marginTop: 20 }}>
-            <button onClick={() => navigate("/insights")} style={{ padding: "10px 14px", borderRadius: 10, background: "#1a3c34", color: "white", border: "none", cursor: "pointer" }}>
-              View insights (without taking tests)
-            </button>
-          </div>
-        </>
-      ) : (
-        // runner
-        <div style={{ marginTop: 16 }}>
-          <button onClick={() => setActiveTest(null)} style={{ padding: "8px 12px" }}>← Back</button>
-          <h2 style={{ marginTop: 12 }}>{TEST_DEFS.find(t => t.id === activeTest).title}</h2>
-
-          {questions.map((q, i) => (
-            <div key={q.id} style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "#fff", border: "1px solid #e6efe9" }}>
-              <div style={{ fontWeight: 700 }}>{i + 1}. {q.text}</div>
-              <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
-                {q.options.map((opt, idx) => (
-                  <label key={idx} style={{ cursor: "pointer" }}>
-                    <input
-                      type="radio"
-                      name={q.id}
-                      checked={answers[q.id] === idx}
-                      onChange={() => pick(q.id, idx)}
-                    />{" "}
-                    {opt}
-                  </label>
-                ))}
-              </div>
+        {tests.map((t) => (
+          <div
+            key={t.id}
+            style={{
+              background: "#fff",
+              padding: 18,
+              borderRadius: 12,
+              boxShadow: "0 6px 18px rgba(0,0,0,0.04)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              minHeight: 120,
+            }}
+          >
+            <div>
+              <h3 style={{ margin: "0 0 8px 0" }}>{t.title}</h3>
+              <p style={{ color: "#6b7a70", marginTop: 0 }}>
+                {Array.isArray(t.questions) ? t.questions.length : "—"} questions
+              </p>
             </div>
-          ))}
 
-          <div style={{ marginTop: 16, display: "flex", gap: 12 }}>
-            <button onClick={scoreAndSave} style={{ padding: "10px 14px", borderRadius: 10, background: "#1a3c34", color: "white", border: "none", cursor: "pointer" }}>
-              Save test
+            <div style={{ marginTop: 12, display: "flex", justifyContent: "flex-end" }}>
+              <button
+                onClick={() => onStartClick(t.id)}
+                style={{
+                  padding: "10px 14px",
+                  borderRadius: 8,
+                  border: "1px solid rgba(0,0,0,0.08)",
+                  background: "#fff",
+                  cursor: "pointer",
+                }}
+              >
+                Start
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Login modal shown only when user tries to start while not logged in */}
+      {showLoginModal && (
+        <div style={modalOverlay}>
+          <div style={modalCard}>
+            <h3 style={{ marginTop: 0 }}>Sign in to save your score</h3>
+            <p style={{ color: "#556b62" }}>
+              Skill test results are saved to your profile and used in Insights.
+              Please sign in or create an account to continue.
+            </p>
+
+            <div style={{ display: "flex", gap: 10, marginTop: 18 }}>
+              <button
+              onClick={() => openAuth({ tab: "login" })}
+              className="ciq-primary"
+              style={{ padding: "14px 34px", borderRadius: 28 }}
+            >
+              Sign in / create account
             </button>
-            <button onClick={submitAllAndFinish} style={{ padding: "10px 14px", borderRadius: 10, background: "#fff", border: "1px solid #cfd8d4", cursor: "pointer" }}>
-              Save & go to Insights
-            </button>
+              <button
+                onClick={() => {
+                  setShowLoginModal(false);
+                  setSelectedTestId(null);
+                }}
+                style={secondaryBtnStyle}
+              >
+                Cancel
+              </button>
+            </div>
+
+            <div style={{ marginTop: 14, color: "#7b8b82", fontSize: 13 }}>
+              After signing in you'll be redirected to the test you tried to start.
+            </div>
           </div>
         </div>
       )}
     </div>
   );
 }
+
+/* --- inline modal styles (move to CSS if you prefer) --- */
+const modalOverlay = {
+  position: "fixed",
+  inset: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "rgba(0,0,0,0.35)",
+  zIndex: 1200,
+};
+
+const modalCard = {
+  width: 420,
+  background: "#fff",
+  padding: 22,
+  borderRadius: 12,
+  boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+};
+
+const primaryBtnStyle = {
+  background: "#0a6b55",
+  color: "#fff",
+  padding: "10px 14px",
+  border: "none",
+  borderRadius: 8,
+  cursor: "pointer",
+};
+
+const secondaryBtnStyle = {
+  background: "#f0f5f2",
+  color: "#083",
+  padding: "10px 14px",
+  border: "none",
+  borderRadius: 8,
+  cursor: "pointer",
+};
