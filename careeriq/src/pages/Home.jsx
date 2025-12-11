@@ -104,7 +104,7 @@ export default function Home() {
               <h3 className="popular-title">Popular Careers in India</h3>
 
               <div className="popular-row">
-                <Link to="/engineering-careers" style={{textDecoration: 'none'}} className="pop-link">
+                
                   <div className="pop-card">
                     <div className="pop-left">
                       <div className="pop-icon"><IconLaptop /></div>
@@ -118,9 +118,9 @@ export default function Home() {
                       <div className="pop-sal-bottom">15L</div>
                     </div>
                   </div>
-                </Link>
+                
 
-                <Link to="/medical-careers" style={{textDecoration: 'none'}} className="pop-link">
+                
                   <div className="pop-card">
                     <div className="pop-left">
                       <div className="pop-icon"><IconDoctor /></div>
@@ -134,9 +134,7 @@ export default function Home() {
                       <div className="pop-sal-bottom">25L</div>
                     </div>
                   </div>
-                </Link>
-
-                <Link to="/culinary-careers" style={{textDecoration: 'none'}} className="pop-link">
+               
                   <div className="pop-card">
                     <div className="pop-left">
                       <div className="pop-icon"><IconChef /></div>
@@ -150,7 +148,7 @@ export default function Home() {
                       <div className="pop-sal-bottom">12L</div>
                     </div>
                   </div>
-                </Link>
+               
               </div>
             </div>
           </section>
