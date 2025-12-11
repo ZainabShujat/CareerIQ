@@ -10,8 +10,8 @@ const app = express();
 // middlewares
 app.use(cors());
 app.use(express.json());
-import authRoutes from "./server/routes/auth.js";
-import careerRoutes from "./server/routes/careers.js";
+import authRoutes from "./routes/Auth.js";
+import careerRoutes from "./routes/careers.js";
 app.use("/api/careers", careerRoutes);
 
 
