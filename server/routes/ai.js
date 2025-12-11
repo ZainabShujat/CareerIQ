@@ -4,7 +4,6 @@ import rateLimit from "express-rate-limit";
 
 const router = express.Router();
 
-// safer key generator (avoid X-Forwarded-For crash)
 const limiter = rateLimit({
   windowMs: 1000 * 30,
   max: 12,
@@ -13,16 +12,16 @@ const limiter = rateLimit({
   }
 });
 
-// Simple careers mapping for rule-based recommendations.
-// Add or expand to match your careers-100.json later.
+// Basic career map used for rule-based matching & suggestions.
+// Expand this or load from careers-100.json for better coverage.
 const CAREER_MAP = {
-  "programming": ["Frontend Developer", "Backend Developer", "Fullstack Developer"],
-  "data": ["Data Analyst", "ML Engineer", "Data Scientist"],
-  "design": ["UX Designer", "Product Designer", "Visual Designer"],
-  "teaching": ["School Teacher", "Content Creator", "Corporate Trainer"],
-  "medical": ["Nurse", "Medical Researcher", "Physician Assistant"],
-  "management": ["Project Manager", "Product Manager", "Operations Manager"],
-  "general": ["Business Analyst", "Consultant", "Entrepreneur"]
+  programming: ["Frontend Developer", "Backend Developer", "Fullstack Developer"],
+  data: ["Data Analyst", "ML Engineer", "Data Scientist"],
+  design: ["UX Designer", "Product Designer", "Visual Designer"],
+  teaching: ["School Teacher", "Content Creator", "Corporate Trainer"],
+  medical: ["Nurse", "Medical Researcher", "Physician Assistant"],
+  management: ["Project Manager", "Product Manager", "Operations Manager"],
+  general: ["Business Analyst", "Consultant", "Entrepreneur"]
 };
 
 function pickCareersForSkill(skill, count = 3) {
@@ -39,12 +38,10 @@ function confidenceFromScore(score) {
 }
 
 function analyze(profile = {}, tests = {}, happiness = {}) {
-  // tests may have { scores: { skill: number, ... }, topSkill: "data" }
   const scores = tests.scores || {};
   const topSkill = (tests.topSkill || Object.keys(scores)[0] || "general").toLowerCase();
   const topScore = scores[topSkill] ?? (tests.topScore ?? 65);
 
-  // recommendations
   const candidates = pickCareersForSkill(topSkill, 5);
   const recommendations = candidates.slice(0, 3).map((title, i) => ({
     title,
@@ -52,13 +49,11 @@ function analyze(profile = {}, tests = {}, happiness = {}) {
     reason: `Matched by top skill "${topSkill}" with score ${topScore}.`
   }));
 
-  // strengths / weaknesses (simple heuristics)
   const strengths = [];
   const weaknesses = [];
   if (topScore >= 75) strengths.push(`${topSkill} aptitude`);
   else weaknesses.push(`${topSkill} needs practice`);
 
-  // happiness sliders: salary, stress, worklife
   const sSalary = happiness.salary ?? 50;
   const sStress = happiness.stress ?? 50;
   const sWorklife = happiness.worklife ?? happiness.worklifeQuality ?? 50;
@@ -71,14 +66,12 @@ function analyze(profile = {}, tests = {}, happiness = {}) {
 
   if (sWorklife >= 60) strengths.push("prefers healthy work-life balance");
 
-  // action plan (3 items)
   const actionPlan = [
     `Build a small portfolio project related to ${topSkill} (2-4 weeks).`,
     `Take a focused course to raise ${topSkill} skill by 10-20 points.`,
     `Apply to internships or small freelance gigs to get real experience.`
   ];
 
-  // resources
   const resources = [
     "Free courses on Coursera / edX / YouTube",
     "Documentation and tutorials on MDN / official libs",
@@ -94,18 +87,42 @@ function analyze(profile = {}, tests = {}, happiness = {}) {
   };
 }
 
+// Helper: detect if user text matches career-intent
+function hasCareerIntent(text) {
+  if (!text) return false;
+  const lower = text.toLowerCase();
+  const keywords = [
+    "career", "path", "become", "how to", "how do i", "steps", "guide", "which career", "recommend",
+    "suggest", "what should i", "i want to be", "i want to know a path", "career path"
+  ];
+  return keywords.some(k => lower.includes(k));
+}
+
+// Helper: find a known career or skill mentioned in text
+function extractCareerOrSkill(text) {
+  if (!text) return null;
+  const lower = text.toLowerCase();
+  // check career names
+  for (const skill of Object.keys(CAREER_MAP)) {
+    for (const role of CAREER_MAP[skill]) {
+      if (lower.includes(role.toLowerCase())) return { type: "role", value: role, skill };
+    }
+    // also match skill keywords
+    if (lower.includes(skill)) return { type: "skill", value: skill, skill };
+  }
+  // some common phrasing: "data science", "web dev"
+  if (lower.includes("data")) return { type: "skill", value: "data", skill: "data" };
+  if (lower.includes("web") || lower.includes("frontend") || lower.includes("backend")) return { type: "skill", value: "programming", skill: "programming" };
+  return null;
+}
+
 // POST /api/ai/insights
 router.post("/insights", limiter, async (req, res) => {
   try {
     const body = req.body || {};
-    // If OpenAI key present and you want to toggle to real AI later, keep this flag.
-    // But for rule-based mode we ignore external API.
     const result = analyze(body.profile, body.tests, body.happiness);
-
-    // also attach a little summary narrative for UI
     const narrative = `Hi ${body.profile?.name || "there"} — based on top skill "${body.tests?.topSkill || 'general'}" we recommend ${result.recommendations.map(r => r.title).join(", ")}.`;
-
-    return res.json({ ...result, narrative, fallback: true });
+    return res.json({ ...result, narrative, content: narrative, reply: narrative, fallback: true });
   } catch (err) {
     console.error("AI insights error (rule mode):", err);
     return res.status(500).json({ error: "Server error" });
@@ -113,44 +130,51 @@ router.post("/insights", limiter, async (req, res) => {
 });
 
 // POST /api/ai/chat
-// Accepts { messages: [{role, content}], message: "..." , profile: {...} }
 router.post("/chat", limiter, async (req, res) => {
   try {
-    const { messages = [], message = "", profile = {}, tests = {}, happiness = {} } = req.body;
-
-    // Simple rule-based reply:
-    const last = message || (messages.length ? messages[messages.length - 1].content : "");
+    const { messages = [], message = "", profile = {}, tests = {}, happiness = {} } = req.body || {};
+    // derive user text: prefer explicit `message`, else last message content in array
+    const last = (typeof message === "string" && message.trim().length) ? message.trim() : (messages.length ? (messages[messages.length - 1].content || "") : "");
     const lower = (last || "").toLowerCase();
 
-    // If user asks for recommendations, return short analyze summary
-    if (lower.includes("recommend") || lower.includes("career") || lower.includes("suggest")) {
+    // log minimal request for debugging (safe)
+    console.log("AI chat request:", { ip: req.ip, len: (last || "").length, sample: (last || "").slice(0, 80) });
+
+    // 1) If user mentions a specific role/skill, return role-specific steps
+    const mention = extractCareerOrSkill(last);
+    if (mention && (mention.type === "role" || mention.type === "skill")) {
+      const skillKey = mention.skill || mention.value;
+      const careers = pickCareersForSkill(skillKey, 3);
+      const reply = mention.type === "role"
+        ? `${mention.value} usually maps to skills in ${skillKey}. Suggested next steps: 1) build a small project, 2) follow a focused course, 3) apply to internships. Example roles: ${careers.join(", ")}.`
+        : `If you're interested in ${mention.value}, common paths include: ${careers.join(", ")}. Actionable first step: build one small project and share it in a community for feedback.`;
+
+      return res.json({ content: reply, reply: reply, fallback: false });
+    }
+
+    // 2) If user expresses career-intent / asks for path, run analyze() for tailored recommendations
+    if (hasCareerIntent(last)) {
       const analysis = analyze(profile, tests, happiness);
-      const reply = `Based on the info you gave, top picks: ${analysis.recommendations.map(r => `${r.title} (${r.confidence})`).join(", ")}. I suggest: ${analysis.actionPlan[0]}`;
-      return res.json({ content: reply, fallback: true });
+      const recs = analysis.recommendations.map(r => `${r.title} (${r.confidence})`).join(", ");
+      const reply = `For a career path, top picks are: ${recs}. Starter plan: ${analysis.actionPlan[0]} Next steps: ${analysis.actionPlan.slice(1).join(" / ")}.`;
+      return res.json({ content: reply, reply: reply, fallback: false });
     }
 
-    // If user asks about a specific career in recommendations
-    for (const skill of Object.keys(CAREER_MAP)) {
-      for (const c of CAREER_MAP[skill]) {
-        if (lower.includes(c.toLowerCase())) {
-          const reply = `${c} typically requires skill in ${skill}. Suggested first steps: build a portfolio project and read starter tutorials.`;
-          return res.json({ content: reply, fallback: true });
-        }
-      }
-    }
-
-    // generic replies
+    // 3) If the user asks a short question / greeting, respond conversationally
     if (!last || last.trim().length < 3) {
-      return res.json({ content: "Hey — what specifically do you want advice on? (career suggestions, next steps, skill building)", fallback: true });
+      const reply = "Hey — what specifically would you like help with? Try: 'suggest careers', 'how to become a data scientist', or 'what are steps to become a frontend developer'.";
+      return res.json({ content: reply, reply: reply, fallback: true });
     }
 
-    return res.json({
-      content: `I hear you: "${last}". Quick thought: focus on one project or learning goal this week, then reach out with progress and I can refine suggestions.`,
-      fallback: true
-    });
+    // 4) If nothing above matched, be helpful: offer a small, specific action
+    // Use analysis as a dynamic base so answers vary with profile/tests input
+    const analysis = analyze(profile, tests, happiness);
+    const fallbackReply = `I hear you: "${last}". Quick thought: ${analysis.actionPlan[0]} If you want a clearer path, ask "what career matches me" or mention a role (for example: Data Analyst or UX Designer).`;
+    return res.json({ content: fallbackReply, reply: fallbackReply, fallback: true });
+
   } catch (err) {
     console.error("AI chat error (rule mode):", err);
-    res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ error: "Server error" });
   }
 });
 

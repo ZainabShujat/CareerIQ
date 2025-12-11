@@ -94,6 +94,7 @@ export default function Home() {
 
             <div className="ciq-cta-row">
               <Link to="/quiz"><button className="ciq-primary">Start Assessment</button></Link>
+              
               <Link to="/careers" className="ciq-link" style={{ marginTop: 12, display: "inline-block" }}>
                 Explore All Careers →
               </Link>
@@ -153,60 +154,11 @@ export default function Home() {
             </div>
           </section>
           
-          {/* POPULAR GRID */}
-          <section className="ciq-popular">
-            <h2>Popular Careers in India</h2>
-
-            <div className="cards">
-              <article className="card">
-                <div className="card-head">
-                  <div>
-                    <h3>Software Engineer</h3>
-                    <div className="muted">Technology</div>
-                  </div>
-                  <div className="sal">₹8–15 LPA</div>
-                </div>
-                <p className="muted">Build products, systems and services used by millions.</p>
-                <div className="card-foot">
-                  <Link to="/engineering-careers" className="small-cta">Explore</Link>
-                </div>
-              </article>
-
-              <article className="card">
-                <div className="card-head">
-                  <div>
-                    <h3>Doctor</h3>
-                    <div className="muted">Healthcare</div>
-                  </div>
-                  <div className="sal">₹10–25 LPA</div>
-                </div>
-                <p className="muted">Clinical practice, research and public health.</p>
-                <div className="card-foot">
-                  <Link to="/medical-careers" className="small-cta">Explore</Link>
-                </div>
-              </article>
-
-              <article className="card">
-                <div className="card-head">
-                  <div>
-                    <h3>Teacher</h3>
-                    <div className="muted">Education</div>
-                  </div>
-                  <div className="sal">₹3–12 LPA</div>
-                </div>
-                <p className="muted">Shape learners' futures in schools and colleges.</p>
-                <div className="card-foot">
-                  <Link to="/teaching-careers" className="small-cta">Explore</Link>
-                </div>
-              </article>
-            </div>
-          </section>
           {/* ------------------ HOW TO USE SECTION ------------------ */}
 <section style={{
-  padding: "50px 20px",
+  padding: "10px 20px",
   maxWidth: "1100px",
   margin: "0 auto",
-  marginTop: "40px",
   marginBottom: "60px",
   fontFamily: "'Inter', sans-serif"
 }}>

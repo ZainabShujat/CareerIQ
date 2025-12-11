@@ -35,7 +35,7 @@ export default function Chatbot() {
 
       setMessages(prev => [
         ...prev,
-        { sender: "bot", text: data.reply || "Hmm… something went wrong." }
+        { text: data.reply || data.content || "Hmm... something went wrong."}
       ]);
 
       setTimeout(() => {
