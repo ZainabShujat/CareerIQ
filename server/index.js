@@ -30,6 +30,9 @@ app.use("/api/results", resultsRouter);
 import personalityRoutes from "./routes/personality.js";
 app.use("/api/personality", personalityRoutes);
 
+import aiRoutes from "./routes/ai.js";
+app.use("/api/ai", aiRoutes);
+
 // basic test route
 app.get("/", (req, res) => {
   res.json({ message: "CareerIQ backend running 🚀" });
