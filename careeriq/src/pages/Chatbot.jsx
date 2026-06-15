@@ -134,6 +134,7 @@ export default function Chatbot() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [streaming, setStreaming] = useState(false); // true while SSE chunks are arriving
   const [source, setSource] = useState(null);
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
@@ -168,23 +169,92 @@ export default function Chatbot() {
       textareaRef.current.style.height = "24px";
       textareaRef.current.focus();
     }
+
     setMessages(prev => [...prev, { role: "user", content: msg }]);
     setLoading(true);
 
+    const profile = getProfile();
+
     try {
-      const profile = getProfile();
-      const res = await fetch(`${API_BASE}/api/ai/chat`, {
+      // ── Try streaming endpoint first ──────────────────────────────────────
+      const res = await fetch(`${API_BASE}/api/ai/chat/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: msg, profile, tests: profile.skills }),
       });
-      const data = await res.json();
-      setSource(data.source || "ml-engine");
-      setMessages(prev => [...prev, { role: "assistant", content: data.content || data.error || "No response." }]);
-    } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "Could not reach the backend. Please check your connection." }]);
-    } finally {
-      setLoading(false);
+
+      if (!res.ok || !res.body) throw new Error("stream_failed");
+
+      // Add an empty assistant message — we'll fill it chunk by chunk
+      const assistantIdx = Date.now(); // stable key
+      setMessages(prev => [...prev, { role: "assistant", content: "", key: assistantIdx }]);
+      setLoading(false);    // hide typing dots — live text is showing
+      setStreaming(true);   // show blinking cursor instead
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let srcSeen = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+
+        // SSE lines are separated by \n\n
+        const parts = buffer.split("\n\n");
+        buffer = parts.pop(); // keep incomplete last chunk
+
+        for (const part of parts) {
+          const line = part.trim();
+          if (!line.startsWith("data:")) continue;
+          const raw = line.slice(5).trim();
+          if (raw === "[DONE]") break;
+
+          try {
+            const { chunk, source: src } = JSON.parse(raw);
+            if (!srcSeen && src) { setSource(src); srcSeen = true; }
+            if (chunk) {
+              setMessages(prev => {
+                const msgs = [...prev];
+                const last = msgs[msgs.length - 1];
+                if (last?.role === "assistant") {
+                  msgs[msgs.length - 1] = { ...last, content: last.content + chunk };
+                }
+                return msgs;
+              });
+            }
+          } catch (_) {}
+        }
+      }
+      setStreaming(false);
+    } catch (streamErr) {
+      // ── Fallback to non-streaming /chat ────────────────────────────────────
+      try {
+        const res = await fetch(`${API_BASE}/api/ai/chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg, profile, tests: profile.skills }),
+        });
+        const data = await res.json();
+        setSource(data.source || "ml-engine");
+        setMessages(prev => {
+          // If we already added an empty assistant message, fill it; otherwise append
+          const msgs = [...prev];
+          const last = msgs[msgs.length - 1];
+          if (last?.role === "assistant" && last.content === "") {
+            msgs[msgs.length - 1] = { ...last, content: data.content || "No response." };
+          } else {
+            msgs.push({ role: "assistant", content: data.content || "No response." });
+          }
+          return msgs;
+        });
+      } catch {
+        setMessages(prev => [...prev, { role: "assistant", content: "Could not reach the backend. Please check your connection." }]);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -327,7 +397,18 @@ export default function Chatbot() {
                 </div>
                 <div style={{ color: "#dceee5", lineHeight: 1.7 }}>
                   {msg.role === "assistant"
-                    ? <MarkdownText text={msg.content} />
+                    ? (
+                      <>
+                        <MarkdownText text={msg.content} />
+                        {streaming && idx === messages.length - 1 && (
+                          <span style={{
+                            display: "inline-block", width: 2, height: "1.1em",
+                            background: "#06a77d", marginLeft: 2, verticalAlign: "text-bottom",
+                            animation: "blink 0.7s step-end infinite"
+                          }} />
+                        )}
+                      </>
+                    )
                     : <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7 }}>{msg.content}</p>
                   }
                 </div>
@@ -395,21 +476,21 @@ export default function Chatbot() {
             />
             <button
               onClick={() => sendMessage()}
-              disabled={loading || !input.trim()}
+              disabled={loading || streaming || !input.trim()}
               style={{
                 width: 36, height: 36, borderRadius: 9, border: "none",
-                background: loading || !input.trim()
+                background: loading || streaming || !input.trim()
                   ? "rgba(255,255,255,0.08)"
                   : "linear-gradient(135deg, #06a77d, #04c48a)",
-                color: loading || !input.trim() ? "rgba(255,255,255,0.3)" : "#fff",
-                cursor: loading || !input.trim() ? "default" : "pointer",
+                color: loading || streaming || !input.trim() ? "rgba(255,255,255,0.3)" : "#fff",
+                cursor: loading || streaming || !input.trim() ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: 16, flexShrink: 0, transition: "all 0.2s",
-                boxShadow: loading || !input.trim() ? "none" : "0 2px 8px rgba(6,167,125,0.4)"
+                boxShadow: loading || streaming || !input.trim() ? "none" : "0 2px 8px rgba(6,167,125,0.4)"
               }}
               title="Send (Enter)"
             >
-              {loading ? (
+              {(loading || streaming) ? (
                 <div style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.4)", borderTop: "2px solid #fff", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
               ) : "↑"}
             </button>
@@ -440,6 +521,10 @@ export default function Chatbot() {
         }
         @keyframes spin {
           to { transform: rotate(360deg); }
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
         *::-webkit-scrollbar { width: 5px; }
         *::-webkit-scrollbar-track { background: transparent; }

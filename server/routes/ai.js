@@ -301,6 +301,150 @@ function cosineSimilarity(a, b) {
   return dot / (magA * magB);
 }
 
+// ─── 7. Route Handlers ────────────────────────────────────────────────────────
+
+// POST /api/ai/chat — non-streaming fallback (kept for compatibility)
+router.post("/chat", async (req, res) => {
+  const { message, profile, tests } = req.body;
+  if (!message) return res.status(400).json({ content: "Message is required." });
+
+  const enrichedProfile = {
+    ...profile,
+    skills: { ...(profile?.skills || {}), ...(tests || {}) },
+  };
+
+  if (openai) {
+    try {
+      const userVec = buildUserVector(enrichedProfile);
+      const topCareers = rankCareers(userVec, 3).map(c => `${c.title} (${Math.round(c.similarity * 100)}% match)`).join(", ");
+      const { intent } = classifyIntent(message);
+
+      const systemPrompt = `You are CareerIQ, an expert AI career advisor for Indian students and professionals.
+
+USER CONTEXT (from ML profile analysis):
+- Detected intent: ${intent}
+- Top career matches: ${topCareers}
+- Dominant traits: ${dominantTraits(userVec, 3).join(", ")}
+- Profile: ${JSON.stringify(enrichedProfile)}
+
+INSTRUCTIONS:
+- Give specific, actionable advice tailored to the user's detected traits and career matches
+- Use markdown formatting with headers (##), bullet points, and tables where helpful
+- Include Indian salary ranges (LPA), Indian companies, and India-specific career context
+- Keep responses under 500 words
+- If recommending careers, refer to their ML-calculated matches above
+- Be encouraging but realistic`;
+
+      const completion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "system", content: systemPrompt }, { role: "user", content: message }],
+        max_tokens: 700,
+        temperature: 0.7,
+      });
+      return res.json({ content: completion.choices[0].message.content, source: "openai" });
+    } catch (err) {
+      console.error("OpenAI /chat error:", err.message, "→ ML engine");
+    }
+  }
+
+  const response = mlEngine(message, enrichedProfile);
+  res.json({ content: response, source: "ml-engine" });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/ai/chat/stream — SSE streaming (token-by-token like ChatGPT)
+// OpenAI: native token streaming.
+// ML engine: word-by-word with ~16ms delay — feels exactly like typing.
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/chat/stream", async (req, res) => {
+  const { message, profile, tests } = req.body;
+  if (!message) return res.status(400).json({ error: "Message is required." });
+
+  const enrichedProfile = {
+    ...profile,
+    skills: { ...(profile?.skills || {}), ...(tests || {}) },
+  };
+
+  // ── SSE headers — defeat every layer of buffering ─────────────────────────
+  res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no");        // Nginx / Render CDN
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.flushHeaders();                               // Send headers immediately
+
+  const send = (data) => {
+    try {
+      res.write(`data: ${JSON.stringify(data)}\n\n`);
+      if (typeof res.flush === "function") res.flush(); // compression middleware
+    } catch (_) {}
+  };
+
+  const finish = () => {
+    try { res.write("data: [DONE]\n\n"); res.end(); } catch (_) {}
+  };
+
+  // Split text into natural streaming tokens (words + whitespace + markdown)
+  const streamText = async (text, delayMs = 16) => {
+    // Tokenise: split on whitespace boundaries, keeping the whitespace as tokens
+    const tokens = text.split(/(\s+)/);
+    for (const tok of tokens) {
+      if (!tok) continue;
+      send({ chunk: tok, source: "ml-engine" });
+      await new Promise(r => setTimeout(r, delayMs));
+    }
+  };
+
+  // ── 1. Try OpenAI native streaming ───────────────────────────────────────
+  if (openai) {
+    try {
+      const userVec = buildUserVector(enrichedProfile);
+      const topCareers = rankCareers(userVec, 3)
+        .map(c => `${c.title} (${Math.round(c.similarity * 100)}% match)`).join(", ");
+      const { intent } = classifyIntent(message);
+
+      const systemPrompt = `You are CareerIQ, an expert AI career advisor for Indian students and professionals.
+
+USER CONTEXT (from ML profile analysis):
+- Detected intent: ${intent}
+- Top career matches: ${topCareers}
+- Dominant traits: ${dominantTraits(userVec, 3).join(", ")}
+- Profile: ${JSON.stringify(enrichedProfile)}
+
+INSTRUCTIONS:
+- Give specific, actionable advice tailored to the user's detected traits and career matches
+- Use markdown formatting with headers (##), bullet points, and tables where helpful
+- Include Indian salary ranges (LPA), Indian companies, and India-specific career context
+- Keep responses under 500 words
+- Be encouraging but realistic`;
+
+      const stream = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message },
+        ],
+        max_tokens: 700,
+        temperature: 0.7,
+        stream: true,
+      });
+
+      for await (const chunk of stream) {
+        const token = chunk.choices[0]?.delta?.content || "";
+        if (token) send({ chunk: token, source: "openai" });
+      }
+      return finish();
+    } catch (err) {
+      console.error("OpenAI stream error:", err.message, "→ ML engine word-stream");
+    }
+  }
+
+  // ── 2. ML Engine word-by-word stream (always works) ──────────────────────
+  const fullResponse = mlEngine(message, enrichedProfile);
+  await streamText(fullResponse, 16);
+  finish();
+});
+
 /**
  * rankCareers: returns careers sorted by cosine similarity to user vector.
  */
@@ -873,61 +1017,8 @@ Based on your profile, your top career match is **${top.title}** (${Math.round(t
 What would you like to explore?`;
 }
 
-// ─── 7. Route Handlers ────────────────────────────────────────────────────────
-
-// POST /api/ai/chat — main chatbot
-router.post("/chat", async (req, res) => {
-  const { message, profile, tests } = req.body;
-  if (!message) return res.status(400).json({ content: "Message is required." });
-
-  // Merge tests into profile for richer context
-  const enrichedProfile = {
-    ...profile,
-    skills: { ...(profile?.skills || {}), ...(tests || {}) },
-  };
-
-  // 1. Try OpenAI
-  if (openai) {
-    try {
-      const userVec = buildUserVector(enrichedProfile);
-      const topCareers = rankCareers(userVec, 3).map(c => `${c.title} (${Math.round(c.similarity * 100)}% match)`).join(", ");
-      const { intent } = classifyIntent(message);
-
-      const systemPrompt = `You are CareerIQ, an expert AI career advisor for Indian students and professionals.
-
-USER CONTEXT (from ML profile analysis):
-- Detected intent: ${intent}
-- Top career matches: ${topCareers}
-- Dominant traits: ${dominantTraits(userVec, 3).join(", ")}
-- Profile: ${JSON.stringify(enrichedProfile)}
-
-INSTRUCTIONS:
-- Give specific, actionable advice tailored to the user's detected traits and career matches
-- Use markdown formatting with headers (##), bullet points, and tables where helpful
-- Include Indian salary ranges (LPA), Indian companies, and India-specific career context
-- Keep responses under 500 words
-- If recommending careers, refer to their ML-calculated matches above
-- Be encouraging but realistic`;
-
-      const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: message }
-        ],
-        max_tokens: 700,
-        temperature: 0.7,
-      });
-      return res.json({ content: completion.choices[0].message.content, source: "openai" });
-    } catch (err) {
-      console.error("OpenAI /chat error:", err.message, "→ switching to ML engine");
-    }
-  }
-
-  // 2. ML Engine fallback (always works)
-  const response = mlEngine(message, enrichedProfile);
-  res.json({ content: response, source: "ml-engine" });
-});
+// NOTE: /chat and /chat/stream routes are defined earlier in this file (above helper functions).
+// Express hoists function declarations so they resolve correctly at call time.
 
 // POST /api/ai/explain — match explanation
 router.post("/explain", async (req, res) => {
