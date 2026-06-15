@@ -1,8 +1,7 @@
-// src/pages/Chatbot.jsx — ML-Powered AI Career Chatbot
+// src/pages/Chatbot.jsx — Full-screen AI Career Chatbot (ChatGPT-style)
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
-import BackButton from "../components/BackButton";
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
@@ -15,66 +14,61 @@ const SUGGESTED_QUESTIONS = [
   "What salary can I expect as a data scientist?",
 ];
 
-// ── Lightweight Markdown renderer (no external deps) ─────────────────────────
+// ── Lightweight inline Markdown renderer ─────────────────────────────────────
 function MarkdownText({ text }) {
   if (!text) return null;
-
   const lines = text.split("\n");
   const elements = [];
   let i = 0;
   let tableBuffer = [];
   let inTable = false;
 
-  const flushTable = () => {
-    if (tableBuffer.length < 2) {
-      tableBuffer.forEach(l => elements.push(<p key={elements.length} style={{ margin: "4px 0", color: "inherit", fontSize: 13.5, lineHeight: 1.65 }}>{renderInline(l)}</p>));
-      tableBuffer = [];
-      inTable = false;
-      return;
-    }
-    const rows = tableBuffer.filter(r => !r.match(/^\|[-| ]+\|$/));
-    elements.push(
-      <div key={elements.length} style={{ overflowX: "auto", margin: "10px 0" }}>
-        <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 12.5 }}>
-          <tbody>
-            {rows.map((row, ri) => {
-              const cells = row.split("|").filter((_, ci) => ci > 0 && ci < row.split("|").length - 1);
-              const Tag = ri === 0 ? "th" : "td";
-              return (
-                <tr key={ri} style={{ background: ri % 2 === 0 ? "rgba(255,255,255,0.08)" : "transparent" }}>
-                  {cells.map((cell, ci) => (
-                    <Tag key={ci} style={{ padding: "6px 10px", border: "1px solid rgba(255,255,255,0.15)", textAlign: "left", fontWeight: ri === 0 ? 700 : 400, color: "inherit", whiteSpace: "nowrap" }}>
-                      {renderInline(cell.trim())}
-                    </Tag>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    );
-    tableBuffer = [];
-    inTable = false;
-  };
-
   const renderInline = (str) => {
-    // Bold **text**
     const parts = str.split(/(\*\*[^*]+\*\*|`[^`]+`|_[^_]+_)/g);
     return parts.map((part, pi) => {
-      if (part.startsWith("**") && part.endsWith("**")) return <strong key={pi}>{part.slice(2, -2)}</strong>;
-      if (part.startsWith("`") && part.endsWith("`")) return <code key={pi} style={{ background: "rgba(0,0,0,0.25)", padding: "1px 5px", borderRadius: 3, fontSize: "0.9em", fontFamily: "monospace" }}>{part.slice(1, -1)}</code>;
-      if (part.startsWith("_") && part.endsWith("_")) return <em key={pi}>{part.slice(1, -1)}</em>;
+      if (part.startsWith("**") && part.endsWith("**"))
+        return <strong key={pi} style={{ fontWeight: 700 }}>{part.slice(2, -2)}</strong>;
+      if (part.startsWith("`") && part.endsWith("`"))
+        return <code key={pi} style={{ background: "rgba(255,255,255,0.12)", padding: "1px 6px", borderRadius: 4, fontSize: "0.88em", fontFamily: "monospace" }}>{part.slice(1, -1)}</code>;
+      if (part.startsWith("_") && part.endsWith("_"))
+        return <em key={pi}>{part.slice(1, -1)}</em>;
       return part;
     });
   };
 
+  const flushTable = () => {
+    const rows = tableBuffer.filter(r => !r.match(/^\|[-| :]+\|$/));
+    if (rows.length > 0) {
+      elements.push(
+        <div key={`tbl-${elements.length}`} style={{ overflowX: "auto", margin: "12px 0", borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)" }}>
+          <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13 }}>
+            <tbody>
+              {rows.map((row, ri) => {
+                const cells = row.split("|").slice(1, -1);
+                const Tag = ri === 0 ? "th" : "td";
+                return (
+                  <tr key={ri} style={{ background: ri === 0 ? "rgba(255,255,255,0.08)" : ri % 2 === 0 ? "rgba(255,255,255,0.03)" : "transparent" }}>
+                    {cells.map((cell, ci) => (
+                      <Tag key={ci} style={{ padding: "8px 14px", borderBottom: "1px solid rgba(255,255,255,0.07)", textAlign: "left", fontWeight: ri === 0 ? 700 : 400, color: "inherit", whiteSpace: "nowrap" }}>
+                        {renderInline(cell.trim())}
+                      </Tag>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+    tableBuffer = [];
+    inTable = false;
+  };
+
   while (i < lines.length) {
     const line = lines[i];
-
-    // Table detection
     if (line.startsWith("|")) {
-      if (!inTable) inTable = true;
+      inTable = true;
       tableBuffer.push(line);
       i++;
       continue;
@@ -82,54 +76,60 @@ function MarkdownText({ text }) {
       flushTable();
     }
 
-    // H2
     if (line.startsWith("## ")) {
-      elements.push(<h2 key={elements.length} style={{ fontSize: 16, fontWeight: 800, margin: "16px 0 8px", color: "inherit", borderBottom: "1px solid rgba(255,255,255,0.2)", paddingBottom: 4 }}>{renderInline(line.slice(3))}</h2>);
-    }
-    // H3
-    else if (line.startsWith("### ")) {
-      elements.push(<h3 key={elements.length} style={{ fontSize: 14, fontWeight: 700, margin: "12px 0 6px", color: "inherit" }}>{renderInline(line.slice(4))}</h3>);
-    }
-    // HR
-    else if (line.startsWith("---")) {
-      elements.push(<hr key={elements.length} style={{ border: "none", borderTop: "1px solid rgba(255,255,255,0.15)", margin: "12px 0" }} />);
-    }
-    // Numbered list
-    else if (/^\d+\.\s/.test(line)) {
-      elements.push(<div key={elements.length} style={{ display: "flex", gap: 8, margin: "4px 0" }}>
-        <span style={{ minWidth: 18, fontWeight: 700, color: "inherit", opacity: 0.7 }}>{line.match(/^(\d+)\./)?.[1]}.</span>
-        <span style={{ fontSize: 13.5, lineHeight: 1.65, color: "inherit" }}>{renderInline(line.replace(/^\d+\.\s/, ""))}</span>
-      </div>);
-    }
-    // Bullet
-    else if (line.startsWith("- ") || line.startsWith("• ")) {
-      elements.push(<div key={elements.length} style={{ display: "flex", gap: 8, margin: "3px 0", paddingLeft: 4 }}>
-        <span style={{ color: "inherit", opacity: 0.6, marginTop: 2, flexShrink: 0 }}>•</span>
-        <span style={{ fontSize: 13.5, lineHeight: 1.65, color: "inherit" }}>{renderInline(line.slice(2))}</span>
-      </div>);
-    }
-    // Empty line
-    else if (line.trim() === "") {
-      elements.push(<div key={elements.length} style={{ height: 8 }} />);
-    }
-    // Normal paragraph
-    else if (line.trim()) {
-      elements.push(<p key={elements.length} style={{ margin: "4px 0", color: "inherit", fontSize: 13.5, lineHeight: 1.65 }}>{renderInline(line)}</p>);
+      elements.push(<h2 key={`h2-${i}`} style={{ fontSize: 15, fontWeight: 800, margin: "18px 0 8px", color: "inherit", borderBottom: "1px solid rgba(255,255,255,0.15)", paddingBottom: 6 }}>{renderInline(line.slice(3))}</h2>);
+    } else if (line.startsWith("### ")) {
+      elements.push(<h3 key={`h3-${i}`} style={{ fontSize: 13.5, fontWeight: 700, margin: "14px 0 6px", color: "inherit" }}>{renderInline(line.slice(4))}</h3>);
+    } else if (line.startsWith("---")) {
+      elements.push(<hr key={`hr-${i}`} style={{ border: "none", borderTop: "1px solid rgba(255,255,255,0.12)", margin: "14px 0" }} />);
+    } else if (/^\d+\.\s/.test(line)) {
+      elements.push(
+        <div key={`ol-${i}`} style={{ display: "flex", gap: 10, margin: "4px 0" }}>
+          <span style={{ minWidth: 20, fontWeight: 700, opacity: 0.6, flexShrink: 0, fontSize: 13 }}>{line.match(/^(\d+)\./)?.[1]}.</span>
+          <span style={{ fontSize: 13.5, lineHeight: 1.7 }}>{renderInline(line.replace(/^\d+\.\s/, ""))}</span>
+        </div>
+      );
+    } else if (line.startsWith("- ") || line.startsWith("• ")) {
+      elements.push(
+        <div key={`ul-${i}`} style={{ display: "flex", gap: 10, margin: "3px 0", paddingLeft: 4 }}>
+          <span style={{ opacity: 0.5, marginTop: 2, flexShrink: 0, fontSize: 13 }}>•</span>
+          <span style={{ fontSize: 13.5, lineHeight: 1.7 }}>{renderInline(line.slice(2))}</span>
+        </div>
+      );
+    } else if (line.trim() === "") {
+      elements.push(<div key={`sp-${i}`} style={{ height: 6 }} />);
+    } else {
+      elements.push(<p key={`p-${i}`} style={{ margin: "4px 0", fontSize: 13.5, lineHeight: 1.7 }}>{renderInline(line)}</p>);
     }
     i++;
   }
-
   if (inTable) flushTable();
   return <div>{elements}</div>;
 }
 
+// ── Typing indicator ──────────────────────────────────────────────────────────
+function TypingDots() {
+  return (
+    <div style={{ display: "flex", gap: 5, alignItems: "center", padding: "4px 0" }}>
+      {[0, 1, 2].map(i => (
+        <div key={i} style={{
+          width: 7, height: 7, borderRadius: "50%",
+          background: "rgba(255,255,255,0.5)",
+          animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`
+        }} />
+      ))}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 export default function Chatbot() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: "## Welcome to CareerIQ AI 👋\n\nI'm powered by an ML-based career matching engine that analyses your profile to give personalised advice.\n\nI can help you:\n- **Discover** careers that match your traits\n- **Compare** career paths side-by-side\n- **Plan** your learning roadmap\n- **Understand** salary ranges and market demand\n\nWhat's on your mind?"
+      content: "## Hey! I'm CareerIQ AI 👋\n\nI'm an ML-powered career advisor that uses **trait-vector cosine similarity** to match your personality and skills to the right careers.\n\nAsk me anything:\n- **Career recommendations** based on your profile\n- **Salary ranges** across industries\n- **How to break into** a new field\n- **Compare careers** side-by-side\n- **Skills & learning roadmaps**"
     }
   ]);
   const [input, setInput] = useState("");
@@ -137,10 +137,16 @@ export default function Chatbot() {
   const [source, setSource] = useState(null);
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
+  const inputAreaRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, loading]);
+
+  useEffect(() => {
+    // Focus on mount
+    textareaRef.current?.focus();
+  }, []);
 
   const getProfile = () => {
     let personality = null;
@@ -155,12 +161,14 @@ export default function Chatbot() {
   };
 
   const sendMessage = async (text) => {
-    const msg = text || input.trim();
+    const msg = (text || input).trim();
     if (!msg || loading) return;
     setInput("");
-    if (textareaRef.current) textareaRef.current.style.height = "44px";
-    const userMsg = { role: "user", content: msg };
-    setMessages(prev => [...prev, userMsg]);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "24px";
+      textareaRef.current.focus();
+    }
+    setMessages(prev => [...prev, { role: "user", content: msg }]);
     setLoading(true);
 
     try {
@@ -180,172 +188,264 @@ export default function Chatbot() {
     }
   };
 
-  // Auto-grow textarea
-  const handleInput = (e) => {
-    setInput(e.target.value);
-    e.target.style.height = "44px";
-    e.target.style.height = Math.min(e.target.scrollHeight, 120) + "px";
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
   };
 
+  const handleInput = (e) => {
+    setInput(e.target.value);
+    e.target.style.height = "24px";
+    e.target.style.height = Math.min(e.target.scrollHeight, 150) + "px";
+  };
+
+  const isFirstMessage = messages.length === 1;
+
   return (
-    <div style={{ maxWidth: 820, margin: "0 auto", padding: "20px 16px", fontFamily: "'Inter', -apple-system, sans-serif" }}>
-      <BackButton />
-      <div style={{ marginBottom: 20 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-          <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, color: "#0a2118" }}>AI Career Advisor</h1>
-          <span style={{
-            display: "inline-flex", alignItems: "center", gap: 5,
-            background: "linear-gradient(135deg, #06a77d, #058a68)",
-            color: "#fff", padding: "3px 10px", borderRadius: 20,
-            fontSize: 11, fontWeight: 700, letterSpacing: 0.5
-          }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", animation: "pulse 1.5s ease-in-out infinite" }} />
-            ML-POWERED
-          </span>
+    <div style={{
+      position: "fixed", inset: 0,
+      background: "linear-gradient(160deg, #0d1f1a 0%, #0a1c17 50%, #091510 100%)",
+      display: "flex", flexDirection: "column",
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      color: "#e8f0ec",
+    }}>
+
+      {/* ── Top Bar ── */}
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "14px 24px", borderBottom: "1px solid rgba(255,255,255,0.07)",
+        background: "rgba(0,0,0,0.2)", backdropFilter: "blur(12px)",
+        flexShrink: 0, zIndex: 10
+      }}>
+        {/* Back button */}
+        <button
+          onClick={() => navigate(-1)}
+          style={{
+            display: "flex", alignItems: "center", gap: 8,
+            background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
+            color: "#c8ddd4", borderRadius: 10, padding: "7px 14px",
+            cursor: "pointer", fontSize: 13, fontWeight: 600,
+            transition: "all 0.15s", fontFamily: "inherit"
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
+        >
+          ← Back
+        </button>
+
+        {/* Title */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: "50%",
+            background: "linear-gradient(135deg, #06a77d, #04c48a)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 16, boxShadow: "0 0 12px rgba(6,167,125,0.4)"
+          }}>🤖</div>
+          <div>
+            <div style={{ fontWeight: 800, fontSize: 15, color: "#e8f0ec", lineHeight: 1.2 }}>CareerIQ AI</div>
+            <div style={{ fontSize: 11, color: "#5a9e82", display: "flex", alignItems: "center", gap: 5 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#06a77d", display: "inline-block", animation: "pulse 2s infinite" }} />
+              ML-Powered • Cosine Similarity Matching
+            </div>
+          </div>
         </div>
-        <div style={{ color: "#556b62", fontSize: 13.5 }}>
-          Personalised career advice using trait-vector cosine similarity matching.
-          {user ? <span style={{ color: "#06a77d", marginLeft: 6 }}>Profile loaded for {user.name.split(" ")[0]} ✓</span> : " Sign in to personalise responses."}
+
+        {/* User badge */}
+        <div style={{
+          background: "rgba(6,167,125,0.12)", border: "1px solid rgba(6,167,125,0.25)",
+          borderRadius: 20, padding: "5px 12px", fontSize: 12, color: "#5a9e82", fontWeight: 600
+        }}>
+          {user ? `✓ ${user.name.split(" ")[0]}` : "Guest"}
         </div>
       </div>
 
-      {/* Chat Window */}
+      {/* ── Messages Area ── */}
       <div style={{
-        background: "#fff", borderRadius: 18, border: "1px solid #e0ede6",
-        boxShadow: "0 4px 32px rgba(10,30,20,0.08)", overflow: "hidden",
-        display: "flex", flexDirection: "column", height: "65vh"
+        flex: 1, overflowY: "auto", padding: "0 0 8px",
+        scrollBehavior: "smooth",
       }}>
-        {/* Messages */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "20px 20px 10px", display: "flex", flexDirection: "column", gap: 16 }}>
-          {messages.map((msg, i) => (
-            <div key={i} style={{
-              maxWidth: msg.role === "user" ? "78%" : "92%",
-              alignSelf: msg.role === "user" ? "flex-end" : "flex-start",
-              display: "flex", flexDirection: "column", gap: 2
-            }}>
-              {msg.role === "assistant" && (
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2 }}>
-                  <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg, #06a77d, #058a68)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>🤖</div>
-                  <span style={{ fontSize: 11, color: "#8aa08e", fontWeight: 600 }}>CareerIQ AI</span>
-                </div>
-              )}
-              <div style={{
-                padding: msg.role === "user" ? "11px 16px" : "14px 18px",
-                borderRadius: msg.role === "user" ? "18px 18px 4px 18px" : "4px 18px 18px 18px",
-                background: msg.role === "user"
-                  ? "linear-gradient(135deg, #1a3c34, #0d2a22)"
-                  : "linear-gradient(180deg, #f5faf7, #eef7f1)",
-                color: msg.role === "user" ? "#fff" : "#0a2118",
-                boxShadow: msg.role === "user" ? "0 2px 12px rgba(26,60,52,0.25)" : "0 2px 10px rgba(0,0,0,0.04)",
-                border: msg.role === "assistant" ? "1px solid #ddeee5" : "none",
-              }}>
-                {msg.role === "assistant"
-                  ? <MarkdownText text={msg.content} />
-                  : <span style={{ fontSize: 13.5, lineHeight: 1.6 }}>{msg.content}</span>
-                }
+        {/* Empty state — show suggested questions */}
+        {isFirstMessage && (
+          <div style={{ maxWidth: 680, margin: "0 auto", padding: "32px 24px 0" }}>
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ fontSize: 11, color: "#4a7a62", fontWeight: 700, letterSpacing: 1, marginBottom: 12, textTransform: "uppercase" }}>
+                Try asking
               </div>
-            </div>
-          ))}
-
-          {loading && (
-            <div style={{ alignSelf: "flex-start", display: "flex", flexDirection: "column", gap: 2 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2 }}>
-                <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg, #06a77d, #058a68)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>🤖</div>
-                <span style={{ fontSize: 11, color: "#8aa08e", fontWeight: 600 }}>CareerIQ AI is thinking...</span>
-              </div>
-              <div style={{
-                padding: "14px 18px", borderRadius: "4px 18px 18px 18px",
-                background: "linear-gradient(180deg, #f5faf7, #eef7f1)",
-                border: "1px solid #ddeee5",
-                display: "flex", gap: 5, alignItems: "center"
-              }}>
-                {[0, 1, 2].map(i => (
-                  <div key={i} style={{
-                    width: 8, height: 8, borderRadius: "50%", background: "#06a77d",
-                    animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`
-                  }} />
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {SUGGESTED_QUESTIONS.map((q, i) => (
+                  <button
+                    key={i}
+                    onClick={() => sendMessage(q)}
+                    style={{
+                      padding: "9px 16px", borderRadius: 20,
+                      border: "1px solid rgba(6,167,125,0.25)",
+                      background: "rgba(6,167,125,0.08)",
+                      color: "#a8d4bc", fontSize: 13, cursor: "pointer",
+                      fontFamily: "inherit", transition: "all 0.15s"
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(6,167,125,0.18)"; e.currentTarget.style.color = "#d4ede2"; e.currentTarget.style.borderColor = "rgba(6,167,125,0.5)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(6,167,125,0.08)"; e.currentTarget.style.color = "#a8d4bc"; e.currentTarget.style.borderColor = "rgba(6,167,125,0.25)"; }}
+                  >
+                    {q}
+                  </button>
                 ))}
               </div>
             </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
+          </div>
+        )}
 
-        {/* Input Area */}
-        <div style={{
-          borderTop: "1px solid #e8f0ec", padding: "12px 16px",
-          background: "#fafcfb", display: "flex", gap: 10, alignItems: "flex-end"
-        }}>
-          <textarea
-            ref={textareaRef}
+        {/* Messages */}
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
             style={{
-              flex: 1, padding: "10px 14px", borderRadius: 12,
-              border: "1px solid #cddbd4", fontFamily: "inherit", fontSize: 14,
-              resize: "none", outline: "none", background: "#fff", color: "#0a2118",
-              lineHeight: 1.5, minHeight: 44, maxHeight: 120, transition: "border-color 0.15s"
+              padding: msg.role === "assistant" ? "22px 0" : "22px 0",
+              borderBottom: "1px solid rgba(255,255,255,0.04)",
+              background: msg.role === "assistant" ? "rgba(255,255,255,0.02)" : "transparent",
             }}
-            placeholder="Ask about careers, skills, salary, or what path suits you..."
-            value={input}
-            onChange={handleInput}
-            rows={1}
-            onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
-            onFocus={e => { e.target.style.borderColor = "#06a77d"; }}
-            onBlur={e => { e.target.style.borderColor = "#cddbd4"; }}
-          />
-          <button
-            style={{
-              padding: "10px 20px", borderRadius: 12,
-              background: loading ? "#6b8c80" : "linear-gradient(135deg, #1a3c34, #0d5c42)",
-              color: "#fff", border: "none", cursor: loading ? "default" : "pointer",
-              fontWeight: 700, fontSize: 14, transition: "all 0.2s", whiteSpace: "nowrap",
-              boxShadow: loading ? "none" : "0 2px 8px rgba(26,60,52,0.3)"
-            }}
-            onClick={() => sendMessage()}
-            disabled={loading}
           >
-            {loading ? "..." : "Send ↑"}
-          </button>
-        </div>
+            <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+              {/* Avatar */}
+              <div style={{
+                width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                background: msg.role === "assistant"
+                  ? "linear-gradient(135deg, #06a77d, #04c48a)"
+                  : "linear-gradient(135deg, #2a5245, #1a3c34)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 14, marginTop: 2,
+                boxShadow: msg.role === "assistant" ? "0 0 10px rgba(6,167,125,0.3)" : "none"
+              }}>
+                {msg.role === "assistant" ? "🤖" : (user?.name?.[0] || "U")}
+              </div>
+
+              {/* Content */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: msg.role === "assistant" ? "#4a9e82" : "#7a9a8a", marginBottom: 8, letterSpacing: 0.3 }}>
+                  {msg.role === "assistant" ? "CareerIQ AI" : (user?.name?.split(" ")[0] || "You")}
+                </div>
+                <div style={{ color: "#dceee5", lineHeight: 1.7 }}>
+                  {msg.role === "assistant"
+                    ? <MarkdownText text={msg.content} />
+                    : <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7 }}>{msg.content}</p>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Loading */}
+        {loading && (
+          <div style={{
+            padding: "22px 0",
+            borderBottom: "1px solid rgba(255,255,255,0.04)",
+            background: "rgba(255,255,255,0.02)",
+          }}>
+            <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+              <div style={{
+                width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                background: "linear-gradient(135deg, #06a77d, #04c48a)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 14, boxShadow: "0 0 10px rgba(6,167,125,0.3)"
+              }}>🤖</div>
+              <div style={{ flex: 1, paddingTop: 6 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#4a9e82", marginBottom: 10, letterSpacing: 0.3 }}>CareerIQ AI</div>
+                <TypingDots />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div ref={messagesEndRef} style={{ height: 8 }} />
       </div>
 
-      {/* Suggested questions */}
-      <div style={{ marginTop: 16 }}>
-        <div style={{ fontSize: 11, color: "#7b8b82", fontWeight: 700, letterSpacing: 0.8, marginBottom: 10 }}>💡 TRY ASKING</div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {SUGGESTED_QUESTIONS.map((q, i) => (
-            <button
-              key={i}
+      {/* ── Input Area ── */}
+      <div style={{
+        flexShrink: 0, borderTop: "1px solid rgba(255,255,255,0.07)",
+        background: "rgba(0,0,0,0.25)", backdropFilter: "blur(12px)",
+        padding: "16px 24px 20px",
+      }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          {/* Input box */}
+          <div style={{
+            display: "flex", alignItems: "flex-end", gap: 12,
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 14, padding: "10px 12px 10px 18px",
+            transition: "border-color 0.2s",
+          }}
+            onFocusCapture={e => { e.currentTarget.style.borderColor = "rgba(6,167,125,0.5)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(6,167,125,0.08)"; }}
+            onBlurCapture={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.boxShadow = "none"; }}
+          >
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={handleInput}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask about careers, skills, salary, or anything career-related..."
+              rows={1}
               style={{
-                padding: "7px 14px", borderRadius: 20, border: "1px solid #cddbd4",
-                fontSize: 12, color: "#1a3c34", background: "#fff", cursor: "pointer",
-                transition: "all 0.15s ease", fontFamily: "inherit"
+                flex: 1, background: "transparent", border: "none", outline: "none",
+                color: "#e8f0ec", fontSize: 14, lineHeight: 1.6, resize: "none",
+                fontFamily: "inherit", minHeight: 24, maxHeight: 150,
+                "::placeholder": { color: "rgba(255,255,255,0.3)" }
               }}
-              onClick={() => sendMessage(q)}
-              onMouseEnter={e => { e.target.style.background = "#f0faf4"; e.target.style.borderColor = "#06a77d"; e.target.style.color = "#06a77d"; }}
-              onMouseLeave={e => { e.target.style.background = "#fff"; e.target.style.borderColor = "#cddbd4"; e.target.style.color = "#1a3c34"; }}
+            />
+            <button
+              onClick={() => sendMessage()}
+              disabled={loading || !input.trim()}
+              style={{
+                width: 36, height: 36, borderRadius: 9, border: "none",
+                background: loading || !input.trim()
+                  ? "rgba(255,255,255,0.08)"
+                  : "linear-gradient(135deg, #06a77d, #04c48a)",
+                color: loading || !input.trim() ? "rgba(255,255,255,0.3)" : "#fff",
+                cursor: loading || !input.trim() ? "default" : "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 16, flexShrink: 0, transition: "all 0.2s",
+                boxShadow: loading || !input.trim() ? "none" : "0 2px 8px rgba(6,167,125,0.4)"
+              }}
+              title="Send (Enter)"
             >
-              {q}
+              {loading ? (
+                <div style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.4)", borderTop: "2px solid #fff", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+              ) : "↑"}
             </button>
-          ))}
+          </div>
+
+          {/* Footer info */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, padding: "0 2px" }}>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>
+              Press Enter to send · Shift+Enter for new line
+            </span>
+            {source && (
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>
+                {source === "openai" ? "⚡ OpenAI GPT-3.5" : "🧠 CareerIQ ML Engine"}
+              </span>
+            )}
+          </div>
         </div>
       </div>
-
-      {/* Source badge */}
-      {source && (
-        <div style={{ marginTop: 12, textAlign: "center", fontSize: 11, color: "#9bada6" }}>
-          {source === "openai" ? "⚡ Powered by OpenAI GPT-3.5" : "🧠 Powered by CareerIQ ML Engine (TF-IDF + Cosine Similarity)"}
-        </div>
-      )}
 
       <style>{`
         @keyframes bounce {
           0%, 60%, 100% { transform: translateY(0); }
-          30% { transform: translateY(-6px); }
+          30% { transform: translateY(-5px); }
         }
         @keyframes pulse {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
+          50% { opacity: 0.3; }
         }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        *::-webkit-scrollbar { width: 5px; }
+        *::-webkit-scrollbar-track { background: transparent; }
+        *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        *::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+        textarea::placeholder { color: rgba(255,255,255,0.3); }
       `}</style>
     </div>
   );
