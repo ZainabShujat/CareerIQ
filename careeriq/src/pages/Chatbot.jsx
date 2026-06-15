@@ -332,210 +332,283 @@ export default function Chatbot() {
         </div>
       </div>
 
-      {/* ── Messages Area ── */}
-      <div style={{
-        flex: 1, overflowY: "auto", padding: "0 0 8px",
-        scrollBehavior: "smooth",
-      }}>
-        {/* Empty state — show suggested questions */}
-        {isFirstMessage && (
-          <div style={{ maxWidth: 680, margin: "0 auto", padding: "32px 24px 0" }}>
-            <div style={{ marginBottom: 24 }}>
-              <div style={{ fontSize: 11, color: "#4a7a62", fontWeight: 700, letterSpacing: 1, marginBottom: 12, textTransform: "uppercase" }}>
-                Try asking
+      {/* ── Flex Container for Sidebar & Chat area ── */}
+      <div className="chat-body-container" style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+        
+        {/* ── Desktop Sidebar ── */}
+        <div className="chat-sidebar" style={{
+          width: 300,
+          borderRight: "1px solid rgba(255,255,255,0.07)",
+          background: "rgba(0,0,0,0.18)",
+          display: "flex",
+          flexDirection: "column",
+          padding: "24px 20px",
+          flexShrink: 0,
+          overflowY: "auto",
+        }}>
+          <div style={{ fontSize: 11, color: "#4a7a62", fontWeight: 700, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>
+            Suggested Questions
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {SUGGESTED_QUESTIONS.map((q, i) => (
+              <button
+                key={i}
+                onClick={() => sendMessage(q)}
+                style={{
+                  textAlign: "left",
+                  padding: "10px 14px",
+                  borderRadius: 10,
+                  border: "1px solid rgba(6,167,125,0.2)",
+                  background: "rgba(6,167,125,0.05)",
+                  color: "#a8d4bc",
+                  fontSize: 12.5,
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  transition: "all 0.15s",
+                  lineHeight: 1.4
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(6,167,125,0.15)"; e.currentTarget.style.color = "#d4ede2"; e.currentTarget.style.borderColor = "rgba(6,167,125,0.4)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(6,167,125,0.05)"; e.currentTarget.style.color = "#a8d4bc"; e.currentTarget.style.borderColor = "rgba(6,167,125,0.2)"; }}
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ marginTop: "auto", paddingTop: 30, fontSize: 12, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>
+            <div style={{ fontWeight: 700, color: "#4a7a62", marginBottom: 6 }}>TIPS:</div>
+            • Ask for salary trends or skills roadmaps.<br/>
+            • Compare careers like coder vs PM.<br/>
+            • Choose Response Mode below.
+          </div>
+        </div>
+
+        {/* ── Main Chat Area ── */}
+        <div className="chat-main-container" style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          
+          {/* Messages Area */}
+          <div style={{
+            flex: 1, overflowY: "auto", padding: "0 0 8px",
+            scrollBehavior: "smooth",
+          }}>
+            {/* Empty state — show suggested questions in main panel too if first message */}
+            {isFirstMessage && (
+              <div style={{ maxWidth: 680, margin: "0 auto", padding: "32px 24px 0" }}>
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 11, color: "#4a7a62", fontWeight: 700, letterSpacing: 1, marginBottom: 12, textTransform: "uppercase" }}>
+                    Welcome to CareerIQ Chat
+                  </div>
+                  <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, margin: "0 0 16px" }}>
+                    Select a suggestion or type your own question below. Our ML model classifies your intent and aligns matches using cosine similarity.
+                  </p>
+                </div>
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            )}
+
+            {/* Messages */}
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                style={{
+                  padding: "22px 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.04)",
+                  background: msg.role === "assistant" ? "rgba(255,255,255,0.02)" : "transparent",
+                }}
+              >
+                <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  {/* Avatar */}
+                  <div style={{
+                    width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                    background: msg.role === "assistant"
+                      ? "linear-gradient(135deg, #06a77d, #04c48a)"
+                      : "linear-gradient(135deg, #2a5245, #1a3c34)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 14, marginTop: 2,
+                    boxShadow: msg.role === "assistant" ? "0 0 10px rgba(6,167,125,0.3)" : "none"
+                  }}>
+                    {msg.role === "assistant" ? "🤖" : (user?.name?.[0] || "U")}
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: msg.role === "assistant" ? "#4a9e82" : "#7a9a8a", marginBottom: 8, letterSpacing: 0.3 }}>
+                      {msg.role === "assistant" ? "CareerIQ AI" : (user?.name?.split(" ")[0] || "You")}
+                    </div>
+                    <div style={{ color: "#dceee5", lineHeight: 1.7 }}>
+                      {msg.role === "assistant"
+                        ? (
+                          <>
+                            <MarkdownText text={msg.content} />
+                            {streaming && idx === messages.length - 1 && (
+                              <span style={{
+                                display: "inline-block", width: 2, height: "1.1em",
+                                background: "#06a77d", marginLeft: 2, verticalAlign: "text-bottom",
+                                animation: "blink 0.7s step-end infinite"
+                              }} />
+                            )}
+                          </>
+                        )
+                        : <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7 }}>{msg.content}</p>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Loading */}
+            {loading && (
+              <div style={{
+                padding: "22px 0",
+                borderBottom: "1px solid rgba(255,255,255,0.04)",
+                background: "rgba(255,255,255,0.02)",
+              }}>
+                <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <div style={{
+                    width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+                    background: "linear-gradient(135deg, #06a77d, #04c48a)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 14, boxShadow: "0 0 10px rgba(6,167,125,0.3)"
+                  }}>🤖</div>
+                  <div style={{ flex: 1, paddingTop: 6 }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "#4a9e82", marginBottom: 10, letterSpacing: 0.3 }}>CareerIQ AI</div>
+                    <TypingDots />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} style={{ height: 8 }} />
+          </div>
+
+          {/* ── Input Area ── */}
+          <div style={{
+            flexShrink: 0, borderTop: "1px solid rgba(255,255,255,0.07)",
+            background: "rgba(0,0,0,0.25)", backdropFilter: "blur(12px)",
+            padding: "12px 24px 20px",
+          }}>
+            <div style={{ maxWidth: 740, margin: "0 auto" }}>
+              
+              {/* ── Mobile Suggestions Strip (scrollable, shown only on mobile) ── */}
+              <div className="mobile-suggestions-strip" style={{
+                display: "none",
+                gap: 8,
+                overflowX: "auto",
+                paddingBottom: 8,
+                marginBottom: 8,
+                whiteSpace: "nowrap",
+                scrollbarWidth: "none"
+              }}>
                 {SUGGESTED_QUESTIONS.map((q, i) => (
                   <button
                     key={i}
                     onClick={() => sendMessage(q)}
                     style={{
-                      padding: "9px 16px", borderRadius: 20,
+                      display: "inline-block",
+                      padding: "6px 12px",
+                      borderRadius: 14,
                       border: "1px solid rgba(6,167,125,0.25)",
                       background: "rgba(6,167,125,0.08)",
-                      color: "#a8d4bc", fontSize: 13, cursor: "pointer",
-                      fontFamily: "inherit", transition: "all 0.15s"
+                      color: "#a8d4bc",
+                      fontSize: 11.5,
+                      cursor: "pointer",
+                      fontFamily: "inherit",
+                      flexShrink: 0
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(6,167,125,0.18)"; e.currentTarget.style.color = "#d4ede2"; e.currentTarget.style.borderColor = "rgba(6,167,125,0.5)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(6,167,125,0.08)"; e.currentTarget.style.color = "#a8d4bc"; e.currentTarget.style.borderColor = "rgba(6,167,125,0.25)"; }}
                   >
                     {q}
                   </button>
                 ))}
               </div>
-            </div>
-          </div>
-        )}
 
-        {/* Messages */}
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            style={{
-              padding: msg.role === "assistant" ? "22px 0" : "22px 0",
-              borderBottom: "1px solid rgba(255,255,255,0.04)",
-              background: msg.role === "assistant" ? "rgba(255,255,255,0.02)" : "transparent",
-            }}
-          >
-            <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
-              {/* Avatar */}
-              <div style={{
-                width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
-                background: msg.role === "assistant"
-                  ? "linear-gradient(135deg, #06a77d, #04c48a)"
-                  : "linear-gradient(135deg, #2a5245, #1a3c34)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 14, marginTop: 2,
-                boxShadow: msg.role === "assistant" ? "0 0 10px rgba(6,167,125,0.3)" : "none"
-              }}>
-                {msg.role === "assistant" ? "🤖" : (user?.name?.[0] || "U")}
-              </div>
-
-              {/* Content */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: msg.role === "assistant" ? "#4a9e82" : "#7a9a8a", marginBottom: 8, letterSpacing: 0.3 }}>
-                  {msg.role === "assistant" ? "CareerIQ AI" : (user?.name?.split(" ")[0] || "You")}
+              {/* ── Concise / Detailed toggle ───────────────────────────────── */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontWeight: 600, letterSpacing: 0.5 }}>RESPONSE MODE</span>
+                <div style={{
+                  display: "flex", borderRadius: 20, overflow: "hidden",
+                  border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)"
+                }}>
+                  {[{ id: "concise", label: "⚡ Concise", tip: "Short, to-the-point answers" }, { id: "detailed", label: "📖 Detailed", tip: "Full explanations and roadmaps" }].map(opt => (
+                    <button
+                      key={opt.id}
+                      title={opt.tip}
+                      onClick={() => setMode(opt.id)}
+                      style={{
+                        padding: "5px 14px", border: "none", cursor: "pointer",
+                        fontSize: 12, fontWeight: 600, fontFamily: "inherit",
+                        background: mode === opt.id ? "rgba(6,167,125,0.25)" : "transparent",
+                        color: mode === opt.id ? "#06a77d" : "rgba(255,255,255,0.35)",
+                        borderRight: opt.id === "concise" ? "1px solid rgba(255,255,255,0.12)" : "none",
+                        transition: "all 0.15s",
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
                 </div>
-                <div style={{ color: "#dceee5", lineHeight: 1.7 }}>
-                  {msg.role === "assistant"
-                    ? (
-                      <>
-                        <MarkdownText text={msg.content} />
-                        {streaming && idx === messages.length - 1 && (
-                          <span style={{
-                            display: "inline-block", width: 2, height: "1.1em",
-                            background: "#06a77d", marginLeft: 2, verticalAlign: "text-bottom",
-                            animation: "blink 0.7s step-end infinite"
-                          }} />
-                        )}
-                      </>
-                    )
-                    : <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7 }}>{msg.content}</p>
-                  }
-                </div>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", fontStyle: "italic" }} className="mode-desc">
+                  {mode === "concise" ? "Quick answers" : "Full explanations"}
+                </span>
               </div>
-            </div>
-          </div>
-        ))}
 
-        {/* Loading */}
-        {loading && (
-          <div style={{
-            padding: "22px 0",
-            borderBottom: "1px solid rgba(255,255,255,0.04)",
-            background: "rgba(255,255,255,0.02)",
-          }}>
-            <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+              {/* Input box */}
               <div style={{
-                width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
-                background: "linear-gradient(135deg, #06a77d, #04c48a)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 14, boxShadow: "0 0 10px rgba(6,167,125,0.3)"
-              }}>🤖</div>
-              <div style={{ flex: 1, paddingTop: 6 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: "#4a9e82", marginBottom: 10, letterSpacing: 0.3 }}>CareerIQ AI</div>
-                <TypingDots />
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div ref={messagesEndRef} style={{ height: 8 }} />
-      </div>
-
-      {/* ── Input Area ── */}
-      <div style={{
-        flexShrink: 0, borderTop: "1px solid rgba(255,255,255,0.07)",
-        background: "rgba(0,0,0,0.25)", backdropFilter: "blur(12px)",
-        padding: "12px 24px 20px",
-      }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          {/* ── Concise / Detailed toggle ───────────────────────────────── */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontWeight: 600, letterSpacing: 0.5 }}>RESPONSE MODE</span>
-            <div style={{
-              display: "flex", borderRadius: 20, overflow: "hidden",
-              border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)"
-            }}>
-              {[{ id: "concise", label: "⚡ Concise", tip: "Short, to-the-point answers" }, { id: "detailed", label: "📖 Detailed", tip: "Full explanations and roadmaps" }].map(opt => (
-                <button
-                  key={opt.id}
-                  title={opt.tip}
-                  onClick={() => setMode(opt.id)}
+                display: "flex", alignItems: "flex-end", gap: 12,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                borderRadius: 14, padding: "10px 12px 10px 18px",
+                transition: "border-color 0.2s",
+              }}
+                onFocusCapture={e => { e.currentTarget.style.borderColor = "rgba(6,167,125,0.5)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(6,167,125,0.08)"; }}
+                onBlurCapture={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <textarea
+                  ref={textareaRef}
+                  value={input}
+                  onChange={handleInput}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask about careers, skills, salary..."
+                  rows={1}
                   style={{
-                    padding: "5px 14px", border: "none", cursor: "pointer",
-                    fontSize: 12, fontWeight: 600, fontFamily: "inherit",
-                    background: mode === opt.id ? "rgba(6,167,125,0.25)" : "transparent",
-                    color: mode === opt.id ? "#06a77d" : "rgba(255,255,255,0.35)",
-                    borderRight: opt.id === "concise" ? "1px solid rgba(255,255,255,0.12)" : "none",
-                    transition: "all 0.15s",
+                    flex: 1, background: "transparent", border: "none", outline: "none",
+                    color: "#e8f0ec", fontSize: 14, lineHeight: 1.6, resize: "none",
+                    fontFamily: "inherit", minHeight: 24, maxHeight: 150,
                   }}
+                />
+                <button
+                  onClick={() => sendMessage()}
+                  disabled={loading || streaming || !input.trim()}
+                  style={{
+                    width: 36, height: 36, borderRadius: 9, border: "none",
+                    background: loading || streaming || !input.trim()
+                      ? "rgba(255,255,255,0.08)"
+                      : "linear-gradient(135deg, #06a77d, #04c48a)",
+                    color: loading || streaming || !input.trim() ? "rgba(255,255,255,0.3)" : "#fff",
+                    cursor: loading || streaming || !input.trim() ? "default" : "pointer",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 16, flexShrink: 0, transition: "all 0.2s",
+                    boxShadow: loading || streaming || !input.trim() ? "none" : "0 2px 8px rgba(6,167,125,0.4)"
+                  }}
+                  title="Send (Enter)"
                 >
-                  {opt.label}
+                  {(loading || streaming) ? (
+                    <div style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.4)", borderTop: "2px solid #fff", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                  ) : "↑"}
                 </button>
-              ))}
-            </div>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
-              {mode === "concise" ? "Quick answers, key points only" : "Full roadmaps, salary tables, examples"}
-            </span>
-          </div>
-          {/* Input box */}
-          <div style={{
-            display: "flex", alignItems: "flex-end", gap: 12,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: 14, padding: "10px 12px 10px 18px",
-            transition: "border-color 0.2s",
-          }}
-            onFocusCapture={e => { e.currentTarget.style.borderColor = "rgba(6,167,125,0.5)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(6,167,125,0.08)"; }}
-            onBlurCapture={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.boxShadow = "none"; }}
-          >
-            <textarea
-              ref={textareaRef}
-              value={input}
-              onChange={handleInput}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask about careers, skills, salary, or anything career-related..."
-              rows={1}
-              style={{
-                flex: 1, background: "transparent", border: "none", outline: "none",
-                color: "#e8f0ec", fontSize: 14, lineHeight: 1.6, resize: "none",
-                fontFamily: "inherit", minHeight: 24, maxHeight: 150,
-                "::placeholder": { color: "rgba(255,255,255,0.3)" }
-              }}
-            />
-            <button
-              onClick={() => sendMessage()}
-              disabled={loading || streaming || !input.trim()}
-              style={{
-                width: 36, height: 36, borderRadius: 9, border: "none",
-                background: loading || streaming || !input.trim()
-                  ? "rgba(255,255,255,0.08)"
-                  : "linear-gradient(135deg, #06a77d, #04c48a)",
-                color: loading || streaming || !input.trim() ? "rgba(255,255,255,0.3)" : "#fff",
-                cursor: loading || streaming || !input.trim() ? "default" : "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 16, flexShrink: 0, transition: "all 0.2s",
-                boxShadow: loading || streaming || !input.trim() ? "none" : "0 2px 8px rgba(6,167,125,0.4)"
-              }}
-              title="Send (Enter)"
-            >
-              {(loading || streaming) ? (
-                <div style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.4)", borderTop: "2px solid #fff", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
-              ) : "↑"}
-            </button>
-          </div>
+              </div>
 
-          {/* Footer info */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, padding: "0 2px" }}>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>
-              Press Enter to send · Shift+Enter for new line
-            </span>
-            {source && (
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>
-                {source === "openai" ? "⚡ OpenAI GPT-3.5" : "🧠 CareerIQ ML Engine"}
-              </span>
-            )}
+              {/* Footer info */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, padding: "0 2px" }}>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }} className="footer-keys-tip">
+                  Press Enter to send · Shift+Enter for new line
+                </span>
+                {source && (
+                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>
+                    {source === "openai" ? "⚡ OpenAI GPT-3.5" : "🧠 CareerIQ ML Engine"}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -556,11 +629,27 @@ export default function Chatbot() {
           0%, 100% { opacity: 1; }
           50% { opacity: 0; }
         }
-        *::-webkit-scrollbar { width: 5px; }
+        *::-webkit-scrollbar { width: 5px; height: 5px; }
         *::-webkit-scrollbar-track { background: transparent; }
         *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
         *::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
         textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+        /* Media Queries for responsive sidebar */
+        @media (max-width: 768px) {
+          .chat-sidebar {
+            display: none !important;
+          }
+          .mobile-suggestions-strip {
+            display: flex !important;
+          }
+          .footer-keys-tip {
+            display: none !important;
+          }
+          .mode-desc {
+            display: none !important;
+          }
+        }
       `}</style>
     </div>
   );

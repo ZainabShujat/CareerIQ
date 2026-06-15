@@ -97,6 +97,13 @@ export default function Quiz() {
   const [activeIndex, setActiveIndex] = useState(0);
   const rowRefs = useRef([]);
 
+  const handleAutoFill = () => {
+    // Fill all questions with realistic positive values (3 to 5) so scores are well-distributed
+    const simulatedAnswers = TRAIT_QUESTIONS.map(() => Math.floor(Math.random() * 3) + 3);
+    setAnswers(simulatedAnswers);
+    setActiveIndex(TRAIT_QUESTIONS.length - 1);
+  };
+
   const answeredCount = answers.filter(a => a > 0).length;
   const progress = Math.round((answeredCount / TRAIT_QUESTIONS.length) * 100);
 
@@ -171,7 +178,29 @@ export default function Quiz() {
           <button style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #cfd8d4", background: "#fff", cursor: "pointer" }}
             onClick={() => navigate(-1)}>← Back</button>
           <div>
-            <h1 style={styles.title}>Personality Assessment</h1>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <h1 style={styles.title}>Personality Assessment</h1>
+              <button
+                type="button"
+                onClick={handleAutoFill}
+                style={{
+                  background: "linear-gradient(135deg, #06a77d, #04c48a)",
+                  color: "#fff",
+                  border: "none",
+                  padding: "5px 12px",
+                  borderRadius: 6,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  boxShadow: "0 2px 8px rgba(6,167,125,0.2)",
+                  transition: "transform 0.1s"
+                }}
+                onMouseDown={e => e.currentTarget.style.transform = "scale(0.95)"}
+                onMouseUp={e => e.currentTarget.style.transform = "scale(1)"}
+              >
+                ⚡ Auto-Fill
+              </button>
+            </div>
             <div style={styles.subtitle}>27 questions · Measures 9 career-relevant traits · ~5 min</div>
           </div>
         </div>

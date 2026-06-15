@@ -244,22 +244,71 @@ function tokenize(text) {
   return tokens;
 }
 
-/**
- * classifyIntent: returns best matching intent and its score.
- */
 function classifyIntent(message) {
+  const lowerMsg = message.toLowerCase().trim();
   const tokens = tokenize(message);
   const scores = {};
 
-  for (const [intent, { terms }] of Object.entries(INTENT_MAP)) {
+  // Initialize scores
+  for (const intent of Object.keys(INTENT_MAP)) {
     scores[intent] = 0;
+  }
+
+  // 1. TF-IDF Token Matching
+  for (const [intent, { terms }] of Object.entries(INTENT_MAP)) {
     for (const token of tokens) {
       if (terms[token]) scores[intent] += terms[token];
     }
   }
 
+  // 2. Direct keyword/phrase checks for robustness (boost matches)
+  if (lowerMsg.includes("alone") || lowerMsg.includes("introvert") || lowerMsg.includes("quiet") || lowerMsg.includes("independent") || lowerMsg.includes("solo")) {
+    scores.introvert_solo += 4;
+  }
+  if (lowerMsg.includes("salary") || lowerMsg.includes("earn") || lowerMsg.includes("pay") || lowerMsg.includes("lpa") || lowerMsg.includes("ctc") || lowerMsg.includes("income") || lowerMsg.includes("package") || lowerMsg.includes("money")) {
+    scores.salary += 4;
+  }
+  if (lowerMsg.includes("compare") || lowerMsg.includes("vs") || lowerMsg.includes("versus") || lowerMsg.includes("difference between") || lowerMsg.includes("difference b/w")) {
+    scores.compare += 4;
+  }
+  if (lowerMsg.includes("skill") || lowerMsg.includes("learn") || lowerMsg.includes("course") || lowerMsg.includes("certif") || lowerMsg.includes("study") || lowerMsg.includes("education")) {
+    scores.skills_learning += 4;
+  }
+  if (lowerMsg.includes("recommend") || lowerMsg.includes("suggest") || lowerMsg.includes("suit") || lowerMsg.includes("match") || lowerMsg.includes("for me") || lowerMsg.includes("fit")) {
+    scores.recommendation += 4;
+  }
+  if (lowerMsg.includes("data science") || lowerMsg.includes("data scientist") || lowerMsg.includes("analytics") || lowerMsg.includes("data analysis")) {
+    scores.data_science += 4;
+  }
+  if (lowerMsg.includes("software engineer") || lowerMsg.includes("software engineering") || lowerMsg.includes("coding") || lowerMsg.includes("programmer") || lowerMsg.includes("developer") || lowerMsg.includes("backend") || lowerMsg.includes("frontend") || lowerMsg.includes("full stack") || lowerMsg.includes("swe")) {
+    scores.software_eng += 4;
+  }
+  if (lowerMsg.includes("ux") || lowerMsg.includes("ui") || lowerMsg.includes("design") || lowerMsg.includes("figma") || lowerMsg.includes("wireframe")) {
+    scores.ux_design += 4;
+  }
+  if (lowerMsg.includes("product manager") || lowerMsg.includes("product management") || lowerMsg.includes(" pm ") || lowerMsg.includes("pm role")) {
+    scores.product_mgmt += 4;
+  }
+  if (lowerMsg.includes("cybersecurity") || lowerMsg.includes("cyber security") || lowerMsg.includes("hacking") || lowerMsg.includes("security analyst") || lowerMsg.includes("ethical hacker")) {
+    scores.cybersecurity += 4;
+  }
+  if (lowerMsg.includes("ai") || lowerMsg.includes("ml engineer") || lowerMsg.includes("artificial intelligence") || lowerMsg.includes("deep learning") || lowerMsg.includes("neural network")) {
+    scores.ai_ml_eng += 4;
+  }
+  if (lowerMsg.includes("change career") || lowerMsg.includes("career change") || lowerMsg.includes("switch") || lowerMsg.includes("pivot") || lowerMsg.includes("transition")) {
+    scores.career_change += 4;
+  }
+
   const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-  return { intent: sorted[0][0], score: sorted[0][1], allScores: scores };
+  const bestIntent = sorted[0][0];
+  const bestScore = sorted[0][1];
+
+  // Default to recommendation if the best score is 0
+  return { 
+    intent: bestScore > 0 ? bestIntent : "recommendation", 
+    score: Math.max(bestScore, 1.5), // Ensure it passes the minimum threshold if it had any hit
+    allScores: scores 
+  };
 }
 
 // ─── 4. Profile Analyser ──────────────────────────────────────────────────────

@@ -72,7 +72,8 @@ a { color: inherit; text-decoration: none; }
 .ciq-header .ciq-container {
   display: flex;
   align-items: center;
-  gap: 140px;
+  justify-content: space-between;
+  gap: 20px;
   height: 84px;
 }
 .ciq-brand {
@@ -98,7 +99,30 @@ a { color: inherit; text-decoration: none; }
 .ciq-nav {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+}
+
+/* Mobile responsive navbar & header */
+@media (max-width: 768px) {
+  .ciq-header .ciq-container {
+    height: 64px;
+    padding: 0 16px;
+  }
+  .ciq-sub {
+    display: none;
+  }
+  .ciq-title {
+    font-size: 16px;
+  }
+  .ciq-nav {
+    gap: 2px;
+  }
+  .ciq-link {
+    padding: 6px 8px !important;
+  }
+  .ciq-main {
+    padding-top: 84px !important;
+  }
 }
 .ciq-link {
   color: var(--muted);
