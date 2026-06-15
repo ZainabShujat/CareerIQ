@@ -21,7 +21,7 @@ export default function CareerDetail() {
 
   const [liveData, setLiveData] = useState(null);
   const [loadingLive, setLoadingLive] = useState(true);
-  const API_BASE = import.meta.env.VITE_API_BASE || "";
+  const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
   useEffect(() => {
     console.log("LOADED → INLINE CareerDetail.jsx", rawParam, decoded);

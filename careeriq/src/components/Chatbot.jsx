@@ -1,7 +1,7 @@
 // src/components/Chatbot.jsx
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext.jsx";
-const API_BASE = import.meta.env.VITE_API_BASE || "";
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
 export default function Chatbot() {
   const { user, fetchProfile } = useContext(AuthContext);

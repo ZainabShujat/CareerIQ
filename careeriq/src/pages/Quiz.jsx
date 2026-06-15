@@ -91,7 +91,7 @@ const TRAIT_LABELS = {
 export default function Quiz() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const API_BASE = import.meta.env.VITE_API_BASE || "";
+  const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
   const [answers, setAnswers] = useState(() => TRAIT_QUESTIONS.map(() => 0));
   const [activeIndex, setActiveIndex] = useState(0);

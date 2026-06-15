@@ -8,7 +8,7 @@ const TOKEN_KEY = "ciq_token";
 const BOOKMARKS_KEY = "ciq_bookmarks";
 
 // API base (empty for local dev unless VITE_API_BASE is set)
-const API_BASE = import.meta.env.VITE_API_BASE || "";
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
 const getToken = () => localStorage.getItem(TOKEN_KEY);
 const setToken = (t) => (t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY));

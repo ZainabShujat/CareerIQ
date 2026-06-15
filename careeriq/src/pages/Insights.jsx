@@ -5,7 +5,7 @@ import careersData from "../data/careers.json";
 import { AuthContext } from "../contexts/AuthContext";
 import BackButton from "../components/BackButton";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "";
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
 // ── Scoring helpers ───────────────────────────────────────────────────────────
 

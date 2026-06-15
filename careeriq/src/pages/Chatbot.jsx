@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import BackButton from "../components/BackButton";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "";
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
 const SUGGESTED_QUESTIONS = [
   "What career should I pursue based on my results?",
