@@ -171,6 +171,10 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  const updateUserResults = useCallback((results) => {
+    setUser((prev) => (prev ? { ...prev, results } : null));
+  }, []);
+
   const value = {
     authOpen,
     openAuth,
@@ -186,6 +190,7 @@ export function AuthProvider({ children }) {
     fetchProfile,
     getResults,
     saveResult,
+    updateUserResults,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

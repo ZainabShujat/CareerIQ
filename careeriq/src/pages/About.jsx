@@ -1,494 +1,175 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import BackButton from "../components/BackButton";
+import Header from "../components/Header";
 
 export default function About() {
   const navigate = useNavigate();
 
   return (
-    <div className="ciq-root">
-      <main className="ciq-main" style={{ paddingTop: 20 }}>
-        <div className="ciq-container" style={{ maxWidth: 800 }}>
-          <div style={{ animation: "slideInDown 0.6s ease-out" }}>
-            <button
-              onClick={() => navigate("/")}
-              style={{
-                padding: "8px 12px",
-                borderRadius: 8,
-                border: "1px solid rgba(6, 95, 75, 0.12)",
-                background: "#fff",
-                cursor: "pointer",
-                marginBottom: 20,
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "translateY(-2px)";
-                e.target.style.boxShadow = "0 6px 16px rgba(6, 95, 75, 0.08)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "translateY(0)";
-                e.target.style.boxShadow = "none";
-              }}
-            >
-              ← Back
-            </button>
+    <div className="ciq-root" style={{ background: "linear-gradient(180deg, #f6fbf9 0%, #edf7f3 100%)", minHeight: "100vh" }}>
+      {/* Icon Navigation Header */}
+      <Header />
 
+      <main className="ciq-main" style={{ paddingBottom: 80 }}>
+        <div className="ciq-container" style={{ maxWidth: 880, margin: "0 auto", padding: "0 20px" }}>
+          
+          {/* Header Title section */}
+          <div style={{
+            animation: "slideInDown 0.6s ease-out",
+            textAlign: "center",
+            marginTop: 40,
+            marginBottom: 40
+          }}>
             <h1
               style={{
-                fontSize: 32,
-                fontWeight: 800,
-                margin: "0 0 16px 0",
+                fontSize: 42,
+                fontWeight: 900,
+                margin: "0 0 12px 0",
                 background: "linear-gradient(135deg, #072827, #06a77d)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-1px"
               }}
             >
               About CareerIQ
             </h1>
+            <p
+              className="muted"
+              style={{
+                fontSize: 16,
+                lineHeight: 1.6,
+                color: "#4a5a56",
+                maxWidth: 680,
+                margin: "0 auto"
+              }}
+            >
+              An evidence-driven career recommendation engine matching your personality, skills, and life priorities using mathematical trait-vector alignment.
+            </p>
           </div>
 
-          {/* Sections with staggered animation */}
-          <div style={{ animation: "slideInUp 0.6s ease-out 0.1s both" }}>
-            <header style={{ marginTop: 8, marginBottom: 28 }}>
-              <p
-                className="muted"
-                style={{
-                  marginTop: 12,
-                  maxWidth: 960,
-                  color: "var(--ciq-muted)",
-                }}
-              >
-                CareerIQ is an evidence-driven career recommendation platform that
-                helps students and early-career professionals explore careers
-                aligned with their skills, values and life priorities. It combines
-                a concise assessment, practical skill tests and contextual market
-                data to produce actionable career matches tailored for the Indian
-                job market.
+          {/* Staggered Content Area */}
+          <div style={{ animation: "slideInUp 0.6s ease-out 0.1s both", display: "flex", flexDirection: "column", gap: 30 }}>
+            
+            {/* Core Card Section */}
+            <section style={{
+              background: "#ffffff",
+              padding: 32,
+              borderRadius: 16,
+              border: "1px solid rgba(6, 160, 120, 0.08)",
+              boxShadow: "0 10px 30px rgba(6, 95, 75, 0.04)"
+            }}>
+              <h3 style={{ marginTop: 0, fontSize: 22, color: "#072827", fontWeight: 800, marginBottom: 16 }}>Platform Workflow</h3>
+              
+              <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                {[
+                  { step: "1", title: "Take the Assessment", desc: "A 27-item Likert personality questionnaire measuring 9 core work-preference and style traits." },
+                  { step: "2", title: "Take Practical Skill Tests", desc: "Assess specific domains (analytical, tech, decision speed, emotional IQ) to map quantitative scores." },
+                  { step: "3", title: "View Weighted Matches", desc: "The Weighted Directional Matching algorithm ranks careers without penalizing over-qualification." },
+                  { step: "4", title: "Explore AI Insights & Paths", desc: "Get real-time Indian salary estimations, job market demand, emerging tool lists, and custom project roadmaps." }
+                ].map((item, idx) => (
+                  <div key={idx} style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
+                    <div style={{
+                      width: 36, height: 36, borderRadius: "50%",
+                      background: "linear-gradient(135deg, #06a77d, #04c48a)",
+                      color: "#fff", display: "flex", alignItems: "center", justifyContent: "center",
+                      fontWeight: 800, fontSize: 16, flexShrink: 0,
+                      boxShadow: "0 4px 12px rgba(6,167,125,0.3)"
+                    }}>
+                      {item.step}
+                    </div>
+                    <div>
+                      <h4 style={{ margin: "0 0 4px 0", fontSize: 16, color: "#072827", fontWeight: 700 }}>{item.title}</h4>
+                      <p style={{ margin: 0, color: "#5b6a67", fontSize: 14, lineHeight: 1.5 }}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Methodology & Parameters */}
+            <section style={{
+              background: "#ffffff",
+              padding: 32,
+              borderRadius: 16,
+              border: "1px solid rgba(6, 160, 120, 0.08)",
+              boxShadow: "0 10px 30px rgba(6, 95, 75, 0.04)"
+            }}>
+              <h3 style={{ marginTop: 0, fontSize: 22, color: "#072827", fontWeight: 800, marginBottom: 8 }}>Methodology</h3>
+              <p style={{ color: "#5b6a67", fontSize: 14.5, lineHeight: 1.6, margin: "0 0 20px" }}>
+                CareerIQ models careers as multidimensional trait vectors. We align user personality profiles, skill scores, and lifestyle values to rank jobs using a custom cosine similarity and distance matrix.
               </p>
-            </header>
 
-            {/* HERO CARDS */}
-            <section style={{ marginBottom: 28 }}>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 320px",
-                  gap: 20,
-                  alignItems: "start",
-                }}
-              >
-                <div
-                  style={{
-                    background: "linear-gradient(180deg,#fff,#fbfffd)",
-                    padding: 22,
-                    borderRadius: 14,
-                    border: "1px solid #eef7f2",
-                    boxShadow: "0 6px 20px rgba(10,30,20,0.04)",
-                  }}
-                >
-                  <h3 style={{ marginTop: 0, fontSize: 20 }}>
-                    Platform workflow
-                  </h3>
-
-                  <div style={{ display: "flex", gap: 16, marginTop: 12 }}>
-                    <ol
-                      style={{
-                        margin: 0,
-                        paddingLeft: 18,
-                        color: "var(--ciq-dark)",
-                        flex: 1,
-                      }}
-                    >
-                      <li
-                        style={{ marginBottom: 8 }}
-                      >{` `}<strong>Take the assessment</strong> — a short questionnaire that builds a personality and happiness profile.</li>
-                      <li
-                        style={{ marginBottom: 8 }}
-                      >{` `}<strong>Receive recommendations</strong> — careers suggested based on your profile and priorities.</li>
-                      <li
-                        style={{ marginBottom: 8 }}
-                      >{` `}<strong>Refine priorities</strong> — adjust sliders to re-rank results in real time.</li>
-                      <li style={{ marginBottom: 0 }}>
-                        <strong>Explore next steps</strong> — review role summaries,
-                        responsibilities and suggested projects.
-                      </li>
-                    </ol>
-
-                    <div style={{ minWidth: 220 }}>
-                      <div
-                        style={{
-                          background: "#fff",
-                          padding: 12,
-                          borderRadius: 10,
-                          border: "1px solid #eef7f2",
-                        }}
-                      >
-                        <h5 style={{ margin: "0 0 8px 0" }}>Quick facts</h5>
-                        <div
-                          style={{
-                            color: "var(--ciq-muted)",
-                            lineHeight: 1.4,
-                          }}
-                        >
-                          <div>
-                            <strong>100+</strong> curated career profiles
-                          </div>
-                          <div>
-                            <strong>~7 minutes</strong> average assessment time
-                          </div>
-                          <div>
-                            <strong>Interactive</strong> priority sliders
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      marginTop: 16,
-                      borderTop: "1px dashed #eef7f2",
-                      paddingTop: 16,
-                      color: "var(--ciq-muted)",
-                    }}
-                  >
-                    <strong>Note:</strong> CareerIQ is a research-oriented tool to
-                    support exploration and early-stage decision-making — it does
-                    not replace professional career counselling.
-                  </div>
-                </div>
-
-                <aside
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 12,
-                  }}
-                >
-                  <div
-                    style={{
-                      padding: 18,
-                      borderRadius: 12,
-                      background: "#fff",
-                      border: "1px solid #eef7f2",
-                      boxShadow: "0 4px 12px rgba(10,20,15,0.03)",
-                    }}
-                  >
-                    <h4 style={{ margin: "0 0 8px 0" }}>How CareerIQ helps</h4>
-                    <ul
-                      style={{
-                        margin: 0,
-                        paddingLeft: 18,
-                        color: "var(--ciq-muted)",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      <li>Identify roles that fit your skills</li>
-                      <li>Compare compensation, stress and work-life factors</li>
-                      <li>Get practical next steps to build skills</li>
-                    </ul>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: 14,
-                      borderRadius: 12,
-                      background: "#f7fff9",
-                      border: "1px solid #eef7f2",
-                    }}
-                  >
-                    <h5 style={{ margin: "0 0 6px 0" }}>Get started</h5>
-                    <div style={{ display: "flex", gap: 8 }}>
-                      <button
-                        onClick={() => navigate("/quiz")}
-                        className="ciq-primary"
-                        style={{
-                          padding: "8px 12px",
-                          borderRadius: 8,
-                        }}
-                      >
-                        Take assessment
-                      </button>
-                      <button
-                        onClick={() => navigate("/careers")}
-                        className="small-cta"
-                        style={{
-                          padding: "8px 12px",
-                          borderRadius: 8,
-                        }}
-                      >
-                        Browse careers
-                      </button>
-                    </div>
-                  </div>
-                </aside>
-              </div>
-            </section>
-
-            {/* METHODOLOGY */}
-            <section style={{ marginBottom: 28 }}>
-              <div
-                style={{
-                  background: "#fff",
-                  padding: 22,
-                  borderRadius: 12,
-                  border: "1px solid #eef7f2",
-                  boxShadow: "0 6px 20px rgba(10,30,20,0.02)",
-                }}
-              >
-                <h3 style={{ marginTop: 0 }}>Methodology</h3>
-                <p
-                  className="muted"
-                  style={{ marginTop: 8 }}
-                >{` `}CareerIQ uses a multi-dimensional matching approach combining assessment results, user priorities and market data to score and rank careers. Recommendations include brief explanations and suggested next steps.</p>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: 12,
-                    marginTop: 14,
-                  }}
-                >
-                  <div
-                    style={{
-                      padding: 12,
-                      borderRadius: 8,
-                      background: "#f8fffb",
-                      border: "1px solid #eef7f2",
-                    }}
-                  >
-                    <strong>Assessment</strong>
-                    <div className="muted">
-                      24 likert-style items measuring work preferences and practical
-                      skills.
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: 12,
-                      borderRadius: 8,
-                      background: "#f3f7ff",
-                      border: "1px solid #eef3ff",
-                    }}
-                  >
-                    <strong>Matching</strong>
-                    <div className="muted">
-                      Combines top-skill detection, happiness sliders and normalized
-                      market benchmarks.
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: 12,
-                      borderRadius: 8,
-                      background: "#fff8f5",
-                      border: "1px solid #fbeeea",
-                    }}
-                  >
-                    <strong>Action plan</strong>
-                    <div className="muted">
-                      Each recommended role includes practical next steps, project ideas
-                      and resource links.
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ marginTop: 16 }}>
-                  <h4 style={{ margin: "10px 0" }}>Scales & normalization</h4>
-                  <ul style={{ color: "var(--ciq-muted)" }}>
-                    <li>
-                      <strong>Mental stress (0–100):</strong> Higher values indicate
-                      more stressful roles.
-                    </li>
-                    <li>
-                      <strong>Salary (LPA):</strong> Market salary in lakhs per
-                      annum, normalised for scoring.
-                    </li>
-                    <li>
-                      <strong>Work-life balance (0–100):</strong> Higher values
-                      indicate better balance.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* DIMENSIONS */}
-            <section style={{ marginBottom: 28 }}>
-              <div
-                style={{
-                  background: "#fff",
-                  padding: 22,
-                  borderRadius: 12,
-                  border: "1px solid #eef7f2",
-                  boxShadow: "0 6px 20px rgba(10,30,20,0.02)",
-                }}
-              >
-                <h3 style={{ marginTop: 0 }}>Job happiness dimensions</h3>
-                <p className="muted">
-                  The Job Happiness Index compares your preferences against career
-                  benchmarks across multiple dimensions.
-                </p>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-                    gap: 12,
-                    marginTop: 12,
-                  }}
-                >
-                  {[
-                    "Compensation",
-                    "Job security",
-                    "Work-life balance",
-                    "Growth & learning",
-                    "Work environment",
-                    "Autonomy",
-                    "Recognition",
-                  ].map((d) => (
-                    <div
-                      key={d}
-                      style={{
-                        padding: 12,
-                        borderRadius: 10,
-                        background: "#fbfff7",
-                        border: "1px solid #eef7f2",
-                        minHeight: 72,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <strong style={{ marginBottom: 6 }}>{d}</strong>
-                      <small className="muted">Indicator</small>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* COVERAGE & DATA */}
-            <section style={{ marginBottom: 18 }}>
-              <div
-                style={{
-                  background: "#fff",
-                  padding: 22,
-                  borderRadius: 12,
-                  border: "1px solid #eef7f2",
-                  boxShadow: "0 6px 20px rgba(10,30,20,0.02)",
-                }}
-              >
-                <h3 style={{ marginTop: 0 }}>Coverage & regional focus</h3>
-                <p className="muted">
-                  CareerIQ covers 100+ career profiles across technology, healthcare,
-                  engineering, business, education, creative industries and skilled
-                  trades. Salary bands are tailored to the Indian context with regional
-                  adjustments where applicable.
-                </p>
-
-                <p
-                  className="muted"
-                  style={{ marginTop: 8 }}
-                >
-                  The platform is intended as a research tool for exploration and
-                  early-stage decision-making and does not substitute professional
-                  career counselling.
-                </p>
-              </div>
-            </section>
-
-            {/* CONTRIBUTIONS */}
-            <section
-              style={{
-                marginBottom: 10,
+              <div style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 320px",
-                gap: 18,
-              }}
-            >
-              <div
-                style={{
-                  background: "#fff",
-                  padding: 22,
-                  borderRadius: 12,
-                  border: "1px solid #eef7f2",
-                  boxShadow: "0 6px 20px rgba(10,30,20,0.02)",
-                }}
-              >
-                <h3 style={{ marginTop: 0 }}>Contributing & data improvements</h3>
-                <p className="muted">
-                  Contributions are welcome as pull requests, issue reports or by
-                  sharing validated datasets. Improvements that help accuracy and
-                  coverage are especially valuable (career descriptions, salary
-                  sources, skills mapping).
-                </p>
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: 16
+              }}>
+                <div style={{ padding: 18, borderRadius: 10, background: "#f8fffb", border: "1px solid #e2efe8" }}>
+                  <strong style={{ display: "block", color: "#065f4b", marginBottom: 6 }}>No Over-qualification Penalty</strong>
+                  <span style={{ fontSize: 13, color: "#5b6a67", lineHeight: 1.5, display: "block" }}>
+                    exceeding a career's trait benchmark results in positive reinforcement, not a scoring penalty.
+                  </span>
+                </div>
 
-                <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
-                  <a
-                    href="https://github.com/ZainabShujat/Career-Recommender-Mini-Project/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="small-cta"
-                    style={{
-                      padding: "8px 12px",
-                      borderRadius: 8,
-                    }}
-                  >
-                    Repository
-                  </a>
-                  <a
-                    href="mailto:zainabshujatali@gmail.com"
-                    className="small-cta"
-                    style={{
-                      padding: "8px 12px",
-                      borderRadius: 8,
-                    }}
-                  >
-                    Contact
-                  </a>
+                <div style={{ padding: 18, borderRadius: 10, background: "#f5f9ff", border: "1px solid #e2ebf8" }}>
+                  <strong style={{ display: "block", color: "#1b4d8a", marginBottom: 6 }}>India-Specific Context</strong>
+                  <span style={{ fontSize: 13, color: "#5b6a67", lineHeight: 1.5, display: "block" }}>
+                    Salaries, employers, and hiring outlooks are mapped specifically to the Indian job market (LPA ranges).
+                  </span>
                 </div>
               </div>
-
-              <aside
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                }}
-              >
-                <div
-                  style={{
-                    padding: 12,
-                    borderRadius: 12,
-                    background: "#fff",
-                    border: "1px solid #eef7f2",
-                  }}
-                >
-                  <h5 style={{ margin: 0 }}>Data sources</h5>
-                  <div className="muted">
-                    Public salary surveys, industry reports and curated community
-                    inputs.
-                  </div>
-                </div>
-              </aside>
             </section>
 
-            <footer
-              style={{
-                marginTop: 26,
-                textAlign: "center",
-                color: "var(--ciq-muted)",
-              }}
-            >
-              <small>
-                CareerIQ is a research-oriented platform intended to support career
-                exploration and does not substitute professional career counselling.
-              </small>
-            </footer>
+            {/* Actions / Exploration CTA */}
+            <section style={{
+              textAlign: "center",
+              padding: "40px 20px",
+              background: "linear-gradient(135deg, #072827 0%, #051d1c 100%)",
+              borderRadius: 16,
+              color: "#fff",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
+            }}>
+              <h3 style={{ marginTop: 0, fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Ready to Explore Your Career Path?</h3>
+              <p style={{ color: "rgba(255,255,255,0.7)", maxWidth: 500, margin: "0 auto 24px", fontSize: 14.5, lineHeight: 1.6 }}>
+                Take the assessment or start testing specific skills to unlock personalized matching indices.
+              </p>
+              <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+                <button
+                  onClick={() => navigate("/quiz")}
+                  className="ciq-cta"
+                  style={{
+                    padding: "12px 24px",
+                    background: "linear-gradient(135deg, #06a77d, #04c48a)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 10,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    boxShadow: "0 4px 14px rgba(6,167,125,0.3)"
+                  }}
+                >
+                  Start Assessment
+                </button>
+                <button
+                  onClick={() => navigate("/careers")}
+                  style={{
+                    padding: "12px 24px",
+                    background: "rgba(255,255,255,0.08)",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    color: "#e8f0ec",
+                    borderRadius: 10,
+                    fontWeight: 600,
+                    cursor: "pointer"
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.15)"}
+                  onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}
+                >
+                  Browse Careers
+                </button>
+              </div>
+            </section>
+
           </div>
         </div>
       </main>

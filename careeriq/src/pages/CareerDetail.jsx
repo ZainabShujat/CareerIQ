@@ -19,33 +19,6 @@ export default function CareerDetail() {
   const rawParam = params.slug ?? params.id ?? Object.values(params)[0] ?? "";
   const decoded = decodeURIComponent(rawParam || "");
 
-  const [liveData, setLiveData] = useState(null);
-  const [loadingLive, setLoadingLive] = useState(true);
-  const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
-
-  useEffect(() => {
-    console.log("LOADED → INLINE CareerDetail.jsx", rawParam, decoded);
-  }, [rawParam, decoded]);
-
-  useEffect(() => {
-    if (!career) return;
-    
-    setLoadingLive(true);
-    fetch(`${API_BASE}/api/careers/${encodeURIComponent(career.slug || career.id)}/live-data`)
-      .then(res => {
-        if (!res.ok) throw new Error("API failed");
-        return res.json();
-      })
-      .then(data => {
-        setLiveData(data);
-        setLoadingLive(false);
-      })
-      .catch(err => {
-        console.error("Failed to load live career details:", err);
-        setLoadingLive(false);
-      });
-  }, [career, API_BASE]);
-
   const career = useMemo(() => {
     if (!decoded) return null;
     const want = normalize(decoded);
@@ -82,6 +55,33 @@ export default function CareerDetail() {
 
     return null;
   }, [decoded]);
+
+  const [liveData, setLiveData] = useState(null);
+  const [loadingLive, setLoadingLive] = useState(true);
+  const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
+
+  useEffect(() => {
+    console.log("LOADED → INLINE CareerDetail.jsx", rawParam, decoded);
+  }, [rawParam, decoded]);
+
+  useEffect(() => {
+    if (!career) return;
+    
+    setLoadingLive(true);
+    fetch(`${API_BASE}/api/careers/${encodeURIComponent(career.slug || career.id)}/live-data`)
+      .then(res => {
+        if (!res.ok) throw new Error("API failed");
+        return res.json();
+      })
+      .then(data => {
+        setLiveData(data);
+        setLoadingLive(false);
+      })
+      .catch(err => {
+        console.error("Failed to load live career details:", err);
+        setLoadingLive(false);
+      });
+  }, [career, API_BASE]);
 
   // inline styles
   const page = { padding: 28, maxWidth: 1100, margin: "0 auto", fontFamily: "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" };
