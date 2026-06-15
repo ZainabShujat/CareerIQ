@@ -135,6 +135,7 @@ export default function Chatbot() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [streaming, setStreaming] = useState(false); // true while SSE chunks are arriving
+  const [mode, setMode] = useState("detailed");      // "concise" | "detailed"
   const [source, setSource] = useState(null);
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
@@ -180,7 +181,7 @@ export default function Chatbot() {
       const res = await fetch(`${API_BASE}/api/ai/chat/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg, profile, tests: profile.skills }),
+        body: JSON.stringify({ message: msg, profile, tests: profile.skills, mode }),
       });
 
       if (!res.ok || !res.body) throw new Error("stream_failed");
@@ -235,7 +236,7 @@ export default function Chatbot() {
         const res = await fetch(`${API_BASE}/api/ai/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: msg, profile, tests: profile.skills }),
+          body: JSON.stringify({ message: msg, profile, tests: profile.skills, mode }),
         });
         const data = await res.json();
         setSource(data.source || "ml-engine");
@@ -446,9 +447,38 @@ export default function Chatbot() {
       <div style={{
         flexShrink: 0, borderTop: "1px solid rgba(255,255,255,0.07)",
         background: "rgba(0,0,0,0.25)", backdropFilter: "blur(12px)",
-        padding: "16px 24px 20px",
+        padding: "12px 24px 20px",
       }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          {/* ── Concise / Detailed toggle ───────────────────────────────── */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontWeight: 600, letterSpacing: 0.5 }}>RESPONSE MODE</span>
+            <div style={{
+              display: "flex", borderRadius: 20, overflow: "hidden",
+              border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)"
+            }}>
+              {[{ id: "concise", label: "⚡ Concise", tip: "Short, to-the-point answers" }, { id: "detailed", label: "📖 Detailed", tip: "Full explanations and roadmaps" }].map(opt => (
+                <button
+                  key={opt.id}
+                  title={opt.tip}
+                  onClick={() => setMode(opt.id)}
+                  style={{
+                    padding: "5px 14px", border: "none", cursor: "pointer",
+                    fontSize: 12, fontWeight: 600, fontFamily: "inherit",
+                    background: mode === opt.id ? "rgba(6,167,125,0.25)" : "transparent",
+                    color: mode === opt.id ? "#06a77d" : "rgba(255,255,255,0.35)",
+                    borderRight: opt.id === "concise" ? "1px solid rgba(255,255,255,0.12)" : "none",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
+              {mode === "concise" ? "Quick answers, key points only" : "Full roadmaps, salary tables, examples"}
+            </span>
+          </div>
           {/* Input box */}
           <div style={{
             display: "flex", alignItems: "flex-end", gap: 12,

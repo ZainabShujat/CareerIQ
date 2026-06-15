@@ -303,15 +303,29 @@ function cosineSimilarity(a, b) {
 
 // ─── 7. Route Handlers ────────────────────────────────────────────────────────
 
+// ─── Concise post-processor ───────────────────────────────────────────────────
+/**
+ * condenseMlResponse: trims a detailed ML response to a concise form.
+ */
+function condenseMlResponse(text) {
+  if (!text) return "";
+  const paragraphs = text.split(/\n\n+/);
+  // Keep up to 3 paragraphs/sections, which includes the main answer and a short bulleted list if present.
+  const condensed = paragraphs.slice(0, Math.min(3, paragraphs.length)).join("\n\n");
+  return condensed.trim();
+}
+
 // POST /api/ai/chat — non-streaming fallback (kept for compatibility)
 router.post("/chat", async (req, res) => {
-  const { message, profile, tests } = req.body;
+  const { message, profile, tests, mode } = req.body;
   if (!message) return res.status(400).json({ content: "Message is required." });
 
   const enrichedProfile = {
     ...profile,
     skills: { ...(profile?.skills || {}), ...(tests || {}) },
   };
+
+  const isConcise = mode === "concise";
 
   if (openai) {
     try {
@@ -331,14 +345,14 @@ INSTRUCTIONS:
 - Give specific, actionable advice tailored to the user's detected traits and career matches
 - Use markdown formatting with headers (##), bullet points, and tables where helpful
 - Include Indian salary ranges (LPA), Indian companies, and India-specific career context
-- Keep responses under 500 words
+- ${isConcise ? "Keep responses extremely concise and to-the-point, under 120 words. Focus only on the direct answer or main key takeaways." : "Keep responses detailed and comprehensive, under 500 words."}
 - If recommending careers, refer to their ML-calculated matches above
 - Be encouraging but realistic`;
 
       const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [{ role: "system", content: systemPrompt }, { role: "user", content: message }],
-        max_tokens: 700,
+        max_tokens: isConcise ? 250 : 700,
         temperature: 0.7,
       });
       return res.json({ content: completion.choices[0].message.content, source: "openai" });
@@ -347,7 +361,10 @@ INSTRUCTIONS:
     }
   }
 
-  const response = mlEngine(message, enrichedProfile);
+  let response = mlEngine(message, enrichedProfile);
+  if (isConcise) {
+    response = condenseMlResponse(response);
+  }
   res.json({ content: response, source: "ml-engine" });
 });
 
@@ -357,13 +374,15 @@ INSTRUCTIONS:
 // ML engine: word-by-word with ~16ms delay — feels exactly like typing.
 // ─────────────────────────────────────────────────────────────────────────────
 router.post("/chat/stream", async (req, res) => {
-  const { message, profile, tests } = req.body;
+  const { message, profile, tests, mode } = req.body;
   if (!message) return res.status(400).json({ error: "Message is required." });
 
   const enrichedProfile = {
     ...profile,
     skills: { ...(profile?.skills || {}), ...(tests || {}) },
   };
+
+  const isConcise = mode === "concise";
 
   // ── SSE headers — defeat every layer of buffering ─────────────────────────
   res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
@@ -415,7 +434,7 @@ INSTRUCTIONS:
 - Give specific, actionable advice tailored to the user's detected traits and career matches
 - Use markdown formatting with headers (##), bullet points, and tables where helpful
 - Include Indian salary ranges (LPA), Indian companies, and India-specific career context
-- Keep responses under 500 words
+- ${isConcise ? "Keep responses extremely concise and to-the-point, under 120 words. Focus only on the direct answer or main key takeaways." : "Keep responses detailed and comprehensive, under 500 words."}
 - Be encouraging but realistic`;
 
       const stream = await openai.chat.completions.create({
@@ -424,7 +443,7 @@ INSTRUCTIONS:
           { role: "system", content: systemPrompt },
           { role: "user", content: message },
         ],
-        max_tokens: 700,
+        max_tokens: isConcise ? 250 : 700,
         temperature: 0.7,
         stream: true,
       });
@@ -440,7 +459,10 @@ INSTRUCTIONS:
   }
 
   // ── 2. ML Engine word-by-word stream (always works) ──────────────────────
-  const fullResponse = mlEngine(message, enrichedProfile);
+  let fullResponse = mlEngine(message, enrichedProfile);
+  if (isConcise) {
+    fullResponse = condenseMlResponse(fullResponse);
+  }
   await streamText(fullResponse, 16);
   finish();
 });
