@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import CategoriesGrid from "../components/CategoriesGrid";
+import Header from "../components/Header";
 
 /* Modern inline SVG icons */
 const IconLaptop = () => (
@@ -47,27 +48,6 @@ const IconArrowRight = () => (
   </svg>
 );
 
-function ProfileButton() {
-  const navigate = useNavigate();
-  const ctx = useContext(AuthContext);
-
-  return (
-    <button
-      className="ciq-cta"
-      onClick={() => {
-        try {
-          navigate("/profile");
-        } catch (err) {
-          console.warn("Router not available:", err);
-          alert("Router not ready — try again");
-        }
-      }}
-    >
-      {ctx?.user ? ctx.user.name : "You"}
-    </button>
-  );
-}
-
 export default function Home() {
   const navigate = useNavigate();
 
@@ -79,32 +59,7 @@ export default function Home() {
   return (
     <div className="ciq-root">
       {/* Header */}
-      <header className="ciq-header">
-        <div className="ciq-container">
-          <div className="ciq-brand" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-            <div className="ciq-title">CareerIQ</div>
-            <div className="ciq-sub">career predictor & recommender</div>
-          </div>
-
-          <nav className="ciq-nav" role="navigation" aria-label="Main navigation">
-            <Link to="/careers" className="ciq-link">Careers</Link>
-            <Link to="/insights" className="ciq-link">Insights</Link>
-            <Link to="/skill-tests" className="ciq-link">Skill Tests</Link>
-            <Link to="/personality-test" className="ciq-link">Personality Test</Link>
-            <Link to="/happiness-index" className="ciq-link">Happiness Index</Link>
-            <Link to="/chatbot" className="ciq-link">AI Chatbot</Link>
-            <Link to="/about" className="ciq-link">About</Link>
-            <ProfileButton />
-            <button
-              className="mobile-toggle"
-              aria-label="Toggle navigation"
-              onClick={() => document.body.classList.toggle('mobile-nav-open')}
-            >
-              <span className="hamburger-inner" />
-            </button>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Container */}
       <main className="ciq-main" style={{ background: "#f6fbf9", paddingBottom: 60 }}>
