@@ -48,11 +48,8 @@ export default function Header() {
           <Link to="/careers" className="ciq-link">Careers</Link>
           <Link to="/insights" className="ciq-link">Insights</Link>
           <Link to="/skill-tests" className="ciq-link">Skill Tests</Link>
-          <Link to="/engineering-careers" className="ciq-link">Engineering</Link>
-          <Link to="/medical-careers" className="ciq-link">Medical</Link>
-          <Link to="/teaching-careers" className="ciq-link">Teaching</Link>
-          <Link to="/culinary-careers" className="ciq-link">Culinary</Link>
-          <Link to="/civil-careers" className="ciq-link">Civil</Link>
+          <Link to="/happiness-index" className="ciq-link">Happiness Index</Link>
+          <Link to="/chatbot" className="ciq-link">AI Chatbot</Link>
           <Link to="/about" className="ciq-link">About</Link>
           <ProfileButton />
         </nav>

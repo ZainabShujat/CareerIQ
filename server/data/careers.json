@@ -1,102 +1,5196 @@
 [
-  { "id": 1, "slug": "software-engineer-1", "title": "Software Engineer", "short": "Designs and builds software applications.", "long": "Builds backend and frontend systems, collaborates with product and QA, writes tests.", "tags": ["engineering","software"], "skills": ["JavaScript","Data Structures","Problem Solving"], "salary": "6 LPA", "responsibilities": ["Write code","Review PRs","Fix bugs"] },
-  { "id": 2, "slug": "frontend-developer-2", "title": "Frontend Developer", "short": "Creates user-facing interfaces.", "long": "Works with HTML/CSS/JS frameworks to implement UI and UX designs.", "tags": ["engineering","software","design"], "skills": ["HTML","CSS","React"], "salary": "5 LPA", "responsibilities": ["Implement UI","Optimize performance","Integrate APIs"] },
-  { "id": 3, "slug": "backend-developer-3", "title": "Backend Developer", "short": "Builds server-side logic and APIs.", "long": "Designs databases, APIs, and server logic; optimizes for scale.", "tags": ["engineering","software"], "skills": ["Node.js","Databases","APIs"], "salary": "6 LPA", "responsibilities": ["Design APIs","Manage DBs","Deploy services"] },
-  { "id": 4, "slug": "devops-engineer-4", "title": "DevOps Engineer", "short": "Automates deployments and infrastructure.", "long": "Builds CI/CD, monitors systems, writes infra as code.", "tags": ["engineering","infrastructure"], "skills": ["Docker","Kubernetes","CI/CD"], "salary": "7 LPA", "responsibilities": ["Automate pipelines","Monitor infra","Manage releases"] },
-  { "id": 5, "slug": "data-analyst-5", "title": "Data Analyst", "short": "Analyses data and creates reports.", "long": "Gathers data, performs analysis, builds dashboards and insights.", "tags": ["data","business"], "skills": ["SQL","Excel","Tableau"], "salary": "4.5 LPA", "responsibilities": ["Query data","Create dashboards","Support decisions"] },
-  { "id": 6, "slug": "data-scientist-6", "title": "Data Scientist", "short": "Builds models to derive insights.", "long": "Works on ML models, feature engineering, and data pipelines.", "tags": ["data","ai"], "skills": ["Python","ML","Statistics"], "salary": "8 LPA", "responsibilities": ["Modeling","Experimentation","Feature engineering"] },
-  { "id": 7, "slug": "machine-learning-engineer-7", "title": "Machine Learning Engineer", "short": "Productionises ML models.", "long": "Deploys and monitors ML models, optimizes inference, scales pipelines.", "tags": ["data","ai","engineering"], "skills": ["ML","Deployment","Python"], "salary": "9 LPA", "responsibilities": ["Deploy models","Monitor performance","Optimize latency"] },
-  { "id": 8, "slug": "product-manager-8", "title": "Product Manager", "short": "Defines product vision and roadmap.", "long": "Works with engineering, design and stakeholders to deliver product outcomes.", "tags": ["business","product"], "skills": ["Roadmapping","Stakeholder mgmt","Analytics"], "salary": "9 LPA", "responsibilities": ["Gather requirements","Prioritise features","Measure impact"] },
-  { "id": 9, "slug": "project-manager-9", "title": "Project Manager", "short": "Plans and executes projects.", "long": "Manages timelines, coordinates teams, mitigates risks.", "tags": ["business","management"], "skills": ["Planning","Communication","Risk mgmt"], "salary": "7 LPA", "responsibilities": ["Schedule","Track progress","Report status"] },
-  { "id": 10, "slug": "product-designer-10", "title": "Product Designer", "short": "Designs product interactions and visuals.", "long": "Creates prototypes, user research, and interface design.", "tags": ["design","product"], "skills": ["Figma","UX research","Prototyping"], "salary": "6 LPA", "responsibilities": ["Design flows","Prototype","Conduct research"] },
-  { "id": 11, "slug": "ux-designer-11", "title": "UX Designer", "short": "Improves user experience.", "long": "Conducts user research and creates interaction designs.", "tags": ["design"], "skills": ["User research","Wireframing","Accessibility"], "salary": "5.5 LPA", "responsibilities": ["User testing","Wireframes","Journey maps"] },
-  { "id": 12, "slug": "ui-designer-12", "title": "UI Designer", "short": "Creates visual interfaces and systems.", "long": "Builds visual languages and assets for products.", "tags": ["design"], "skills": ["Visual design","Typography","Component design"], "salary": "5 LPA", "responsibilities": ["Design systems","Create assets","Handoff to engineers"] },
-  { "id": 13, "slug": "graphic-designer-13", "title": "Graphic Designer", "short": "Creates graphics for marketing and product.", "long": "Designs banners, posters, and brand assets.", "tags": ["design","creative"], "skills": ["Illustrator","Photoshop","Composition"], "salary": "3.5 LPA", "responsibilities": ["Brand assets","Campaign visuals","Collaboration"] },
-  { "id": 14, "slug": "qa-engineer-14", "title": "QA Engineer", "short": "Ensures product quality through testing.", "long": "Writes tests, runs manual and automated test suites.", "tags": ["engineering","quality"], "skills": ["Automation","Testing","Scripting"], "salary": "4.5 LPA", "responsibilities": ["Test plans","Automation","Bug triage"] },
-  { "id": 15, "slug": "systems-analyst-15", "title": "Systems Analyst", "short": "Analyses system requirements.", "long": "Bridges business and technical teams to define system specs.", "tags": ["business","engineering"], "skills": ["Analysis","UML","Requirements"], "salary": "5 LPA", "responsibilities": ["Gather specs","Design systems","Coordinate teams"] },
-  { "id": 16, "slug": "database-administrator-16", "title": "Database Administrator", "short": "Manages databases and performance.", "long": "Ensures backups, scaling, and query performance.", "tags": ["infrastructure","data"], "skills": ["SQL","DB tuning","Backups"], "salary": "6 LPA", "responsibilities": ["Maintain DBs","Optimize queries","Ensure uptime"] },
-  { "id": 17, "slug": "security-engineer-17", "title": "Security Engineer", "short": "Protects systems from threats.", "long": "Performs security audits, threat modeling, and incident response.", "tags": ["security","engineering"], "skills": ["Pentesting","Threat modeling","Network security"], "salary": "8 LPA", "responsibilities": ["Assess vulnerabilities","Monitor incidents","Improve controls"] },
-  { "id": 18, "slug": "cloud-engineer-18", "title": "Cloud Engineer", "short": "Designs and maintains cloud infrastructure.", "long": "Implements cloud architecture, optimizes costs, automates infra.", "tags": ["infrastructure","cloud"], "skills": ["AWS","Terraform","Architecture"], "salary": "8 LPA", "responsibilities": ["Architecture","Automation","Cost optimization"] },
-  { "id": 19, "slug": "business-analyst-19", "title": "Business Analyst", "short": "Translates business needs into solutions.", "long": "Works with stakeholders to define and measure business requirements.", "tags": ["business"], "skills": ["Requirements","Analytics","Communication"], "salary": "5 LPA", "responsibilities": ["Requirements","Process mapping","Reporting"] },
-  { "id": 20, "slug": "financial-analyst-20", "title": "Financial Analyst", "short": "Analyses financial performance.", "long": "Builds financial models and forecasts to guide decisions.", "tags": ["business","finance"], "skills": ["Excel","Modeling","Forecasting"], "salary": "6 LPA", "responsibilities": ["Model finance","Budgeting","Reports"] },
-  { "id": 21, "slug": "marketing-manager-21", "title": "Marketing Manager", "short": "Plans and executes marketing strategy.", "long": "Coordinates campaigns, growth experiments, and messaging.", "tags": ["business","marketing"], "skills": ["SEO","Campaigns","Analytics"], "salary": "7 LPA", "responsibilities": ["Campaigns","Strategy","Measurement"] },
-  { "id": 22, "slug": "content-writer-22", "title": "Content Writer", "short": "Creates written content for products and marketing.", "long": "Writes articles, copy, and documentation.", "tags": ["creative","marketing"], "skills": ["Writing","SEO","Research"], "salary": "3.6 LPA", "responsibilities": ["Write copy","Edit content","Research topics"] },
-  { "id": 23, "slug": "technical-writer-23", "title": "Technical Writer", "short": "Produces technical docs and guides.", "long": "Documents APIs, user guides, and onboarding materials.", "tags": ["technical","creative"], "skills": ["API docs","Clarity","Organization"], "salary": "4 LPA", "responsibilities": ["Docs","Tutorials","Coordination"] },
-  { "id": 24, "slug": "hr-manager-24", "title": "HR Manager", "short": "Manages hiring and people operations.", "long": "Handles recruiting, policies, and employee relations.", "tags": ["business","people"], "skills": ["Recruiting","Communication","Policy"], "salary": "6 LPA", "responsibilities": ["Recruit","Manage policies","Onboard"] },
-  { "id": 25, "slug": "ux-researcher-25", "title": "UX Researcher", "short": "Leads qualitative and quantitative research.", "long": "Runs studies and usability tests to inform product decisions.", "tags": ["design","research"], "skills": ["Interviews","Surveys","Usability"], "salary": "6 LPA", "responsibilities": ["User studies","Synthesis","Reports"] },
-  { "id": 26, "slug": "mobile-developer-26", "title": "Mobile Developer", "short": "Builds iOS/Android apps.", "long": "Develops mobile apps, optimizes UX and performance.", "tags": ["engineering","mobile"], "skills": ["Kotlin","Swift","React Native"], "salary": "7 LPA", "responsibilities": ["App dev","Optimize UX","Publish releases"] },
-  { "id": 27, "slug": "embedded-engineer-27", "title": "Embedded Systems Engineer", "short": "Works on hardware-level software.", "long": "Programs microcontrollers, works on firmware and real-time systems.", "tags": ["engineering","hardware"], "skills": ["C/C++","RTOS","Electronics"], "salary": "5.5 LPA", "responsibilities": ["Firmware","Hardware testing","Optimize footprint"] },
-  { "id": 28, "slug": "research-scientist-28", "title": "Research Scientist", "short": "Conducts advanced research in science/AI.", "long": "Publishes papers, builds prototypes, and explores novel methods.", "tags": ["research","data"], "skills": ["Experimentation","Math","Python"], "salary": "9 LPA", "responsibilities": ["Research","Prototyping","Publish"] },
-  { "id": 29, "slug": "clinical-research-coordinator-29", "title": "Clinical Research Coordinator", "short": "Coordinates clinical studies.", "long": "Manages trials, participants, and data collection.", "tags": ["medical","research"], "skills": ["Protocol","Coordination","Data"], "salary": "4 LPA", "responsibilities": ["Run trials","Record data","Monitor safety"] },
-  { "id": 30, "slug": "nurse-30", "title": "Nurse", "short": "Provides patient care and support.", "long": "Assists doctors, administers medication, and monitors patient vitals.", "tags": ["medical","care"], "skills": ["Patient care","Compassion","Clinical skills"], "salary": "3.8 LPA", "responsibilities": ["Care","Medication","Record keeping"] },
-  { "id": 31, "slug": "medical-researcher-31", "title": "Medical Researcher", "short": "Studies diseases and treatments.", "long": "Designs experiments, analyses data, and publishes findings.", "tags": ["medical","research"], "skills": ["Biostatistics","Lab work","Writing"], "salary": "8 LPA", "responsibilities": ["Experiment","Analyze","Publish"] },
-  { "id": 32, "slug": "public-health-officer-32", "title": "Public Health Officer", "short": "Designs public health programs.", "long": "Works on population health, policy and prevention strategies.", "tags": ["public-health","medical"], "skills": ["Epidemiology","Policy","Communication"], "salary": "6 LPA", "responsibilities": ["Programs","Policy","Monitoring"] },
-  { "id": 33, "slug": "teacher-33", "title": "School Teacher", "short": "Teaches subjects to students.", "long": "Plans lessons, assesses students, and supports development.", "tags": ["teaching","education"], "skills": ["Lesson planning","Classroom mgmt","Communication"], "salary": "3.5 LPA", "responsibilities": ["Teach","Assess","Parent comms"] },
-  { "id": 34, "slug": "corporate-trainer-34", "title": "Corporate Trainer", "short": "Trains employees in skills.", "long": "Designs workshops and delivers professional training programs.", "tags": ["teaching","business"], "skills": ["Presentation","Curriculum","Coaching"], "salary": "5 LPA", "responsibilities": ["Train","Design content","Evaluate outcomes"] },
-  { "id": 35, "slug": "instructional-designer-35", "title": "Instructional Designer", "short": "Creates learning content and experiences.", "long": "Designs courses, assessments and multimedia learning artifacts.", "tags": ["education","design"], "skills": ["Course design","LMS","Assessment"], "salary": "5.5 LPA", "responsibilities": ["Design","Author content","Measure learning"] },
-  { "id": 36, "slug": "chef-36", "title": "Chef", "short": "Prepares and designs food menus.", "long": "Manages kitchen, creates dishes, and ensures food quality.", "tags": ["culinary"], "skills": ["Cooking","Menu design","Time management"], "salary": "4 LPA", "responsibilities": ["Cook","Plan menus","Manage kitchen"] },
-  { "id": 37, "slug": "baker-37", "title": "Baker", "short": "Makes bread, pastries and baked goods.", "long": "Works with dough, recipes and ovens.", "tags": ["culinary"], "skills": ["Baking techniques","Scaling recipes","Timing"], "salary": "3 LPA", "responsibilities": ["Bake","Prep ingredients","Quality control"] },
-  { "id": 38, "slug": "hr-generalist-38", "title": "HR Generalist", "short": "Handles day-to-day HR tasks.", "long": "Supports recruiting, onboarding and HR admin.", "tags": ["business","people"], "skills": ["HR operations","Communication","Records"], "salary": "4.5 LPA", "responsibilities": ["Recruit","Onboard","Admin"] },
-  { "id": 39, "slug": "operations-manager-39", "title": "Operations Manager", "short": "Oversees business operations and logistics.", "long": "Optimizes processes, manages teams and ensures delivery.", "tags": ["business","operations"], "skills": ["Process","Coordination","Improvement"], "salary": "7 LPA", "responsibilities": ["Plan ops","Manage teams","Improve KPIs"] },
-  { "id": 40, "slug": "supply-chain-analyst-40", "title": "Supply Chain Analyst", "short": "Manages logistics and supply forecasting.", "long": "Optimizes inventory, shipping, and supplier relationships.", "tags": ["business","logistics"], "skills": ["Excel","Forecasting","ERP"], "salary": "5.5 LPA", "responsibilities": ["Forecast","Coordinate","Optimize"] },
-  { "id": 41, "slug": "civil-engineer-41", "title": "Civil Engineer", "short": "Designs infrastructure and structures.", "long": "Works on roads, bridges, and buildings with engineering plans.", "tags": ["civil","engineering"], "skills": ["Design","Statics","CAD"], "salary": "5.5 LPA", "responsibilities": ["Design","Inspect","Coordinate"] },
-  { "id": 42, "slug": "structural-engineer-42", "title": "Structural Engineer", "short": "Ensures structures are safe and efficient.", "long": "Does calculations and design for load-bearing systems.", "tags": ["civil","engineering"], "skills": ["Analysis","Design codes","CAD"], "salary": "6 LPA", "responsibilities": ["Design","Check safety","Document"] },
-  { "id": 43, "slug": "mechanical-engineer-43", "title": "Mechanical Engineer", "short": "Designs mechanical systems and devices.", "long": "Works on machines, thermal systems and manufacturing designs.", "tags": ["engineering","mechanical"], "skills": ["CAD","Thermodynamics","Materials"], "salary": "5.5 LPA", "responsibilities": ["Design","Test","Manufacture"] },
-  { "id": 44, "slug": "electrical-engineer-44", "title": "Electrical Engineer", "short": "Designs electrical circuits and systems.", "long": "Works on circuits, power systems and control systems.", "tags": ["engineering","electrical"], "skills": ["Circuit design","Simulations","PCB"], "salary": "5.5 LPA", "responsibilities": ["Design","Test","Document"] },
-  { "id": 45, "slug": "environmental-scientist-45", "title": "Environmental Scientist", "short": "Studies and manages environmental issues.", "long": "Performs field studies, collects samples and analyzes data for environmental projects.", "tags": ["science","environment"], "skills": ["Field work","Analysis","Reporting"], "salary": "4.5 LPA", "responsibilities": ["Sampling","Analyze","Report"] },
-  { "id": 46, "slug": "biotech-engineer-46", "title": "Biotech Engineer", "short": "Works on biotech products and processes.", "long": "Applies engineering to biological systems in labs and production.", "tags": ["biotech","research"], "skills": ["Lab skills","Bioprocess","Analysis"], "salary": "7 LPA", "responsibilities": ["Experiment","Scale processes","Document"] },
-  { "id": 47, "slug": "pharmacist-47", "title": "Pharmacist", "short": "Dispenses medicines and advises on drug use.", "long": "Works in pharmacies or hospitals ensuring medication safety and counseling patients.", "tags": ["medical","pharmacy"], "skills": ["Pharmacology","Attention to detail","Counseling"], "salary": "4.5 LPA", "responsibilities": ["Dispense","Advise","Check interactions"] },
-  { "id": 48, "slug": "radiologist-48", "title": "Radiologist", "short": "Interprets medical imaging.", "long": "Reads X-rays, CTs and MRIs and advises on diagnosis.", "tags": ["medical","specialist"], "skills": ["Imaging","Diagnosis","Detail"], "salary": "25 LPA", "responsibilities": ["Read scans","Report","Consult"] },
-  { "id": 49, "slug": "physician-49", "title": "Physician", "short": "Diagnoses and treats patients.", "long": "Works in hospitals or clinics providing medical care across specialties.", "tags": ["medical"], "skills": ["Clinical judgment","Diagnosis","Treatment"], "salary": "12 LPA", "responsibilities": ["Diagnose","Treat","Advise"] },
-  { "id": 50, "slug": "clinical-lab-technician-50", "title": "Clinical Lab Technician", "short": "Performs lab tests and analysis.", "long": "Prepares samples, runs lab equipment and records results.", "tags": ["medical","lab"], "skills": ["Lab techniques","Attention to detail","Reporting"], "salary": "3.8 LPA", "responsibilities": ["Process samples","Run tests","Report results"] },
-  { "id": 51, "slug": "legal-assistant-51", "title": "Legal Assistant", "short": "Supports legal professionals with research and documents.", "long": "Prepares filings, does legal research and manages documentation.", "tags": ["legal","business"], "skills": ["Research","Writing","Organization"], "salary": "3.8 LPA", "responsibilities": ["Research","Draft docs","Manage files"] },
-  { "id": 52, "slug": "paralegal-52", "title": "Paralegal", "short": "Supports lawyers with case prep.", "long": "Conducts research, organizes evidence and drafts legal documents.", "tags": ["legal"], "skills": ["Legal research","Drafting","Organization"], "salary": "4 LPA", "responsibilities": ["Case prep","Research","Drafting"] },
-  { "id": 53, "slug": "ux-writer-53", "title": "UX Writer", "short": "Writes microcopy and product text.", "long": "Creates clear, concise copy for interfaces and helps shape tone.", "tags": ["design","writing"], "skills": ["Copywriting","Clarity","Product thinking"], "salary": "4.8 LPA", "responsibilities": ["Write copy","Align tone","Work with design"] },
-  { "id": 54, "slug": "social-media-manager-54", "title": "Social Media Manager", "short": "Runs social channels and campaigns.", "long": "Plans content calendars, analyzes engagement and grows community.", "tags": ["marketing","creative"], "skills": ["Content","Analytics","Community"], "salary": "4.2 LPA", "responsibilities": ["Plan content","Engage audience","Measure results"] },
-  { "id": 55, "slug": "seo-specialist-55", "title": "SEO Specialist", "short": "Optimizes websites for search engines.", "long": "Works on keywords, technical SEO and content strategy to increase organic reach.", "tags": ["marketing","growth"], "skills": ["SEO","Analytics","Content"], "salary": "5 LPA", "responsibilities": ["Optimize","Audit","Strategy"] },
-  { "id": 56, "slug": "sales-executive-56", "title": "Sales Executive", "short": "Sells products and services to customers.", "long": "Builds relationships, pitches solutions and closes deals.", "tags": ["sales","business"], "skills": ["Communication","Negotiation","CRM"], "salary": "4.5 LPA", "responsibilities": ["Prospect","Pitch","Close deals"] },
-  { "id": 57, "slug": "account-manager-57", "title": "Account Manager", "short": "Manages client relationships and retention.", "long": "Acts as a point of contact, ensures client success and grows accounts.", "tags": ["business","client"], "skills": ["Relationship","Upsell","Support"], "salary": "6 LPA", "responsibilities": ["Support clients","Retain accounts","Expand usage"] },
-  { "id": 58, "slug": "customer-success-manager-58", "title": "Customer Success Manager", "short": "Helps customers achieve value from a product.", "long": "Onboards customers, drives product adoption and minimizes churn.", "tags": ["customer","business"], "skills": ["Onboarding","Support","Measurement"], "salary": "6 LPA", "responsibilities": ["Onboard","Drive adoption","Reduce churn"] },
-  { "id": 59, "slug": "qa-automation-engineer-59", "title": "QA Automation Engineer", "short": "Builds test automation and frameworks.", "long": "Automates regression suites and integrates tests into CI/CD.", "tags": ["engineering","quality"], "skills": ["Selenium","Scripting","Testing"], "salary": "6 LPA", "responsibilities": ["Automate tests","Integrate CI","Monitor"] },
-  { "id": 60, "slug": "research-analyst-60", "title": "Research Analyst", "short": "Performs market and industry research.", "long": "Collects data, summarizes findings and presents recommendations.", "tags": ["research","business"], "skills": ["Research","Writing","Analysis"], "salary": "5 LPA", "responsibilities": ["Study markets","Summarize findings","Recommend actions"] },
-  { "id": 61, "slug": "data-engineer-61", "title": "Data Engineer", "short": "Builds data pipelines and ETL systems.", "long": "Designs reliable pipelines for data storage and processing at scale.", "tags": ["data","engineering"], "skills": ["ETL","Python","Spark"], "salary": "10-18 LPA", "responsibilities": ["Build pipelines","Ensure quality","Optimize jobs"] },
-  { "id": 62, "slug": "analytics-engineer-62", "title": "Analytics Engineer", "short": "Builds analytics data models and transformations.", "long": "Transforms raw data into analytics-ready models and documentation.", "tags": ["data","analytics"], "skills": ["SQL","DBT","Modeling"], "salary": "8-15 LPA", "responsibilities": ["Model data","Document","Support analysts"] },
-  { "id": 63, "slug": "business-intelligence-analyst-63", "title": "Business Intelligence Analyst", "short": "Creates dashboards and insights for business teams.", "long": "Designs reports, KPIs and automates regular reporting.", "tags": ["data","business"], "skills": ["BI tools","SQL","Dashboards"], "salary": "7-14 LPA", "responsibilities": ["Build dashboards","Define KPIs","Automate reports"] },
-  { "id": 64, "slug": "robotics-engineer-64", "title": "Robotics Engineer", "short": "Builds robotic systems and automation.", "long": "Integrates mechanics, electronics and software for robotics projects.", "tags": ["engineering","robotics"], "skills": ["Control","Embedded","Calibration"], "salary": "10-18 LPA", "responsibilities": ["Design robots","Test","Integrate systems"] },
-  { "id": 65, "slug": "game-developer-65", "title": "Game Developer", "short": "Creates video games and interactive experiences.", "long": "Works on gameplay, physics, and performance for games.", "tags": ["creative","engineering"], "skills": ["C#","Unity","Optimization"], "salary": "6-12 LPA", "responsibilities": ["Develop features","Optimize","Polish"] },
-  { "id": 66, "slug": "animator-66", "title": "Animator", "short": "Creates animations for games and media.", "long": "Designs character motion and sequences using animation tools.", "tags": ["creative","media"], "skills": ["Animation","Timing","Storyboarding"], "salary": "4-9 LPA", "responsibilities": ["Animate","Refine","Collaborate"] },
-  { "id": 67, "slug": "sound-engineer-67", "title": "Sound Engineer", "short": "Designs and mixes audio for media.", "long": "Records, edits and masters audio for products and productions.", "tags": ["creative","media"], "skills": ["Audio editing","Mixing","Recording"], "salary": "4.5-10 LPA", "responsibilities": ["Record","Edit","Mix"] },
-  { "id": 68, "slug": "film-editor-68", "title": "Film Editor", "short": "Edits video footage into final form.", "long": "Assembles footage, refines timing and works with directors on final cuts.", "tags": ["media","creative"], "skills": ["Editing","Storytelling","Software"], "salary": "5-11 LPA", "responsibilities": ["Edit","Polish","Deliver edits"] },
-  { "id": 69, "slug": "architect-69", "title": "Architect", "short": "Designs buildings and spaces.", "long": "Creates architectural plans and coordinates with engineers for construction.", "tags": ["design","civil"], "skills": ["Design","CAD","Regulations"], "salary": "8-16 LPA", "responsibilities": ["Design","Coordinate","Comply"] },
-  { "id": 70, "slug": "interior-designer-70", "title": "Interior Designer", "short": "Designs indoor spaces for function and aesthetics.", "long": "Plans layouts, selects materials and coordinates execution.", "tags": ["design","creative"], "skills": ["Space planning","Materials","Mood boards"], "salary": "4.5-10 LPA", "responsibilities": ["Plan spaces","Select finishes","Oversee fit-out"] },
-  { "id": 71, "slug": "ux-research-lead-71", "title": "UX Research Lead", "short": "Leads user research strategies.", "long": "Sets research frameworks and mentors junior researchers.", "tags": ["design","research"], "skills": ["Leadership","Research","Synthesis"], "salary": "12-20 LPA", "responsibilities": ["Lead studies","Mentor","Strategy"] },
-  { "id": 72, "slug": "ai-researcher-72", "title": "AI Researcher", "short": "Works on cutting-edge AI models.", "long": "Explores new model architectures and publishes research.", "tags": ["ai","research"], "skills": ["Math","ML","Python"], "salary": "20-35 LPA", "responsibilities": ["Research","Prototype","Publish"] },
-  { "id": 73, "slug": "ux-engineer-73", "title": "UX Engineer", "short": "Bridges design and engineering.", "long": "Implements high-fidelity interactions and prototypes in code.", "tags": ["design","engineering"], "skills": ["JS","Animation","Interaction"], "salary": "8-15 LPA", "responsibilities": ["Build prototypes","Implement UI","Support design"] },
-  { "id": 74, "slug": "accessibility-specialist-74", "title": "Accessibility Specialist", "short": "Ensures products are accessible to all users.", "long": "Audits interfaces and helps teams meet accessibility standards.", "tags": ["design","ux"], "skills": ["A11y","Testing","Guidelines"], "salary": "7-13 LPA", "responsibilities": ["Audit","Advise","Test"] },
-  { "id": 75, "slug": "machine-vision-engineer-75", "title": "Machine Vision Engineer", "short": "Builds vision systems for automation.", "long": "Works on image processing and object detection for industrial use.", "tags": ["ai","engineering"], "skills": ["CV","Python","Optimization"], "salary": "12-20 LPA", "responsibilities": ["Build models","Integrate cameras","Tune systems"] },
-  { "id": 76, "slug": "biomedical-engineer-76", "title": "Biomedical Engineer", "short": "Designs medical devices and systems.", "long": "Works at the intersection of medicine and engineering to build devices.", "tags": ["medical","engineering"], "skills": ["Design","Clinical understanding","Testing"], "salary": "8-15 LPA", "responsibilities": ["Design devices","Test","Comply"] },
-  { "id": 77, "slug": "ux-strategist-77", "title": "UX Strategist", "short": "Aligns product goals with user needs.", "long": "Sets long-term UX direction and prioritizes initiatives.", "tags": ["design","product"], "skills": ["Strategy","Research","Roadmapping"], "salary": "12-22 LPA", "responsibilities": ["Strategy","Prioritize","Advocate"] },
-  { "id": 78, "slug": "sme-consultant-78", "title": "SME Consultant", "short": "Provides domain-specific advice and solutions.", "long": "Works with organisations to solve specialised problems in their field.", "tags": ["consulting","business"], "skills": ["Domain knowledge","Advisory","Problem solving"], "salary": "15-25 LPA", "responsibilities": ["Advise","Plan","Implement"] },
-  { "id": 79, "slug": "sustainability-specialist-79", "title": "Sustainability Specialist", "short": "Designs sustainable practices and policies.", "long": "Helps organisations reduce environmental impact and meet standards.", "tags": ["environment","policy"], "skills": ["Audits","Policy","Reporting"], "salary": "7-13 LPA", "responsibilities": ["Assess impact","Advise","Report"] },
-  { "id": 80, "slug": "ux-researcher-junior-80", "title": "Junior UX Researcher", "short": "Assists in user research tasks.", "long": "Helps recruit participants, run tests and synthesize findings.", "tags": ["design","research"], "skills": ["Testing","Note taking","Synthesis"], "salary": "4-8 LPA", "responsibilities": ["Help tests","Transcribe","Summarize"] },
-  { "id": 81, "slug": "biostatistician-81", "title": "Biostatistician", "short": "Applies statistics to biological data.", "long": "Designs studies and analyzes results for clinical research.", "tags": ["medical","data"], "skills": ["Statistics","R","Clinical trials"], "salary": "10-18 LPA", "responsibilities": ["Design studies","Analyze","Report"] },
-  { "id": 82, "slug": "ux-research-consultant-82", "title": "UX Research Consultant", "short": "Offers research expertise to clients.", "long": "Designs independent research and synthesizes insights for projects.", "tags": ["design","consulting"], "skills": ["Research","Communication","Recommendations"], "salary": "14-24 LPA", "responsibilities": ["Consult","Design studies","Deliver reports"] },
-  { "id": 83, "slug": "bioinformatician-83", "title": "Bioinformatician", "short": "Combines biology and computation.", "long": "Analyzes genomic data and builds pipelines for biological data processing.", "tags": ["bio","data"], "skills": ["Python","Genomics","Pipelines"], "salary": "9-16 LPA", "responsibilities": ["Process data","Analyze","Automate"] },
-  { "id": 84, "slug": "ux-ops-84", "title": "UX Operations Manager", "short": "Improves UX team processes and tooling.", "long": "Scales UX practice through operations, strategy and tooling.", "tags": ["design","ops"], "skills": ["Operations","Tooling","Coordination"], "salary": "10-18 LPA", "responsibilities": ["Improve processes","Manage tools","Support teams"] },
-  { "id": 85, "slug": "qa-lead-85", "title": "QA Lead", "short": "Leads QA strategy and teams.", "long": "Sets test strategy, mentors QA engineers and ensures product quality.", "tags": ["quality","engineering"], "skills": ["Leadership","Testing","Strategy"], "salary": "10-18 LPA", "responsibilities": ["Lead QA","Mentor","Strategy"] },
-  { "id": 86, "slug": "ux-content-strategist-86", "title": "Content Strategist", "short": "Plans content across products.", "long": "Defines content strategy, taxonomy and voice across user journeys.", "tags": ["content","ux"], "skills": ["Strategy","Taxonomy","Research"], "salary": "8-15 LPA", "responsibilities": ["Define content","Align voice","Measure impact"] },
-  { "id": 87, "slug": "clinical-data-manager-87", "title": "Clinical Data Manager", "short": "Manages clinical trial data systems.", "long": "Ensures data integrity, compliance and reporting for clinical studies.", "tags": ["medical","data"], "skills": ["CDMS","Compliance","QC"], "salary": "7-14 LPA", "responsibilities": ["Manage datasets","Validate","Report"] },
-  { "id": 88, "slug": "medtech-product-manager-88", "title": "MedTech Product Manager", "short": "Manages medical device product lifecycle.", "long": "Works with clinicians and engineers to deliver compliant medical devices.", "tags": ["medical","product"], "skills": ["Regulatory","Stakeholder","Product"], "salary": "15-25 LPA", "responsibilities": ["Plan product","Coordinate trials","Comply"] },
-  { "id": 89, "slug": "robotics-researcher-89", "title": "Robotics Researcher", "short": "Explores new robotics algorithms.", "long": "Publishes research and prototypes in robotics and automation.", "tags": ["research","robotics"], "skills": ["Robotics","Control","Research"], "salary": "15-25 LPA", "responsibilities": ["Research","Prototype","Publish"] },
-  { "id": 90, "slug": "sme-analyst-90", "title": "SME Analyst", "short": "Analyses small and medium enterprise data.", "long": "Focuses on SME products and business analytics.", "tags": ["business","analysis"], "skills": ["Analysis","Communication","Reporting"], "salary": "5-10 LPA", "responsibilities": ["Analyze SMEs","Create reports","Advise"] },
-  { "id": 91, "slug": "technical-product-manager-91", "title": "Technical Product Manager", "short": "Product manager with strong technical skills.", "long": "Builds roadmaps and works closely with engineering on complex features.", "tags": ["product","engineering"], "skills": ["Tech understanding","Planning","Communication"], "salary": "14-24 LPA", "responsibilities": ["Roadmap","Coordinate","Measure"] },
-  { "id": 92, "slug": "entrepreneur-92", "title": "Entrepreneur / Founder", "short": "Builds and scales new ventures.", "long": "Defines vision, raises funds and leads a small team to create products.", "tags": ["startup","business"], "skills": ["Strategy","Execution","Resilience"], "salary": "Varies", "responsibilities": ["Lead","Fundraise","Build"] },
-  { "id": 93, "slug": "ux-engineer-junior-93", "title": "Junior UX Engineer", "short": "Assists with product interactions in code.", "long": "Implements small interactions and supports designers in prototyping.", "tags": ["design","engineering"], "skills": ["HTML/CSS","JS","Prototyping"], "salary": "4.5-9 LPA", "responsibilities": ["Implement prototypes","Support design","Polish"] },
-  { "id": 94, "slug": "ai-product-manager-94", "title": "AI Product Manager", "short": "Manages AI-driven products and features.", "long": "Defines ML feature roadmaps, evaluation and deployment for AI products.", "tags": ["product","ai"], "skills": ["ML literacy","Product","Metrics"], "salary": "15-25 LPA", "responsibilities": ["Define AI features","Measure models","Coordinate"] },
-  { "id": 95, "slug": "fullstack-developer-95", "title": "Fullstack Developer", "short": "Works across frontend and backend.", "long": "Implements product features end-to-end, from UI to DB and APIs.", "tags": ["engineering"], "skills": ["JS","APIs","DB"], "salary": "8-15 LPA", "responsibilities": ["Build features","Ship releases","Support code"] },
-  { "id": 96, "slug": "innovation-manager-96", "title": "Innovation Manager", "short": "Drives new product initiatives and internal innovation.", "long": "Runs experiments and pilots to find new value for the business.", "tags": ["product","business"], "skills": ["Experimentation","Strategy","Stakeholder mgmt"], "salary": "12-20 LPA", "responsibilities": ["Run pilots","Measure","Scale"] },
-  { "id": 97, "slug": "data-privacy-officer-97", "title": "Data Privacy Officer", "short": "Ensures data compliance and privacy.", "long": "Designs policies and ensures legal compliance with data laws.", "tags": ["legal","data"], "skills": ["Policy","Compliance","Audit"], "salary": "10-18 LPA", "responsibilities": ["Policy","Audit","Train"] },
-  { "id": 98, "slug": "cloud-architect-98", "title": "Cloud Architect", "short": "Designs enterprise cloud architecture.", "long": "Defines cloud strategy, cost and architecture for large systems.", "tags": ["cloud","architecture"], "skills": ["Architecture","AWS/GCP","Security"], "salary": "18-30 LPA", "responsibilities": ["Design cloud","Governance","Optimize"] },
-  { "id": 99, "slug": "research-engineer-99", "title": "Research Engineer", "short": "Implements research ideas into prototypes.", "long": "Bridges research and production by building reproducible prototypes.", "tags": ["research","engineering"], "skills": ["Coding","Experimentation","Benchmarking"], "salary": "12-20 LPA", "responsibilities": ["Prototype","Benchmark","Document"] },
-  { "id": 100, "slug": "innovation-designer-100", "title": "Innovation Designer", "short": "Designs new product concepts and user experiments.", "long": "Combines design and research to craft novel product directions.", "tags": ["design","product"], "skills": ["Design thinking","Prototyping","Research"], "salary": "10-18 LPA", "responsibilities": ["Ideate","Prototype","Test"] }
+  {
+    "id": 1,
+    "slug": "software-engineer-1",
+    "title": "Software Engineer",
+    "short": "Designs and builds software applications.",
+    "long": "Builds backend and frontend systems, collaborates with product and QA, writes tests.",
+    "tags": [
+      "engineering",
+      "software"
+    ],
+    "skills": [
+      "JavaScript",
+      "Data Structures",
+      "Problem Solving"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Write code",
+      "Review PRs",
+      "Fix bugs"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 15,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 2,
+    "slug": "frontend-developer-2",
+    "title": "Frontend Developer",
+    "short": "Creates user-facing interfaces.",
+    "long": "Works with HTML/CSS/JS frameworks to implement UI and UX designs.",
+    "tags": [
+      "engineering",
+      "software",
+      "design"
+    ],
+    "skills": [
+      "HTML",
+      "CSS",
+      "React"
+    ],
+    "salary": "5 LPA",
+    "responsibilities": [
+      "Implement UI",
+      "Optimize performance",
+      "Integrate APIs"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 13,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 3,
+    "slug": "backend-developer-3",
+    "title": "Backend Developer",
+    "short": "Builds server-side logic and APIs.",
+    "long": "Designs databases, APIs, and server logic; optimizes for scale.",
+    "tags": [
+      "engineering",
+      "software"
+    ],
+    "skills": [
+      "Node.js",
+      "Databases",
+      "APIs"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Design APIs",
+      "Manage DBs",
+      "Deploy services"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 15,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 4,
+    "slug": "devops-engineer-4",
+    "title": "DevOps Engineer",
+    "short": "Automates deployments and infrastructure.",
+    "long": "Builds CI/CD, monitors systems, writes infra as code.",
+    "tags": [
+      "engineering",
+      "infrastructure"
+    ],
+    "skills": [
+      "Docker",
+      "Kubernetes",
+      "CI/CD"
+    ],
+    "salary": "7 LPA",
+    "responsibilities": [
+      "Automate pipelines",
+      "Monitor infra",
+      "Manage releases"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 18,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 5,
+    "slug": "data-analyst-5",
+    "title": "Data Analyst",
+    "short": "Analyses data and creates reports.",
+    "long": "Gathers data, performs analysis, builds dashboards and insights.",
+    "tags": [
+      "data",
+      "business"
+    ],
+    "skills": [
+      "SQL",
+      "Excel",
+      "Tableau"
+    ],
+    "salary": "4.5 LPA",
+    "responsibilities": [
+      "Query data",
+      "Create dashboards",
+      "Support decisions"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 11,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 65,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 6,
+    "slug": "data-scientist-6",
+    "title": "Data Scientist",
+    "short": "Builds models to derive insights.",
+    "long": "Works on ML models, feature engineering, and data pipelines.",
+    "tags": [
+      "data",
+      "ai"
+    ],
+    "skills": [
+      "Python",
+      "ML",
+      "Statistics"
+    ],
+    "salary": "8 LPA",
+    "responsibilities": [
+      "Modeling",
+      "Experimentation",
+      "Feature engineering"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 60,
+      "structure": 70,
+      "leadership": 40,
+      "social": 35,
+      "independence": 70,
+      "riskTolerance": 45,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 45,
+      "quantitative": 85,
+      "attentionToDetail": 75,
+      "communication": 45,
+      "creativity": 55,
+      "technicalLiteracy": 85
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 20,
+      "workLifeBalance": 60,
+      "jobSecurity": 70,
+      "remoteWork": 85,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 7,
+    "slug": "machine-learning-engineer-7",
+    "title": "Machine Learning Engineer",
+    "short": "Productionises ML models.",
+    "long": "Deploys and monitors ML models, optimizes inference, scales pipelines.",
+    "tags": [
+      "data",
+      "ai",
+      "engineering"
+    ],
+    "skills": [
+      "ML",
+      "Deployment",
+      "Python"
+    ],
+    "salary": "9 LPA",
+    "responsibilities": [
+      "Deploy models",
+      "Monitor performance",
+      "Optimize latency"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 60,
+      "structure": 70,
+      "leadership": 40,
+      "social": 35,
+      "independence": 70,
+      "riskTolerance": 45,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 45,
+      "quantitative": 85,
+      "attentionToDetail": 75,
+      "communication": 45,
+      "creativity": 55,
+      "technicalLiteracy": 85
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 23,
+      "workLifeBalance": 60,
+      "jobSecurity": 70,
+      "remoteWork": 75,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 8,
+    "slug": "product-manager-8",
+    "title": "Product Manager",
+    "short": "Defines product vision and roadmap.",
+    "long": "Works with engineering, design and stakeholders to deliver product outcomes.",
+    "tags": [
+      "business",
+      "product"
+    ],
+    "skills": [
+      "Roadmapping",
+      "Stakeholder mgmt",
+      "Analytics"
+    ],
+    "salary": "9 LPA",
+    "responsibilities": [
+      "Gather requirements",
+      "Prioritise features",
+      "Measure impact"
+    ],
+    "requiredTraits": {
+      "curiosity": 80,
+      "creativity": 65,
+      "structure": 60,
+      "leadership": 95,
+      "social": 75,
+      "independence": 55,
+      "riskTolerance": 60,
+      "collaboration": 80,
+      "analytical": 75
+    },
+    "requiredSkills": {
+      "analytical": 75,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 60,
+      "communication": 85,
+      "creativity": 65,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 80,
+      "salaryPotential": 23,
+      "workLifeBalance": 50,
+      "jobSecurity": 65,
+      "remoteWork": 60,
+      "leadershipOpportunity": 90
+    },
+    "stress": 80,
+    "worklife": 20
+  },
+  {
+    "id": 9,
+    "slug": "project-manager-9",
+    "title": "Project Manager",
+    "short": "Plans and executes projects.",
+    "long": "Manages timelines, coordinates teams, mitigates risks.",
+    "tags": [
+      "business",
+      "management"
+    ],
+    "skills": [
+      "Planning",
+      "Communication",
+      "Risk mgmt"
+    ],
+    "salary": "7 LPA",
+    "responsibilities": [
+      "Schedule",
+      "Track progress",
+      "Report status"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 85,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 18,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 55,
+      "leadershipOpportunity": 85
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 10,
+    "slug": "product-designer-10",
+    "title": "Product Designer",
+    "short": "Designs product interactions and visuals.",
+    "long": "Creates prototypes, user research, and interface design.",
+    "tags": [
+      "design",
+      "product"
+    ],
+    "skills": [
+      "Figma",
+      "UX research",
+      "Prototyping"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Design flows",
+      "Prototype",
+      "Conduct research"
+    ],
+    "requiredTraits": {
+      "curiosity": 80,
+      "creativity": 65,
+      "structure": 60,
+      "leadership": 80,
+      "social": 75,
+      "independence": 55,
+      "riskTolerance": 60,
+      "collaboration": 80,
+      "analytical": 75
+    },
+    "requiredSkills": {
+      "analytical": 75,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 60,
+      "communication": 85,
+      "creativity": 65,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 15,
+      "workLifeBalance": 50,
+      "jobSecurity": 65,
+      "remoteWork": 60,
+      "leadershipOpportunity": 75
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 11,
+    "slug": "ux-designer-11",
+    "title": "UX Designer",
+    "short": "Improves user experience.",
+    "long": "Conducts user research and creates interaction designs.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "User research",
+      "Wireframing",
+      "Accessibility"
+    ],
+    "salary": "5.5 LPA",
+    "responsibilities": [
+      "User testing",
+      "Wireframes",
+      "Journey maps"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 14,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 12,
+    "slug": "ui-designer-12",
+    "title": "UI Designer",
+    "short": "Creates visual interfaces and systems.",
+    "long": "Builds visual languages and assets for products.",
+    "tags": [
+      "design"
+    ],
+    "skills": [
+      "Visual design",
+      "Typography",
+      "Component design"
+    ],
+    "salary": "5 LPA",
+    "responsibilities": [
+      "Design systems",
+      "Create assets",
+      "Handoff to engineers"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 13,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 13,
+    "slug": "graphic-designer-13",
+    "title": "Graphic Designer",
+    "short": "Creates graphics for marketing and product.",
+    "long": "Designs banners, posters, and brand assets.",
+    "tags": [
+      "design",
+      "creative"
+    ],
+    "skills": [
+      "Illustrator",
+      "Photoshop",
+      "Composition"
+    ],
+    "salary": "3.5 LPA",
+    "responsibilities": [
+      "Brand assets",
+      "Campaign visuals",
+      "Collaboration"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 9,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 14,
+    "slug": "qa-engineer-14",
+    "title": "QA Engineer",
+    "short": "Ensures product quality through testing.",
+    "long": "Writes tests, runs manual and automated test suites.",
+    "tags": [
+      "engineering",
+      "quality"
+    ],
+    "skills": [
+      "Automation",
+      "Testing",
+      "Scripting"
+    ],
+    "salary": "4.5 LPA",
+    "responsibilities": [
+      "Test plans",
+      "Automation",
+      "Bug triage"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 40,
+      "structure": 90,
+      "leadership": 45,
+      "social": 40,
+      "independence": 55,
+      "riskTolerance": 25,
+      "collaboration": 55,
+      "analytical": 80
+    },
+    "requiredSkills": {
+      "analytical": 80,
+      "verbal": 50,
+      "quantitative": 65,
+      "attentionToDetail": 95,
+      "communication": 55,
+      "creativity": 35,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 11,
+      "workLifeBalance": 65,
+      "jobSecurity": 70,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 15,
+    "slug": "systems-analyst-15",
+    "title": "Systems Analyst",
+    "short": "Analyses system requirements.",
+    "long": "Bridges business and technical teams to define system specs.",
+    "tags": [
+      "business",
+      "engineering"
+    ],
+    "skills": [
+      "Analysis",
+      "UML",
+      "Requirements"
+    ],
+    "salary": "5 LPA",
+    "responsibilities": [
+      "Gather specs",
+      "Design systems",
+      "Coordinate teams"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 13,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 65,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 16,
+    "slug": "database-administrator-16",
+    "title": "Database Administrator",
+    "short": "Manages databases and performance.",
+    "long": "Ensures backups, scaling, and query performance.",
+    "tags": [
+      "infrastructure",
+      "data"
+    ],
+    "skills": [
+      "SQL",
+      "DB tuning",
+      "Backups"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Maintain DBs",
+      "Optimize queries",
+      "Ensure uptime"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 60,
+      "structure": 70,
+      "leadership": 40,
+      "social": 35,
+      "independence": 70,
+      "riskTolerance": 45,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 45,
+      "quantitative": 85,
+      "attentionToDetail": 75,
+      "communication": 45,
+      "creativity": 55,
+      "technicalLiteracy": 85
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 15,
+      "workLifeBalance": 60,
+      "jobSecurity": 70,
+      "remoteWork": 85,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 17,
+    "slug": "security-engineer-17",
+    "title": "Security Engineer",
+    "short": "Protects systems from threats.",
+    "long": "Performs security audits, threat modeling, and incident response.",
+    "tags": [
+      "security",
+      "engineering"
+    ],
+    "skills": [
+      "Pentesting",
+      "Threat modeling",
+      "Network security"
+    ],
+    "salary": "8 LPA",
+    "responsibilities": [
+      "Assess vulnerabilities",
+      "Monitor incidents",
+      "Improve controls"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 20,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 18,
+    "slug": "cloud-engineer-18",
+    "title": "Cloud Engineer",
+    "short": "Designs and maintains cloud infrastructure.",
+    "long": "Implements cloud architecture, optimizes costs, automates infra.",
+    "tags": [
+      "infrastructure",
+      "cloud"
+    ],
+    "skills": [
+      "AWS",
+      "Terraform",
+      "Architecture"
+    ],
+    "salary": "8 LPA",
+    "responsibilities": [
+      "Architecture",
+      "Automation",
+      "Cost optimization"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 20,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 19,
+    "slug": "business-analyst-19",
+    "title": "Business Analyst",
+    "short": "Translates business needs into solutions.",
+    "long": "Works with stakeholders to define and measure business requirements.",
+    "tags": [
+      "business"
+    ],
+    "skills": [
+      "Requirements",
+      "Analytics",
+      "Communication"
+    ],
+    "salary": "5 LPA",
+    "responsibilities": [
+      "Requirements",
+      "Process mapping",
+      "Reporting"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 13,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 65,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 20,
+    "slug": "financial-analyst-20",
+    "title": "Financial Analyst",
+    "short": "Analyses financial performance.",
+    "long": "Builds financial models and forecasts to guide decisions.",
+    "tags": [
+      "business",
+      "finance"
+    ],
+    "skills": [
+      "Excel",
+      "Modeling",
+      "Forecasting"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Model finance",
+      "Budgeting",
+      "Reports"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 45,
+      "structure": 85,
+      "leadership": 55,
+      "social": 50,
+      "independence": 50,
+      "riskTolerance": 60,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 60,
+      "quantitative": 90,
+      "attentionToDetail": 85,
+      "communication": 60,
+      "creativity": 35,
+      "technicalLiteracy": 60
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 15,
+      "workLifeBalance": 35,
+      "jobSecurity": 65,
+      "remoteWork": 55,
+      "leadershipOpportunity": 60
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 21,
+    "slug": "marketing-manager-21",
+    "title": "Marketing Manager",
+    "short": "Plans and executes marketing strategy.",
+    "long": "Coordinates campaigns, growth experiments, and messaging.",
+    "tags": [
+      "business",
+      "marketing"
+    ],
+    "skills": [
+      "SEO",
+      "Campaigns",
+      "Analytics"
+    ],
+    "salary": "7 LPA",
+    "responsibilities": [
+      "Campaigns",
+      "Strategy",
+      "Measurement"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 70,
+      "structure": 45,
+      "leadership": 75,
+      "social": 85,
+      "independence": 50,
+      "riskTolerance": 65,
+      "collaboration": 70,
+      "analytical": 60
+    },
+    "requiredSkills": {
+      "analytical": 60,
+      "verbal": 80,
+      "quantitative": 55,
+      "attentionToDetail": 50,
+      "communication": 90,
+      "creativity": 75,
+      "technicalLiteracy": 45
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 18,
+      "workLifeBalance": 55,
+      "jobSecurity": 55,
+      "remoteWork": 55,
+      "leadershipOpportunity": 75
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 22,
+    "slug": "content-writer-22",
+    "title": "Content Writer",
+    "short": "Creates written content for products and marketing.",
+    "long": "Writes articles, copy, and documentation.",
+    "tags": [
+      "creative",
+      "marketing"
+    ],
+    "skills": [
+      "Writing",
+      "SEO",
+      "Research"
+    ],
+    "salary": "3.6 LPA",
+    "responsibilities": [
+      "Write copy",
+      "Edit content",
+      "Research topics"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 70,
+      "structure": 45,
+      "leadership": 60,
+      "social": 85,
+      "independence": 50,
+      "riskTolerance": 65,
+      "collaboration": 70,
+      "analytical": 60
+    },
+    "requiredSkills": {
+      "analytical": 60,
+      "verbal": 80,
+      "quantitative": 55,
+      "attentionToDetail": 50,
+      "communication": 90,
+      "creativity": 75,
+      "technicalLiteracy": 45
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 9,
+      "workLifeBalance": 55,
+      "jobSecurity": 55,
+      "remoteWork": 65,
+      "leadershipOpportunity": 60
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 23,
+    "slug": "technical-writer-23",
+    "title": "Technical Writer",
+    "short": "Produces technical docs and guides.",
+    "long": "Documents APIs, user guides, and onboarding materials.",
+    "tags": [
+      "technical",
+      "creative"
+    ],
+    "skills": [
+      "API docs",
+      "Clarity",
+      "Organization"
+    ],
+    "salary": "4 LPA",
+    "responsibilities": [
+      "Docs",
+      "Tutorials",
+      "Coordination"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 10,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 75,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 24,
+    "slug": "hr-manager-24",
+    "title": "HR Manager",
+    "short": "Manages hiring and people operations.",
+    "long": "Handles recruiting, policies, and employee relations.",
+    "tags": [
+      "business",
+      "people"
+    ],
+    "skills": [
+      "Recruiting",
+      "Communication",
+      "Policy"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Recruit",
+      "Manage policies",
+      "Onboard"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 85,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 15,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 55,
+      "leadershipOpportunity": 85
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 25,
+    "slug": "ux-researcher-25",
+    "title": "UX Researcher",
+    "short": "Leads qualitative and quantitative research.",
+    "long": "Runs studies and usability tests to inform product decisions.",
+    "tags": [
+      "design",
+      "research"
+    ],
+    "skills": [
+      "Interviews",
+      "Surveys",
+      "Usability"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "User studies",
+      "Synthesis",
+      "Reports"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 15,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 70,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 26,
+    "slug": "mobile-developer-26",
+    "title": "Mobile Developer",
+    "short": "Builds iOS/Android apps.",
+    "long": "Develops mobile apps, optimizes UX and performance.",
+    "tags": [
+      "engineering",
+      "mobile"
+    ],
+    "skills": [
+      "Kotlin",
+      "Swift",
+      "React Native"
+    ],
+    "salary": "7 LPA",
+    "responsibilities": [
+      "App dev",
+      "Optimize UX",
+      "Publish releases"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 18,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 27,
+    "slug": "embedded-engineer-27",
+    "title": "Embedded Systems Engineer",
+    "short": "Works on hardware-level software.",
+    "long": "Programs microcontrollers, works on firmware and real-time systems.",
+    "tags": [
+      "engineering",
+      "hardware"
+    ],
+    "skills": [
+      "C/C++",
+      "RTOS",
+      "Electronics"
+    ],
+    "salary": "5.5 LPA",
+    "responsibilities": [
+      "Firmware",
+      "Hardware testing",
+      "Optimize footprint"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 14,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 28,
+    "slug": "research-scientist-28",
+    "title": "Research Scientist",
+    "short": "Conducts advanced research in science/AI.",
+    "long": "Publishes papers, builds prototypes, and explores novel methods.",
+    "tags": [
+      "research",
+      "data"
+    ],
+    "skills": [
+      "Experimentation",
+      "Math",
+      "Python"
+    ],
+    "salary": "9 LPA",
+    "responsibilities": [
+      "Research",
+      "Prototyping",
+      "Publish"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 23,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 60,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 29,
+    "slug": "clinical-research-coordinator-29",
+    "title": "Clinical Research Coordinator",
+    "short": "Coordinates clinical studies.",
+    "long": "Manages trials, participants, and data collection.",
+    "tags": [
+      "medical",
+      "research"
+    ],
+    "skills": [
+      "Protocol",
+      "Coordination",
+      "Data"
+    ],
+    "salary": "4 LPA",
+    "responsibilities": [
+      "Run trials",
+      "Record data",
+      "Monitor safety"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 10,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 60,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 30,
+    "slug": "nurse-30",
+    "title": "Nurse",
+    "short": "Provides patient care and support.",
+    "long": "Assists doctors, administers medication, and monitors patient vitals.",
+    "tags": [
+      "medical",
+      "care"
+    ],
+    "skills": [
+      "Patient care",
+      "Compassion",
+      "Clinical skills"
+    ],
+    "salary": "3.8 LPA",
+    "responsibilities": [
+      "Care",
+      "Medication",
+      "Record keeping"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 10,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 31,
+    "slug": "medical-researcher-31",
+    "title": "Medical Researcher",
+    "short": "Studies diseases and treatments.",
+    "long": "Designs experiments, analyses data, and publishes findings.",
+    "tags": [
+      "medical",
+      "research"
+    ],
+    "skills": [
+      "Biostatistics",
+      "Lab work",
+      "Writing"
+    ],
+    "salary": "8 LPA",
+    "responsibilities": [
+      "Experiment",
+      "Analyze",
+      "Publish"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 20,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 70,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 32,
+    "slug": "public-health-officer-32",
+    "title": "Public Health Officer",
+    "short": "Designs public health programs.",
+    "long": "Works on population health, policy and prevention strategies.",
+    "tags": [
+      "public-health",
+      "medical"
+    ],
+    "skills": [
+      "Epidemiology",
+      "Policy",
+      "Communication"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Programs",
+      "Policy",
+      "Monitoring"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 15,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 33,
+    "slug": "teacher-33",
+    "title": "School Teacher",
+    "short": "Teaches subjects to students.",
+    "long": "Plans lessons, assesses students, and supports development.",
+    "tags": [
+      "teaching",
+      "education"
+    ],
+    "skills": [
+      "Lesson planning",
+      "Classroom mgmt",
+      "Communication"
+    ],
+    "salary": "3.5 LPA",
+    "responsibilities": [
+      "Teach",
+      "Assess",
+      "Parent comms"
+    ],
+    "requiredTraits": {
+      "curiosity": 70,
+      "creativity": 65,
+      "structure": 75,
+      "leadership": 65,
+      "social": 85,
+      "independence": 45,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 55
+    },
+    "requiredSkills": {
+      "analytical": 55,
+      "verbal": 85,
+      "quantitative": 45,
+      "attentionToDetail": 65,
+      "communication": 90,
+      "creativity": 65,
+      "technicalLiteracy": 40
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 9,
+      "workLifeBalance": 65,
+      "jobSecurity": 80,
+      "remoteWork": 35,
+      "leadershipOpportunity": 55
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 34,
+    "slug": "corporate-trainer-34",
+    "title": "Corporate Trainer",
+    "short": "Trains employees in skills.",
+    "long": "Designs workshops and delivers professional training programs.",
+    "tags": [
+      "teaching",
+      "business"
+    ],
+    "skills": [
+      "Presentation",
+      "Curriculum",
+      "Coaching"
+    ],
+    "salary": "5 LPA",
+    "responsibilities": [
+      "Train",
+      "Design content",
+      "Evaluate outcomes"
+    ],
+    "requiredTraits": {
+      "curiosity": 70,
+      "creativity": 65,
+      "structure": 75,
+      "leadership": 65,
+      "social": 85,
+      "independence": 45,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 55
+    },
+    "requiredSkills": {
+      "analytical": 55,
+      "verbal": 85,
+      "quantitative": 45,
+      "attentionToDetail": 65,
+      "communication": 90,
+      "creativity": 65,
+      "technicalLiteracy": 40
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 13,
+      "workLifeBalance": 65,
+      "jobSecurity": 80,
+      "remoteWork": 35,
+      "leadershipOpportunity": 55
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 35,
+    "slug": "instructional-designer-35",
+    "title": "Instructional Designer",
+    "short": "Creates learning content and experiences.",
+    "long": "Designs courses, assessments and multimedia learning artifacts.",
+    "tags": [
+      "education",
+      "design"
+    ],
+    "skills": [
+      "Course design",
+      "LMS",
+      "Assessment"
+    ],
+    "salary": "5.5 LPA",
+    "responsibilities": [
+      "Design",
+      "Author content",
+      "Measure learning"
+    ],
+    "requiredTraits": {
+      "curiosity": 70,
+      "creativity": 65,
+      "structure": 75,
+      "leadership": 65,
+      "social": 85,
+      "independence": 45,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 55
+    },
+    "requiredSkills": {
+      "analytical": 55,
+      "verbal": 85,
+      "quantitative": 45,
+      "attentionToDetail": 65,
+      "communication": 90,
+      "creativity": 65,
+      "technicalLiteracy": 40
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 14,
+      "workLifeBalance": 65,
+      "jobSecurity": 80,
+      "remoteWork": 35,
+      "leadershipOpportunity": 55
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 36,
+    "slug": "chef-36",
+    "title": "Chef",
+    "short": "Prepares and designs food menus.",
+    "long": "Manages kitchen, creates dishes, and ensures food quality.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "Cooking",
+      "Menu design",
+      "Time management"
+    ],
+    "salary": "4 LPA",
+    "responsibilities": [
+      "Cook",
+      "Plan menus",
+      "Manage kitchen"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 80,
+      "structure": 70,
+      "leadership": 60,
+      "social": 75,
+      "independence": 45,
+      "riskTolerance": 40,
+      "collaboration": 70,
+      "analytical": 35
+    },
+    "requiredSkills": {
+      "analytical": 35,
+      "verbal": 55,
+      "quantitative": 40,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 85,
+      "technicalLiteracy": 25
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 10,
+      "workLifeBalance": 30,
+      "jobSecurity": 55,
+      "remoteWork": 10,
+      "leadershipOpportunity": 55
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 37,
+    "slug": "baker-37",
+    "title": "Baker",
+    "short": "Makes bread, pastries and baked goods.",
+    "long": "Works with dough, recipes and ovens.",
+    "tags": [
+      "culinary"
+    ],
+    "skills": [
+      "Baking techniques",
+      "Scaling recipes",
+      "Timing"
+    ],
+    "salary": "3 LPA",
+    "responsibilities": [
+      "Bake",
+      "Prep ingredients",
+      "Quality control"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 80,
+      "structure": 70,
+      "leadership": 60,
+      "social": 75,
+      "independence": 45,
+      "riskTolerance": 40,
+      "collaboration": 70,
+      "analytical": 35
+    },
+    "requiredSkills": {
+      "analytical": 35,
+      "verbal": 55,
+      "quantitative": 40,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 85,
+      "technicalLiteracy": 25
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 8,
+      "workLifeBalance": 30,
+      "jobSecurity": 55,
+      "remoteWork": 10,
+      "leadershipOpportunity": 55
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 38,
+    "slug": "hr-generalist-38",
+    "title": "HR Generalist",
+    "short": "Handles day-to-day HR tasks.",
+    "long": "Supports recruiting, onboarding and HR admin.",
+    "tags": [
+      "business",
+      "people"
+    ],
+    "skills": [
+      "HR operations",
+      "Communication",
+      "Records"
+    ],
+    "salary": "4.5 LPA",
+    "responsibilities": [
+      "Recruit",
+      "Onboard",
+      "Admin"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 11,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 55,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 39,
+    "slug": "operations-manager-39",
+    "title": "Operations Manager",
+    "short": "Oversees business operations and logistics.",
+    "long": "Optimizes processes, manages teams and ensures delivery.",
+    "tags": [
+      "business",
+      "operations"
+    ],
+    "skills": [
+      "Process",
+      "Coordination",
+      "Improvement"
+    ],
+    "salary": "7 LPA",
+    "responsibilities": [
+      "Plan ops",
+      "Manage teams",
+      "Improve KPIs"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 85,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 18,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 55,
+      "leadershipOpportunity": 85
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 40,
+    "slug": "supply-chain-analyst-40",
+    "title": "Supply Chain Analyst",
+    "short": "Manages logistics and supply forecasting.",
+    "long": "Optimizes inventory, shipping, and supplier relationships.",
+    "tags": [
+      "business",
+      "logistics"
+    ],
+    "skills": [
+      "Excel",
+      "Forecasting",
+      "ERP"
+    ],
+    "salary": "5.5 LPA",
+    "responsibilities": [
+      "Forecast",
+      "Coordinate",
+      "Optimize"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 14,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 65,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 41,
+    "slug": "civil-engineer-41",
+    "title": "Civil Engineer",
+    "short": "Designs infrastructure and structures.",
+    "long": "Works on roads, bridges, and buildings with engineering plans.",
+    "tags": [
+      "civil",
+      "engineering"
+    ],
+    "skills": [
+      "Design",
+      "Statics",
+      "CAD"
+    ],
+    "salary": "5.5 LPA",
+    "responsibilities": [
+      "Design",
+      "Inspect",
+      "Coordinate"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 14,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 42,
+    "slug": "structural-engineer-42",
+    "title": "Structural Engineer",
+    "short": "Ensures structures are safe and efficient.",
+    "long": "Does calculations and design for load-bearing systems.",
+    "tags": [
+      "civil",
+      "engineering"
+    ],
+    "skills": [
+      "Analysis",
+      "Design codes",
+      "CAD"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Design",
+      "Check safety",
+      "Document"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 15,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 43,
+    "slug": "mechanical-engineer-43",
+    "title": "Mechanical Engineer",
+    "short": "Designs mechanical systems and devices.",
+    "long": "Works on machines, thermal systems and manufacturing designs.",
+    "tags": [
+      "engineering",
+      "mechanical"
+    ],
+    "skills": [
+      "CAD",
+      "Thermodynamics",
+      "Materials"
+    ],
+    "salary": "5.5 LPA",
+    "responsibilities": [
+      "Design",
+      "Test",
+      "Manufacture"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 14,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 44,
+    "slug": "electrical-engineer-44",
+    "title": "Electrical Engineer",
+    "short": "Designs electrical circuits and systems.",
+    "long": "Works on circuits, power systems and control systems.",
+    "tags": [
+      "engineering",
+      "electrical"
+    ],
+    "skills": [
+      "Circuit design",
+      "Simulations",
+      "PCB"
+    ],
+    "salary": "5.5 LPA",
+    "responsibilities": [
+      "Design",
+      "Test",
+      "Document"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 14,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 45,
+    "slug": "environmental-scientist-45",
+    "title": "Environmental Scientist",
+    "short": "Studies and manages environmental issues.",
+    "long": "Performs field studies, collects samples and analyzes data for environmental projects.",
+    "tags": [
+      "science",
+      "environment"
+    ],
+    "skills": [
+      "Field work",
+      "Analysis",
+      "Reporting"
+    ],
+    "salary": "4.5 LPA",
+    "responsibilities": [
+      "Sampling",
+      "Analyze",
+      "Report"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 11,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 60,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 46,
+    "slug": "biotech-engineer-46",
+    "title": "Biotech Engineer",
+    "short": "Works on biotech products and processes.",
+    "long": "Applies engineering to biological systems in labs and production.",
+    "tags": [
+      "biotech",
+      "research"
+    ],
+    "skills": [
+      "Lab skills",
+      "Bioprocess",
+      "Analysis"
+    ],
+    "salary": "7 LPA",
+    "responsibilities": [
+      "Experiment",
+      "Scale processes",
+      "Document"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 18,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 60,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 47,
+    "slug": "pharmacist-47",
+    "title": "Pharmacist",
+    "short": "Dispenses medicines and advises on drug use.",
+    "long": "Works in pharmacies or hospitals ensuring medication safety and counseling patients.",
+    "tags": [
+      "medical",
+      "pharmacy"
+    ],
+    "skills": [
+      "Pharmacology",
+      "Attention to detail",
+      "Counseling"
+    ],
+    "salary": "4.5 LPA",
+    "responsibilities": [
+      "Dispense",
+      "Advise",
+      "Check interactions"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 11,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 48,
+    "slug": "radiologist-48",
+    "title": "Radiologist",
+    "short": "Interprets medical imaging.",
+    "long": "Reads X-rays, CTs and MRIs and advises on diagnosis.",
+    "tags": [
+      "medical",
+      "specialist"
+    ],
+    "skills": [
+      "Imaging",
+      "Diagnosis",
+      "Detail"
+    ],
+    "salary": "25 LPA",
+    "responsibilities": [
+      "Read scans",
+      "Report",
+      "Consult"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 63,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 49,
+    "slug": "physician-49",
+    "title": "Physician",
+    "short": "Diagnoses and treats patients.",
+    "long": "Works in hospitals or clinics providing medical care across specialties.",
+    "tags": [
+      "medical"
+    ],
+    "skills": [
+      "Clinical judgment",
+      "Diagnosis",
+      "Treatment"
+    ],
+    "salary": "12 LPA",
+    "responsibilities": [
+      "Diagnose",
+      "Treat",
+      "Advise"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 30,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 50,
+    "slug": "clinical-lab-technician-50",
+    "title": "Clinical Lab Technician",
+    "short": "Performs lab tests and analysis.",
+    "long": "Prepares samples, runs lab equipment and records results.",
+    "tags": [
+      "medical",
+      "lab"
+    ],
+    "skills": [
+      "Lab techniques",
+      "Attention to detail",
+      "Reporting"
+    ],
+    "salary": "3.8 LPA",
+    "responsibilities": [
+      "Process samples",
+      "Run tests",
+      "Report results"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 10,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 51,
+    "slug": "legal-assistant-51",
+    "title": "Legal Assistant",
+    "short": "Supports legal professionals with research and documents.",
+    "long": "Prepares filings, does legal research and manages documentation.",
+    "tags": [
+      "legal",
+      "business"
+    ],
+    "skills": [
+      "Research",
+      "Writing",
+      "Organization"
+    ],
+    "salary": "3.8 LPA",
+    "responsibilities": [
+      "Research",
+      "Draft docs",
+      "Manage files"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 90,
+      "leadership": 55,
+      "social": 55,
+      "independence": 55,
+      "riskTolerance": 20,
+      "collaboration": 50,
+      "analytical": 80
+    },
+    "requiredSkills": {
+      "analytical": 80,
+      "verbal": 85,
+      "quantitative": 55,
+      "attentionToDetail": 90,
+      "communication": 75,
+      "creativity": 30,
+      "technicalLiteracy": 40
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 10,
+      "workLifeBalance": 40,
+      "jobSecurity": 75,
+      "remoteWork": 45,
+      "leadershipOpportunity": 55
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 52,
+    "slug": "paralegal-52",
+    "title": "Paralegal",
+    "short": "Supports lawyers with case prep.",
+    "long": "Conducts research, organizes evidence and drafts legal documents.",
+    "tags": [
+      "legal"
+    ],
+    "skills": [
+      "Legal research",
+      "Drafting",
+      "Organization"
+    ],
+    "salary": "4 LPA",
+    "responsibilities": [
+      "Case prep",
+      "Research",
+      "Drafting"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 90,
+      "leadership": 55,
+      "social": 55,
+      "independence": 55,
+      "riskTolerance": 20,
+      "collaboration": 50,
+      "analytical": 80
+    },
+    "requiredSkills": {
+      "analytical": 80,
+      "verbal": 85,
+      "quantitative": 55,
+      "attentionToDetail": 90,
+      "communication": 75,
+      "creativity": 30,
+      "technicalLiteracy": 40
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 10,
+      "workLifeBalance": 40,
+      "jobSecurity": 75,
+      "remoteWork": 45,
+      "leadershipOpportunity": 55
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 53,
+    "slug": "ux-writer-53",
+    "title": "UX Writer",
+    "short": "Writes microcopy and product text.",
+    "long": "Creates clear, concise copy for interfaces and helps shape tone.",
+    "tags": [
+      "design",
+      "writing"
+    ],
+    "skills": [
+      "Copywriting",
+      "Clarity",
+      "Product thinking"
+    ],
+    "salary": "4.8 LPA",
+    "responsibilities": [
+      "Write copy",
+      "Align tone",
+      "Work with design"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 12,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 75,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 54,
+    "slug": "social-media-manager-54",
+    "title": "Social Media Manager",
+    "short": "Runs social channels and campaigns.",
+    "long": "Plans content calendars, analyzes engagement and grows community.",
+    "tags": [
+      "marketing",
+      "creative"
+    ],
+    "skills": [
+      "Content",
+      "Analytics",
+      "Community"
+    ],
+    "salary": "4.2 LPA",
+    "responsibilities": [
+      "Plan content",
+      "Engage audience",
+      "Measure results"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 70,
+      "structure": 45,
+      "leadership": 75,
+      "social": 85,
+      "independence": 50,
+      "riskTolerance": 65,
+      "collaboration": 70,
+      "analytical": 60
+    },
+    "requiredSkills": {
+      "analytical": 60,
+      "verbal": 80,
+      "quantitative": 55,
+      "attentionToDetail": 50,
+      "communication": 90,
+      "creativity": 75,
+      "technicalLiteracy": 45
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 11,
+      "workLifeBalance": 55,
+      "jobSecurity": 55,
+      "remoteWork": 55,
+      "leadershipOpportunity": 75
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 55,
+    "slug": "seo-specialist-55",
+    "title": "SEO Specialist",
+    "short": "Optimizes websites for search engines.",
+    "long": "Works on keywords, technical SEO and content strategy to increase organic reach.",
+    "tags": [
+      "marketing",
+      "growth"
+    ],
+    "skills": [
+      "SEO",
+      "Analytics",
+      "Content"
+    ],
+    "salary": "5 LPA",
+    "responsibilities": [
+      "Optimize",
+      "Audit",
+      "Strategy"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 70,
+      "structure": 45,
+      "leadership": 60,
+      "social": 85,
+      "independence": 50,
+      "riskTolerance": 65,
+      "collaboration": 70,
+      "analytical": 60
+    },
+    "requiredSkills": {
+      "analytical": 60,
+      "verbal": 80,
+      "quantitative": 55,
+      "attentionToDetail": 50,
+      "communication": 90,
+      "creativity": 75,
+      "technicalLiteracy": 45
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 13,
+      "workLifeBalance": 55,
+      "jobSecurity": 55,
+      "remoteWork": 55,
+      "leadershipOpportunity": 60
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 56,
+    "slug": "sales-executive-56",
+    "title": "Sales Executive",
+    "short": "Sells products and services to customers.",
+    "long": "Builds relationships, pitches solutions and closes deals.",
+    "tags": [
+      "sales",
+      "business"
+    ],
+    "skills": [
+      "Communication",
+      "Negotiation",
+      "CRM"
+    ],
+    "salary": "4.5 LPA",
+    "responsibilities": [
+      "Prospect",
+      "Pitch",
+      "Close deals"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 70,
+      "structure": 45,
+      "leadership": 60,
+      "social": 85,
+      "independence": 50,
+      "riskTolerance": 65,
+      "collaboration": 70,
+      "analytical": 60
+    },
+    "requiredSkills": {
+      "analytical": 60,
+      "verbal": 80,
+      "quantitative": 55,
+      "attentionToDetail": 50,
+      "communication": 90,
+      "creativity": 75,
+      "technicalLiteracy": 45
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 11,
+      "workLifeBalance": 55,
+      "jobSecurity": 55,
+      "remoteWork": 55,
+      "leadershipOpportunity": 60
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 57,
+    "slug": "account-manager-57",
+    "title": "Account Manager",
+    "short": "Manages client relationships and retention.",
+    "long": "Acts as a point of contact, ensures client success and grows accounts.",
+    "tags": [
+      "business",
+      "client"
+    ],
+    "skills": [
+      "Relationship",
+      "Upsell",
+      "Support"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Support clients",
+      "Retain accounts",
+      "Expand usage"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 70,
+      "structure": 45,
+      "leadership": 75,
+      "social": 85,
+      "independence": 50,
+      "riskTolerance": 65,
+      "collaboration": 70,
+      "analytical": 60
+    },
+    "requiredSkills": {
+      "analytical": 60,
+      "verbal": 80,
+      "quantitative": 55,
+      "attentionToDetail": 50,
+      "communication": 90,
+      "creativity": 75,
+      "technicalLiteracy": 45
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 15,
+      "workLifeBalance": 55,
+      "jobSecurity": 55,
+      "remoteWork": 55,
+      "leadershipOpportunity": 75
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 58,
+    "slug": "customer-success-manager-58",
+    "title": "Customer Success Manager",
+    "short": "Helps customers achieve value from a product.",
+    "long": "Onboards customers, drives product adoption and minimizes churn.",
+    "tags": [
+      "customer",
+      "business"
+    ],
+    "skills": [
+      "Onboarding",
+      "Support",
+      "Measurement"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Onboard",
+      "Drive adoption",
+      "Reduce churn"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 70,
+      "structure": 45,
+      "leadership": 75,
+      "social": 85,
+      "independence": 50,
+      "riskTolerance": 65,
+      "collaboration": 70,
+      "analytical": 60
+    },
+    "requiredSkills": {
+      "analytical": 60,
+      "verbal": 80,
+      "quantitative": 55,
+      "attentionToDetail": 50,
+      "communication": 90,
+      "creativity": 75,
+      "technicalLiteracy": 45
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 15,
+      "workLifeBalance": 55,
+      "jobSecurity": 55,
+      "remoteWork": 55,
+      "leadershipOpportunity": 75
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 59,
+    "slug": "qa-automation-engineer-59",
+    "title": "QA Automation Engineer",
+    "short": "Builds test automation and frameworks.",
+    "long": "Automates regression suites and integrates tests into CI/CD.",
+    "tags": [
+      "engineering",
+      "quality"
+    ],
+    "skills": [
+      "Selenium",
+      "Scripting",
+      "Testing"
+    ],
+    "salary": "6 LPA",
+    "responsibilities": [
+      "Automate tests",
+      "Integrate CI",
+      "Monitor"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 40,
+      "structure": 90,
+      "leadership": 45,
+      "social": 40,
+      "independence": 55,
+      "riskTolerance": 25,
+      "collaboration": 55,
+      "analytical": 80
+    },
+    "requiredSkills": {
+      "analytical": 80,
+      "verbal": 50,
+      "quantitative": 65,
+      "attentionToDetail": 95,
+      "communication": 55,
+      "creativity": 35,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 15,
+      "workLifeBalance": 65,
+      "jobSecurity": 70,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 60,
+    "slug": "research-analyst-60",
+    "title": "Research Analyst",
+    "short": "Performs market and industry research.",
+    "long": "Collects data, summarizes findings and presents recommendations.",
+    "tags": [
+      "research",
+      "business"
+    ],
+    "skills": [
+      "Research",
+      "Writing",
+      "Analysis"
+    ],
+    "salary": "5 LPA",
+    "responsibilities": [
+      "Study markets",
+      "Summarize findings",
+      "Recommend actions"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 13,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 70,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 61,
+    "slug": "data-engineer-61",
+    "title": "Data Engineer",
+    "short": "Builds data pipelines and ETL systems.",
+    "long": "Designs reliable pipelines for data storage and processing at scale.",
+    "tags": [
+      "data",
+      "engineering"
+    ],
+    "skills": [
+      "ETL",
+      "Python",
+      "Spark"
+    ],
+    "salary": "10-18 LPA",
+    "responsibilities": [
+      "Build pipelines",
+      "Ensure quality",
+      "Optimize jobs"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 60,
+      "structure": 70,
+      "leadership": 40,
+      "social": 35,
+      "independence": 70,
+      "riskTolerance": 45,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 45,
+      "quantitative": 85,
+      "attentionToDetail": 75,
+      "communication": 45,
+      "creativity": 55,
+      "technicalLiteracy": 85
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 45,
+      "workLifeBalance": 60,
+      "jobSecurity": 70,
+      "remoteWork": 85,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 62,
+    "slug": "analytics-engineer-62",
+    "title": "Analytics Engineer",
+    "short": "Builds analytics data models and transformations.",
+    "long": "Transforms raw data into analytics-ready models and documentation.",
+    "tags": [
+      "data",
+      "analytics"
+    ],
+    "skills": [
+      "SQL",
+      "DBT",
+      "Modeling"
+    ],
+    "salary": "8-15 LPA",
+    "responsibilities": [
+      "Model data",
+      "Document",
+      "Support analysts"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 60,
+      "structure": 70,
+      "leadership": 40,
+      "social": 35,
+      "independence": 70,
+      "riskTolerance": 45,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 45,
+      "quantitative": 85,
+      "attentionToDetail": 75,
+      "communication": 45,
+      "creativity": 55,
+      "technicalLiteracy": 85
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 38,
+      "workLifeBalance": 60,
+      "jobSecurity": 70,
+      "remoteWork": 75,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 63,
+    "slug": "business-intelligence-analyst-63",
+    "title": "Business Intelligence Analyst",
+    "short": "Creates dashboards and insights for business teams.",
+    "long": "Designs reports, KPIs and automates regular reporting.",
+    "tags": [
+      "data",
+      "business"
+    ],
+    "skills": [
+      "BI tools",
+      "SQL",
+      "Dashboards"
+    ],
+    "salary": "7-14 LPA",
+    "responsibilities": [
+      "Build dashboards",
+      "Define KPIs",
+      "Automate reports"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 35,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 65,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 64,
+    "slug": "robotics-engineer-64",
+    "title": "Robotics Engineer",
+    "short": "Builds robotic systems and automation.",
+    "long": "Integrates mechanics, electronics and software for robotics projects.",
+    "tags": [
+      "engineering",
+      "robotics"
+    ],
+    "skills": [
+      "Control",
+      "Embedded",
+      "Calibration"
+    ],
+    "salary": "10-18 LPA",
+    "responsibilities": [
+      "Design robots",
+      "Test",
+      "Integrate systems"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 45,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 65,
+    "slug": "game-developer-65",
+    "title": "Game Developer",
+    "short": "Creates video games and interactive experiences.",
+    "long": "Works on gameplay, physics, and performance for games.",
+    "tags": [
+      "creative",
+      "engineering"
+    ],
+    "skills": [
+      "C#",
+      "Unity",
+      "Optimization"
+    ],
+    "salary": "6-12 LPA",
+    "responsibilities": [
+      "Develop features",
+      "Optimize",
+      "Polish"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 30,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 66,
+    "slug": "animator-66",
+    "title": "Animator",
+    "short": "Creates animations for games and media.",
+    "long": "Designs character motion and sequences using animation tools.",
+    "tags": [
+      "creative",
+      "media"
+    ],
+    "skills": [
+      "Animation",
+      "Timing",
+      "Storyboarding"
+    ],
+    "salary": "4-9 LPA",
+    "responsibilities": [
+      "Animate",
+      "Refine",
+      "Collaborate"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 23,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 67,
+    "slug": "sound-engineer-67",
+    "title": "Sound Engineer",
+    "short": "Designs and mixes audio for media.",
+    "long": "Records, edits and masters audio for products and productions.",
+    "tags": [
+      "creative",
+      "media"
+    ],
+    "skills": [
+      "Audio editing",
+      "Mixing",
+      "Recording"
+    ],
+    "salary": "4.5-10 LPA",
+    "responsibilities": [
+      "Record",
+      "Edit",
+      "Mix"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 25,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 68,
+    "slug": "film-editor-68",
+    "title": "Film Editor",
+    "short": "Edits video footage into final form.",
+    "long": "Assembles footage, refines timing and works with directors on final cuts.",
+    "tags": [
+      "media",
+      "creative"
+    ],
+    "skills": [
+      "Editing",
+      "Storytelling",
+      "Software"
+    ],
+    "salary": "5-11 LPA",
+    "responsibilities": [
+      "Edit",
+      "Polish",
+      "Deliver edits"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 28,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 69,
+    "slug": "architect-69",
+    "title": "Architect",
+    "short": "Designs buildings and spaces.",
+    "long": "Creates architectural plans and coordinates with engineers for construction.",
+    "tags": [
+      "design",
+      "civil"
+    ],
+    "skills": [
+      "Design",
+      "CAD",
+      "Regulations"
+    ],
+    "salary": "8-16 LPA",
+    "responsibilities": [
+      "Design",
+      "Coordinate",
+      "Comply"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 40,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 70,
+    "slug": "interior-designer-70",
+    "title": "Interior Designer",
+    "short": "Designs indoor spaces for function and aesthetics.",
+    "long": "Plans layouts, selects materials and coordinates execution.",
+    "tags": [
+      "design",
+      "creative"
+    ],
+    "skills": [
+      "Space planning",
+      "Materials",
+      "Mood boards"
+    ],
+    "salary": "4.5-10 LPA",
+    "responsibilities": [
+      "Plan spaces",
+      "Select finishes",
+      "Oversee fit-out"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 25,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 71,
+    "slug": "ux-research-lead-71",
+    "title": "UX Research Lead",
+    "short": "Leads user research strategies.",
+    "long": "Sets research frameworks and mentors junior researchers.",
+    "tags": [
+      "design",
+      "research"
+    ],
+    "skills": [
+      "Leadership",
+      "Research",
+      "Synthesis"
+    ],
+    "salary": "12-20 LPA",
+    "responsibilities": [
+      "Lead studies",
+      "Mentor",
+      "Strategy"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 60,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 50,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 60,
+      "leadershipOpportunity": 55
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 72,
+    "slug": "ai-researcher-72",
+    "title": "AI Researcher",
+    "short": "Works on cutting-edge AI models.",
+    "long": "Explores new model architectures and publishes research.",
+    "tags": [
+      "ai",
+      "research"
+    ],
+    "skills": [
+      "Math",
+      "ML",
+      "Python"
+    ],
+    "salary": "20-35 LPA",
+    "responsibilities": [
+      "Research",
+      "Prototype",
+      "Publish"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 88,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 70,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 73,
+    "slug": "ux-engineer-73",
+    "title": "UX Engineer",
+    "short": "Bridges design and engineering.",
+    "long": "Implements high-fidelity interactions and prototypes in code.",
+    "tags": [
+      "design",
+      "engineering"
+    ],
+    "skills": [
+      "JS",
+      "Animation",
+      "Interaction"
+    ],
+    "salary": "8-15 LPA",
+    "responsibilities": [
+      "Build prototypes",
+      "Implement UI",
+      "Support design"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 38,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 74,
+    "slug": "accessibility-specialist-74",
+    "title": "Accessibility Specialist",
+    "short": "Ensures products are accessible to all users.",
+    "long": "Audits interfaces and helps teams meet accessibility standards.",
+    "tags": [
+      "design",
+      "ux"
+    ],
+    "skills": [
+      "A11y",
+      "Testing",
+      "Guidelines"
+    ],
+    "salary": "7-13 LPA",
+    "responsibilities": [
+      "Audit",
+      "Advise",
+      "Test"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 33,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 75,
+    "slug": "machine-vision-engineer-75",
+    "title": "Machine Vision Engineer",
+    "short": "Builds vision systems for automation.",
+    "long": "Works on image processing and object detection for industrial use.",
+    "tags": [
+      "ai",
+      "engineering"
+    ],
+    "skills": [
+      "CV",
+      "Python",
+      "Optimization"
+    ],
+    "salary": "12-20 LPA",
+    "responsibilities": [
+      "Build models",
+      "Integrate cameras",
+      "Tune systems"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 60,
+      "structure": 70,
+      "leadership": 40,
+      "social": 35,
+      "independence": 70,
+      "riskTolerance": 45,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 45,
+      "quantitative": 85,
+      "attentionToDetail": 75,
+      "communication": 45,
+      "creativity": 55,
+      "technicalLiteracy": 85
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 50,
+      "workLifeBalance": 60,
+      "jobSecurity": 70,
+      "remoteWork": 75,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 76,
+    "slug": "biomedical-engineer-76",
+    "title": "Biomedical Engineer",
+    "short": "Designs medical devices and systems.",
+    "long": "Works at the intersection of medicine and engineering to build devices.",
+    "tags": [
+      "medical",
+      "engineering"
+    ],
+    "skills": [
+      "Design",
+      "Clinical understanding",
+      "Testing"
+    ],
+    "salary": "8-15 LPA",
+    "responsibilities": [
+      "Design devices",
+      "Test",
+      "Comply"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 38,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 77,
+    "slug": "ux-strategist-77",
+    "title": "UX Strategist",
+    "short": "Aligns product goals with user needs.",
+    "long": "Sets long-term UX direction and prioritizes initiatives.",
+    "tags": [
+      "design",
+      "product"
+    ],
+    "skills": [
+      "Strategy",
+      "Research",
+      "Roadmapping"
+    ],
+    "salary": "12-22 LPA",
+    "responsibilities": [
+      "Strategy",
+      "Prioritize",
+      "Advocate"
+    ],
+    "requiredTraits": {
+      "curiosity": 80,
+      "creativity": 65,
+      "structure": 60,
+      "leadership": 80,
+      "social": 75,
+      "independence": 55,
+      "riskTolerance": 60,
+      "collaboration": 80,
+      "analytical": 75
+    },
+    "requiredSkills": {
+      "analytical": 75,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 60,
+      "communication": 85,
+      "creativity": 65,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 55,
+      "workLifeBalance": 50,
+      "jobSecurity": 65,
+      "remoteWork": 60,
+      "leadershipOpportunity": 75
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 78,
+    "slug": "sme-consultant-78",
+    "title": "SME Consultant",
+    "short": "Provides domain-specific advice and solutions.",
+    "long": "Works with organisations to solve specialised problems in their field.",
+    "tags": [
+      "consulting",
+      "business"
+    ],
+    "skills": [
+      "Domain knowledge",
+      "Advisory",
+      "Problem solving"
+    ],
+    "salary": "15-25 LPA",
+    "responsibilities": [
+      "Advise",
+      "Plan",
+      "Implement"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 63,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 55,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 79,
+    "slug": "sustainability-specialist-79",
+    "title": "Sustainability Specialist",
+    "short": "Designs sustainable practices and policies.",
+    "long": "Helps organisations reduce environmental impact and meet standards.",
+    "tags": [
+      "environment",
+      "policy"
+    ],
+    "skills": [
+      "Audits",
+      "Policy",
+      "Reporting"
+    ],
+    "salary": "7-13 LPA",
+    "responsibilities": [
+      "Assess impact",
+      "Advise",
+      "Report"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 90,
+      "leadership": 55,
+      "social": 55,
+      "independence": 55,
+      "riskTolerance": 20,
+      "collaboration": 50,
+      "analytical": 80
+    },
+    "requiredSkills": {
+      "analytical": 80,
+      "verbal": 85,
+      "quantitative": 55,
+      "attentionToDetail": 90,
+      "communication": 75,
+      "creativity": 30,
+      "technicalLiteracy": 40
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 33,
+      "workLifeBalance": 40,
+      "jobSecurity": 75,
+      "remoteWork": 45,
+      "leadershipOpportunity": 55
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 80,
+    "slug": "ux-researcher-junior-80",
+    "title": "Junior UX Researcher",
+    "short": "Assists in user research tasks.",
+    "long": "Helps recruit participants, run tests and synthesize findings.",
+    "tags": [
+      "design",
+      "research"
+    ],
+    "skills": [
+      "Testing",
+      "Note taking",
+      "Synthesis"
+    ],
+    "salary": "4-8 LPA",
+    "responsibilities": [
+      "Help tests",
+      "Transcribe",
+      "Summarize"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 20,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 70,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 81,
+    "slug": "biostatistician-81",
+    "title": "Biostatistician",
+    "short": "Applies statistics to biological data.",
+    "long": "Designs studies and analyzes results for clinical research.",
+    "tags": [
+      "medical",
+      "data"
+    ],
+    "skills": [
+      "Statistics",
+      "R",
+      "Clinical trials"
+    ],
+    "salary": "10-18 LPA",
+    "responsibilities": [
+      "Design studies",
+      "Analyze",
+      "Report"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 55,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 75,
+      "salaryPotential": 45,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 50
+    },
+    "stress": 75,
+    "worklife": 25
+  },
+  {
+    "id": 82,
+    "slug": "ux-research-consultant-82",
+    "title": "UX Research Consultant",
+    "short": "Offers research expertise to clients.",
+    "long": "Designs independent research and synthesizes insights for projects.",
+    "tags": [
+      "design",
+      "consulting"
+    ],
+    "skills": [
+      "Research",
+      "Communication",
+      "Recommendations"
+    ],
+    "salary": "14-24 LPA",
+    "responsibilities": [
+      "Consult",
+      "Design studies",
+      "Deliver reports"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 60,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 55,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 83,
+    "slug": "bioinformatician-83",
+    "title": "Bioinformatician",
+    "short": "Combines biology and computation.",
+    "long": "Analyzes genomic data and builds pipelines for biological data processing.",
+    "tags": [
+      "bio",
+      "data"
+    ],
+    "skills": [
+      "Python",
+      "Genomics",
+      "Pipelines"
+    ],
+    "salary": "9-16 LPA",
+    "responsibilities": [
+      "Process data",
+      "Analyze",
+      "Automate"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 60,
+      "structure": 70,
+      "leadership": 40,
+      "social": 35,
+      "independence": 70,
+      "riskTolerance": 45,
+      "collaboration": 55,
+      "analytical": 90
+    },
+    "requiredSkills": {
+      "analytical": 90,
+      "verbal": 45,
+      "quantitative": 85,
+      "attentionToDetail": 75,
+      "communication": 45,
+      "creativity": 55,
+      "technicalLiteracy": 85
+    },
+    "lifestyleProfile": {
+      "stressLevel": 60,
+      "salaryPotential": 40,
+      "workLifeBalance": 60,
+      "jobSecurity": 70,
+      "remoteWork": 75,
+      "leadershipOpportunity": 40
+    },
+    "stress": 60,
+    "worklife": 40
+  },
+  {
+    "id": 84,
+    "slug": "ux-ops-84",
+    "title": "UX Operations Manager",
+    "short": "Improves UX team processes and tooling.",
+    "long": "Scales UX practice through operations, strategy and tooling.",
+    "tags": [
+      "design",
+      "ops"
+    ],
+    "skills": [
+      "Operations",
+      "Tooling",
+      "Coordination"
+    ],
+    "salary": "10-18 LPA",
+    "responsibilities": [
+      "Improve processes",
+      "Manage tools",
+      "Support teams"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 60,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 45,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 55
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 85,
+    "slug": "qa-lead-85",
+    "title": "QA Lead",
+    "short": "Leads QA strategy and teams.",
+    "long": "Sets test strategy, mentors QA engineers and ensures product quality.",
+    "tags": [
+      "quality",
+      "engineering"
+    ],
+    "skills": [
+      "Leadership",
+      "Testing",
+      "Strategy"
+    ],
+    "salary": "10-18 LPA",
+    "responsibilities": [
+      "Lead QA",
+      "Mentor",
+      "Strategy"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 40,
+      "structure": 90,
+      "leadership": 60,
+      "social": 40,
+      "independence": 55,
+      "riskTolerance": 25,
+      "collaboration": 55,
+      "analytical": 80
+    },
+    "requiredSkills": {
+      "analytical": 80,
+      "verbal": 50,
+      "quantitative": 65,
+      "attentionToDetail": 95,
+      "communication": 55,
+      "creativity": 35,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 45,
+      "workLifeBalance": 65,
+      "jobSecurity": 70,
+      "remoteWork": 65,
+      "leadershipOpportunity": 55
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 86,
+    "slug": "ux-content-strategist-86",
+    "title": "Content Strategist",
+    "short": "Plans content across products.",
+    "long": "Defines content strategy, taxonomy and voice across user journeys.",
+    "tags": [
+      "content",
+      "ux"
+    ],
+    "skills": [
+      "Strategy",
+      "Taxonomy",
+      "Research"
+    ],
+    "salary": "8-15 LPA",
+    "responsibilities": [
+      "Define content",
+      "Align voice",
+      "Measure impact"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 38,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 87,
+    "slug": "clinical-data-manager-87",
+    "title": "Clinical Data Manager",
+    "short": "Manages clinical trial data systems.",
+    "long": "Ensures data integrity, compliance and reporting for clinical studies.",
+    "tags": [
+      "medical",
+      "data"
+    ],
+    "skills": [
+      "CDMS",
+      "Compliance",
+      "QC"
+    ],
+    "salary": "7-14 LPA",
+    "responsibilities": [
+      "Manage datasets",
+      "Validate",
+      "Report"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 70,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 85,
+      "salaryPotential": 35,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 35,
+      "leadershipOpportunity": 65
+    },
+    "stress": 85,
+    "worklife": 15
+  },
+  {
+    "id": 88,
+    "slug": "medtech-product-manager-88",
+    "title": "MedTech Product Manager",
+    "short": "Manages medical device product lifecycle.",
+    "long": "Works with clinicians and engineers to deliver compliant medical devices.",
+    "tags": [
+      "medical",
+      "product"
+    ],
+    "skills": [
+      "Regulatory",
+      "Stakeholder",
+      "Product"
+    ],
+    "salary": "15-25 LPA",
+    "responsibilities": [
+      "Plan product",
+      "Coordinate trials",
+      "Comply"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 80,
+      "leadership": 70,
+      "social": 80,
+      "independence": 40,
+      "riskTolerance": 30,
+      "collaboration": 70,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 65,
+      "quantitative": 60,
+      "attentionToDetail": 85,
+      "communication": 75,
+      "creativity": 35,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 85,
+      "salaryPotential": 63,
+      "workLifeBalance": 40,
+      "jobSecurity": 85,
+      "remoteWork": 25,
+      "leadershipOpportunity": 65
+    },
+    "stress": 85,
+    "worklife": 15
+  },
+  {
+    "id": 89,
+    "slug": "robotics-researcher-89",
+    "title": "Robotics Researcher",
+    "short": "Explores new robotics algorithms.",
+    "long": "Publishes research and prototypes in robotics and automation.",
+    "tags": [
+      "research",
+      "robotics"
+    ],
+    "skills": [
+      "Robotics",
+      "Control",
+      "Research"
+    ],
+    "salary": "15-25 LPA",
+    "responsibilities": [
+      "Research",
+      "Prototype",
+      "Publish"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 63,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 70,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 90,
+    "slug": "sme-analyst-90",
+    "title": "SME Analyst",
+    "short": "Analyses small and medium enterprise data.",
+    "long": "Focuses on SME products and business analytics.",
+    "tags": [
+      "business",
+      "analysis"
+    ],
+    "skills": [
+      "Analysis",
+      "Communication",
+      "Reporting"
+    ],
+    "salary": "5-10 LPA",
+    "responsibilities": [
+      "Analyze SMEs",
+      "Create reports",
+      "Advise"
+    ],
+    "requiredTraits": {
+      "curiosity": 60,
+      "creativity": 55,
+      "structure": 70,
+      "leadership": 70,
+      "social": 70,
+      "independence": 50,
+      "riskTolerance": 50,
+      "collaboration": 75,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 70,
+      "quantitative": 65,
+      "attentionToDetail": 65,
+      "communication": 80,
+      "creativity": 50,
+      "technicalLiteracy": 50
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 25,
+      "workLifeBalance": 50,
+      "jobSecurity": 60,
+      "remoteWork": 65,
+      "leadershipOpportunity": 70
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 91,
+    "slug": "technical-product-manager-91",
+    "title": "Technical Product Manager",
+    "short": "Product manager with strong technical skills.",
+    "long": "Builds roadmaps and works closely with engineering on complex features.",
+    "tags": [
+      "product",
+      "engineering"
+    ],
+    "skills": [
+      "Tech understanding",
+      "Planning",
+      "Communication"
+    ],
+    "salary": "14-24 LPA",
+    "responsibilities": [
+      "Roadmap",
+      "Coordinate",
+      "Measure"
+    ],
+    "requiredTraits": {
+      "curiosity": 80,
+      "creativity": 65,
+      "structure": 60,
+      "leadership": 95,
+      "social": 75,
+      "independence": 55,
+      "riskTolerance": 60,
+      "collaboration": 80,
+      "analytical": 75
+    },
+    "requiredSkills": {
+      "analytical": 75,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 60,
+      "communication": 85,
+      "creativity": 65,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 80,
+      "salaryPotential": 60,
+      "workLifeBalance": 50,
+      "jobSecurity": 65,
+      "remoteWork": 60,
+      "leadershipOpportunity": 90
+    },
+    "stress": 80,
+    "worklife": 20
+  },
+  {
+    "id": 92,
+    "slug": "entrepreneur-92",
+    "title": "Entrepreneur / Founder",
+    "short": "Builds and scales new ventures.",
+    "long": "Defines vision, raises funds and leads a small team to create products.",
+    "tags": [
+      "startup",
+      "business"
+    ],
+    "skills": [
+      "Strategy",
+      "Execution",
+      "Resilience"
+    ],
+    "salary": "Varies",
+    "responsibilities": [
+      "Lead",
+      "Fundraise",
+      "Build"
+    ],
+    "requiredTraits": {
+      "curiosity": 85,
+      "creativity": 80,
+      "structure": 40,
+      "leadership": 90,
+      "social": 70,
+      "independence": 85,
+      "riskTolerance": 90,
+      "collaboration": 65,
+      "analytical": 70
+    },
+    "requiredSkills": {
+      "analytical": 70,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 55,
+      "communication": 80,
+      "creativity": 80,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 85,
+      "salaryPotential": 70,
+      "workLifeBalance": 30,
+      "jobSecurity": 20,
+      "remoteWork": 60,
+      "leadershipOpportunity": 95
+    },
+    "stress": 85,
+    "worklife": 15
+  },
+  {
+    "id": 93,
+    "slug": "ux-engineer-junior-93",
+    "title": "Junior UX Engineer",
+    "short": "Assists with product interactions in code.",
+    "long": "Implements small interactions and supports designers in prototyping.",
+    "tags": [
+      "design",
+      "engineering"
+    ],
+    "skills": [
+      "HTML/CSS",
+      "JS",
+      "Prototyping"
+    ],
+    "salary": "4.5-9 LPA",
+    "responsibilities": [
+      "Implement prototypes",
+      "Support design",
+      "Polish"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 90,
+      "structure": 45,
+      "leadership": 45,
+      "social": 60,
+      "independence": 65,
+      "riskTolerance": 55,
+      "collaboration": 65,
+      "analytical": 50
+    },
+    "requiredSkills": {
+      "analytical": 45,
+      "verbal": 65,
+      "quantitative": 35,
+      "attentionToDetail": 75,
+      "communication": 65,
+      "creativity": 90,
+      "technicalLiteracy": 55
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 23,
+      "workLifeBalance": 65,
+      "jobSecurity": 50,
+      "remoteWork": 65,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 94,
+    "slug": "ai-product-manager-94",
+    "title": "AI Product Manager",
+    "short": "Manages AI-driven products and features.",
+    "long": "Defines ML feature roadmaps, evaluation and deployment for AI products.",
+    "tags": [
+      "product",
+      "ai"
+    ],
+    "skills": [
+      "ML literacy",
+      "Product",
+      "Metrics"
+    ],
+    "salary": "15-25 LPA",
+    "responsibilities": [
+      "Define AI features",
+      "Measure models",
+      "Coordinate"
+    ],
+    "requiredTraits": {
+      "curiosity": 80,
+      "creativity": 65,
+      "structure": 60,
+      "leadership": 95,
+      "social": 75,
+      "independence": 55,
+      "riskTolerance": 60,
+      "collaboration": 80,
+      "analytical": 75
+    },
+    "requiredSkills": {
+      "analytical": 75,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 60,
+      "communication": 85,
+      "creativity": 65,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 80,
+      "salaryPotential": 63,
+      "workLifeBalance": 50,
+      "jobSecurity": 65,
+      "remoteWork": 60,
+      "leadershipOpportunity": 90
+    },
+    "stress": 80,
+    "worklife": 20
+  },
+  {
+    "id": 95,
+    "slug": "fullstack-developer-95",
+    "title": "Fullstack Developer",
+    "short": "Works across frontend and backend.",
+    "long": "Implements product features end-to-end, from UI to DB and APIs.",
+    "tags": [
+      "engineering"
+    ],
+    "skills": [
+      "JS",
+      "APIs",
+      "DB"
+    ],
+    "salary": "8-15 LPA",
+    "responsibilities": [
+      "Build features",
+      "Ship releases",
+      "Support code"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 38,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 96,
+    "slug": "innovation-manager-96",
+    "title": "Innovation Manager",
+    "short": "Drives new product initiatives and internal innovation.",
+    "long": "Runs experiments and pilots to find new value for the business.",
+    "tags": [
+      "product",
+      "business"
+    ],
+    "skills": [
+      "Experimentation",
+      "Strategy",
+      "Stakeholder mgmt"
+    ],
+    "salary": "12-20 LPA",
+    "responsibilities": [
+      "Run pilots",
+      "Measure",
+      "Scale"
+    ],
+    "requiredTraits": {
+      "curiosity": 80,
+      "creativity": 65,
+      "structure": 60,
+      "leadership": 95,
+      "social": 75,
+      "independence": 55,
+      "riskTolerance": 60,
+      "collaboration": 80,
+      "analytical": 75
+    },
+    "requiredSkills": {
+      "analytical": 75,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 60,
+      "communication": 85,
+      "creativity": 65,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 80,
+      "salaryPotential": 50,
+      "workLifeBalance": 50,
+      "jobSecurity": 65,
+      "remoteWork": 60,
+      "leadershipOpportunity": 90
+    },
+    "stress": 80,
+    "worklife": 20
+  },
+  {
+    "id": 97,
+    "slug": "data-privacy-officer-97",
+    "title": "Data Privacy Officer",
+    "short": "Ensures data compliance and privacy.",
+    "long": "Designs policies and ensures legal compliance with data laws.",
+    "tags": [
+      "legal",
+      "data"
+    ],
+    "skills": [
+      "Policy",
+      "Compliance",
+      "Audit"
+    ],
+    "salary": "10-18 LPA",
+    "responsibilities": [
+      "Policy",
+      "Audit",
+      "Train"
+    ],
+    "requiredTraits": {
+      "curiosity": 65,
+      "creativity": 40,
+      "structure": 90,
+      "leadership": 55,
+      "social": 55,
+      "independence": 55,
+      "riskTolerance": 20,
+      "collaboration": 50,
+      "analytical": 80
+    },
+    "requiredSkills": {
+      "analytical": 80,
+      "verbal": 85,
+      "quantitative": 55,
+      "attentionToDetail": 90,
+      "communication": 75,
+      "creativity": 30,
+      "technicalLiteracy": 40
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 45,
+      "workLifeBalance": 40,
+      "jobSecurity": 75,
+      "remoteWork": 55,
+      "leadershipOpportunity": 55
+    },
+    "stress": 70,
+    "worklife": 30
+  },
+  {
+    "id": 98,
+    "slug": "cloud-architect-98",
+    "title": "Cloud Architect",
+    "short": "Designs enterprise cloud architecture.",
+    "long": "Defines cloud strategy, cost and architecture for large systems.",
+    "tags": [
+      "cloud",
+      "architecture"
+    ],
+    "skills": [
+      "Architecture",
+      "AWS/GCP",
+      "Security"
+    ],
+    "salary": "18-30 LPA",
+    "responsibilities": [
+      "Design cloud",
+      "Governance",
+      "Optimize"
+    ],
+    "requiredTraits": {
+      "curiosity": 75,
+      "creativity": 55,
+      "structure": 75,
+      "leadership": 45,
+      "social": 35,
+      "independence": 65,
+      "riskTolerance": 40,
+      "collaboration": 60,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 40,
+      "quantitative": 75,
+      "attentionToDetail": 80,
+      "communication": 50,
+      "creativity": 45,
+      "technicalLiteracy": 90
+    },
+    "lifestyleProfile": {
+      "stressLevel": 65,
+      "salaryPotential": 75,
+      "workLifeBalance": 55,
+      "jobSecurity": 75,
+      "remoteWork": 70,
+      "leadershipOpportunity": 45
+    },
+    "stress": 65,
+    "worklife": 35
+  },
+  {
+    "id": 99,
+    "slug": "research-engineer-99",
+    "title": "Research Engineer",
+    "short": "Implements research ideas into prototypes.",
+    "long": "Bridges research and production by building reproducible prototypes.",
+    "tags": [
+      "research",
+      "engineering"
+    ],
+    "skills": [
+      "Coding",
+      "Experimentation",
+      "Benchmarking"
+    ],
+    "salary": "12-20 LPA",
+    "responsibilities": [
+      "Prototype",
+      "Benchmark",
+      "Document"
+    ],
+    "requiredTraits": {
+      "curiosity": 90,
+      "creativity": 70,
+      "structure": 65,
+      "leadership": 45,
+      "social": 40,
+      "independence": 75,
+      "riskTolerance": 55,
+      "collaboration": 55,
+      "analytical": 85
+    },
+    "requiredSkills": {
+      "analytical": 85,
+      "verbal": 60,
+      "quantitative": 80,
+      "attentionToDetail": 80,
+      "communication": 55,
+      "creativity": 65,
+      "technicalLiteracy": 70
+    },
+    "lifestyleProfile": {
+      "stressLevel": 55,
+      "salaryPotential": 50,
+      "workLifeBalance": 65,
+      "jobSecurity": 60,
+      "remoteWork": 60,
+      "leadershipOpportunity": 40
+    },
+    "stress": 55,
+    "worklife": 45
+  },
+  {
+    "id": 100,
+    "slug": "innovation-designer-100",
+    "title": "Innovation Designer",
+    "short": "Designs new product concepts and user experiments.",
+    "long": "Combines design and research to craft novel product directions.",
+    "tags": [
+      "design",
+      "product"
+    ],
+    "skills": [
+      "Design thinking",
+      "Prototyping",
+      "Research"
+    ],
+    "salary": "10-18 LPA",
+    "responsibilities": [
+      "Ideate",
+      "Prototype",
+      "Test"
+    ],
+    "requiredTraits": {
+      "curiosity": 80,
+      "creativity": 65,
+      "structure": 60,
+      "leadership": 80,
+      "social": 75,
+      "independence": 55,
+      "riskTolerance": 60,
+      "collaboration": 80,
+      "analytical": 75
+    },
+    "requiredSkills": {
+      "analytical": 75,
+      "verbal": 75,
+      "quantitative": 65,
+      "attentionToDetail": 60,
+      "communication": 85,
+      "creativity": 65,
+      "technicalLiteracy": 65
+    },
+    "lifestyleProfile": {
+      "stressLevel": 70,
+      "salaryPotential": 45,
+      "workLifeBalance": 50,
+      "jobSecurity": 65,
+      "remoteWork": 60,
+      "leadershipOpportunity": 75
+    },
+    "stress": 70,
+    "worklife": 30
+  }
 ]

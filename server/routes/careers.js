@@ -2,6 +2,12 @@
 import express from "express";
 import Career from "../models/Career.js";
 import Result from "../models/Result.js";
+import OpenAI from "openai";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY || "dummy-key" });
 
 const router = express.Router(); // <- must be before any router.get/post calls
 
@@ -127,6 +133,80 @@ router.get("/", async (req, res) => {
     res.json(careers);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET /api/careers/:idOrSlug/live-data
+ * Dynamically fetches live Indian market details, salary tiers, and top employers using OpenAI.
+ * Includes a robust fallback mechanism in case the API key is invalid or fails.
+ */
+router.get("/:idOrSlug/live-data", async (req, res) => {
+  const { idOrSlug } = req.params;
+  try {
+    const career = await Career.findOne({
+      $or: [{ slug: idOrSlug }, { id: idOrSlug }]
+    });
+
+    if (!career) return res.status(404).json({ error: "Not found" });
+
+    // Fallback data helper
+    const fallbackData = {
+      juniorSalary: "₹4–6 LPA",
+      midSalary: career.salary || "₹8–15 LPA",
+      seniorSalary: "₹18+ LPA",
+      demandLevel: "Growing",
+      demandTrend: `Hiring demand for ${career.title} remains steady in major Indian hubs like Bengaluru, Hyderabad, and Mumbai, driven by technological adoption.`,
+      topEmployers: ["TCS", "Infosys", "Wipro", "Cognizant"],
+      hotTools: (career.skills && career.skills.slice(0, 4)) || ["Communication", "Problem Solving", "Technical Literacy"]
+    };
+
+    if (!process.env.OPENAI_KEY || process.env.OPENAI_KEY.includes("dummy")) {
+      console.warn("OpenAI API key missing. Serving fallback data.");
+      return res.json(fallbackData);
+    }
+
+    try {
+      const prompt = `You are CareerIQ, an AI market analyst. Provide live career salary data, top employers, and market demand insights in India for the career: ${career.title}.
+Return a JSON object containing:
+- juniorSalary (LPA range, e.g. "₹4–6 LPA")
+- midSalary (LPA range, e.g. "₹8–15 LPA")
+- seniorSalary (LPA range, e.g. "₹18–30 LPA")
+- demandLevel ("High", "Growing", or "Stable")
+- demandTrend (1-2 sentences about hiring trends in India for 2026)
+- topEmployers (array of 4 prominent companies in India hiring for this role)
+- hotTools (array of 4 emerging tools, technologies, or skills for this role)
+
+Do not output any markdown formatting or prefix, only output raw JSON.`;
+
+      const completion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 300,
+      });
+
+      const content = completion.choices[0].message.content.trim();
+      
+      // Basic JSON cleaning if markdown block was returned
+      const cleanJson = content.replace(/^```json\s*/i, "").replace(/```$/, "");
+      const parsed = JSON.parse(cleanJson);
+      
+      return res.json({
+        juniorSalary: parsed.juniorSalary || fallbackData.juniorSalary,
+        midSalary: parsed.midSalary || fallbackData.midSalary,
+        seniorSalary: parsed.seniorSalary || fallbackData.seniorSalary,
+        demandLevel: parsed.demandLevel || fallbackData.demandLevel,
+        demandTrend: parsed.demandTrend || fallbackData.demandTrend,
+        topEmployers: parsed.topEmployers || fallbackData.topEmployers,
+        hotTools: parsed.hotTools || fallbackData.hotTools,
+      });
+    } catch (apiErr) {
+      console.error("OpenAI Live Data API call failed. Using fallback data. Error:", apiErr.message);
+      return res.json(fallbackData);
+    }
+  } catch (err) {
+    console.error("GET Live career data error:", err);
+    return res.status(500).json({ error: "Server error" });
   }
 });
 

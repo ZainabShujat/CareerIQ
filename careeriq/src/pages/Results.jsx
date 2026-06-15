@@ -1,140 +1,201 @@
+// src/pages/Results.jsx — Happiness Index with 6 dimensions
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
 import BackButton from "../components/BackButton";
 
-function matchScore(career, sliders) {
-  const salaryNum = (() => {
-    if (!career.salary) return 50;
-    const m = String(career.salary).match(/(\d+(?:\.\d+)?)/);
-    if (!m) return 50;
-    // normalize to 0-100 using LPA as base (assume value is in LPA)
-    let v = Number(m[1]);
-    // if salary looks like 10000 (unlikely) clamp sensibly
-    if (v > 100) v = Math.min(100, Math.round(v / 1));
-    return Math.max(0, Math.min(100, v));
-  })();
+const SLIDERS = [
+  { key: "salaryPriority",     label: "Salary Priority",      desc: "How important is high earnings to you?",           color: "#1a3c34" },
+  { key: "workLifeBalance",    label: "Work-Life Balance",     desc: "How important is time outside of work?",           color: "#0a6b55" },
+  { key: "stressTolerance",    label: "Stress Tolerance",      desc: "How well do you handle high-pressure environments?", color: "#4caf7d" },
+  { key: "jobSecurity",        label: "Job Security",          desc: "How important is a stable, long-term role?",       color: "#2e7d32" },
+  { key: "remoteWork",         label: "Remote Work Preference", desc: "How much do you prefer working from home?",        color: "#388e3c" },
+  { key: "leadershipAmbition", label: "Leadership Ambition",   desc: "How much do you want to manage or lead others?",   color: "#1b5e20" },
+];
 
-  const stress = career.stress ?? 50;
-  const worklife = career.worklife ?? 50;
+const DEFAULT_VALUES = {
+  salaryPriority: 70, workLifeBalance: 60, stressTolerance: 50,
+  jobSecurity: 60, remoteWork: 50, leadershipAmbition: 50
+};
 
-  const ds = Math.abs(salaryNum - (sliders.salary || 50));
-  const dt = Math.abs(stress - (sliders.stress || 50));
-  const dw = Math.abs(worklife - (sliders.worklife || 50));
-  const maxDistance = 150;
-  const dist = ds + dt + dw;
-  const score = Math.round(((maxDistance - dist) / maxDistance) * 100);
-  return Math.max(0, Math.min(100, score));
+function computeWeightedMatch(userVals, careerReqs) {
+  const keys = Object.keys(careerReqs || {});
+  if (!keys.length) return 50;
+
+  let weightedSumSqDiff = 0;
+  let sumWeights = 0;
+
+  keys.forEach(k => {
+    const u = userVals[k] ?? 50;
+    const c = careerReqs[k] ?? 50;
+
+    // Weight proportional to importance (requirement c)
+    const w = 1.0 + (c / 100.0);
+
+    let diff = 0;
+    if (u < c) {
+      diff = c - u; // deficit
+    }
+
+    weightedSumSqDiff += w * (diff * diff);
+    sumWeights += w;
+  });
+
+  if (sumWeights === 0) return 100;
+
+  let maxSqDiff = 0;
+  keys.forEach(k => {
+    const c = careerReqs[k] ?? 50;
+    const w = 1.0 + (c / 100.0);
+    maxSqDiff += w * (c * c);
+  });
+
+  if (maxSqDiff === 0) return 100;
+
+  const ratio = Math.sqrt(weightedSumSqDiff / maxSqDiff);
+  return Math.max(0, Math.min(100, Math.round((1 - ratio) * 100)));
+}
+
+function matchScore(career, prefs) {
+  const lp = career.lifestyleProfile;
+  if (!lp) {
+    // Fallback to old method for careers without lifestyleProfile
+    const salaryNum = (() => {
+      const m = String(career.salary || "0").match(/(\d+(?:\.\d+)?)/);
+      return m ? Math.min(100, Math.round((Number(m[1]) / 40) * 100)) : 50;
+    })();
+    const stress = career.stress ?? 50;
+    const worklife = career.worklife ?? 50;
+    const ds = Math.abs(salaryNum - prefs.salaryPriority);
+    const dt = Math.abs(stress - (100 - prefs.stressTolerance));
+    const dw = Math.abs(worklife - prefs.workLifeBalance);
+    return Math.max(0, Math.round(((300 - ds - dt - dw) / 300) * 100));
+  }
+
+  // Use all 6 dimensions against lifestyleProfile
+  const userLP = {
+    salaryPotential: prefs.salaryPriority,
+    workLifeBalance: prefs.workLifeBalance,
+    stressLevel: 100 - prefs.stressTolerance, // invert: high tolerance prefers high stress
+    jobSecurity: prefs.jobSecurity,
+    remoteWork: prefs.remoteWork,
+    leadershipOpportunity: prefs.leadershipAmbition,
+  };
+
+  return computeWeightedMatch(userLP, lp);
 }
 
 export default function Results() {
-  const [sliders, setSliders] = useState({ salary: 70, stress: 40, worklife: 60 });
+  const navigate = useNavigate();
+  const [prefs, setPrefs] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("careerIQ_happiness")) || DEFAULT_VALUES; }
+    catch { return DEFAULT_VALUES; }
+  });
   const [sorted, setSorted] = useState([]);
-  const [hoveredCard, setHoveredCard] = useState(null); // NEW
+  const [hovered, setHovered] = useState(null);
 
   const careers = Array.isArray(careersData) ? careersData : [];
 
   useEffect(() => {
-    const withScore = careers.map((c) => ({ ...c, match: matchScore(c, sliders) }));
-    withScore.sort((a, b) => b.match - a.match);
-    setSorted(withScore);
-  }, [sliders, careers]);
+    const with_score = careers.map(c => ({ ...c, match: matchScore(c, prefs) }));
+    with_score.sort((a, b) => b.match - a.match);
+    setSorted(with_score);
+  }, [prefs]);
 
-  // Small inline styles to ensure layout works even if Tailwind isn't configured
-  const containerStyle = { padding: 24, maxWidth: 1100, margin: "0 auto", fontFamily: 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial' };
-  const panelStyle = { background: "#fff", padding: 14, borderRadius: 10, boxShadow: "0 1px 4px rgba(10,20,15,0.04)", border: "1px solid #eef7f2" };
+  const savePrefs = () => {
+    localStorage.setItem("careerIQ_happiness", JSON.stringify(prefs));
+    navigate("/insights");
+  };
+
+  const s = {
+    container: { padding: 24, maxWidth: 1100, margin: "0 auto", fontFamily: "'Inter', sans-serif" },
+    panel: { background: "#fff", padding: 20, borderRadius: 12, boxShadow: "0 1px 4px rgba(10,20,15,0.04)", border: "1px solid #eef7f2" },
+    sliderLabel: { display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 4 },
+    sliderDesc: { fontSize: 12, color: "#7b8b82", marginBottom: 8 },
+    value: (v) => ({ fontWeight: 700, color: v >= 70 ? "#14632a" : v >= 40 ? "#9a6700" : "#8b1e1e" }),
+  };
 
   return (
     <div className="ciq-root">
-      <div style={containerStyle}>
+      <div style={s.container}>
         <BackButton />
-        <h1 style={{ fontSize: 28, marginBottom: 10 }}>Your Results & Happiness Index</h1>
-        <p style={{ color: '#556', marginTop: 0, marginBottom: 18 }}>Adjust sliders to reflect your preferences. Matches update live.</p>
+        <h1 style={{ fontSize: 28, marginBottom: 6 }}>Happiness Index</h1>
+        <p style={{ color: "#556b62", marginBottom: 20 }}>
+          Adjust sliders to reflect your life priorities. Career matches update live. Click "Save & See Insights" to apply these to your recommendations.
+        </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 18, alignItems: 'start' }}>
-          {/* LEFT: sliders + quick summary */}
-          <aside style={panelStyle}>
-            <h3 style={{ marginTop: 0 }}>Preferences</h3>
+        <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: 20, alignItems: "start" }}>
+          {/* LEFT: 6 sliders */}
+          <aside style={s.panel}>
+            <h3 style={{ marginTop: 0 }}>Your Preferences</h3>
 
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Salary preference: <strong>{sliders.salary}</strong></label>
-              <input type="range" min="0" max="100" value={sliders.salary}
-                onChange={(e) => setSliders(s => ({ ...s, salary: Number(e.target.value) }))} style={{ width: '100%' }} />
+            {SLIDERS.map(({ key, label, desc, color }) => (
+              <div key={key} style={{ marginBottom: 20 }}>
+                <div style={s.sliderLabel}>
+                  <span style={{ fontWeight: 600 }}>{label}</span>
+                  <span style={s.value(prefs[key])}>{prefs[key]}</span>
+                </div>
+                <div style={s.sliderDesc}>{desc}</div>
+                <input
+                  type="range" min="0" max="100" value={prefs[key]}
+                  onChange={e => setPrefs(p => ({ ...p, [key]: Number(e.target.value) }))}
+                  style={{ width: "100%", accentColor: color }}
+                />
+              </div>
+            ))}
+
+            <div style={{ marginTop: 8, padding: 12, borderRadius: 8, background: "#f6fff9", border: "1px solid #c8efd8", fontSize: 13, color: "#234c43" }}>
+              <strong>Top match:</strong> {sorted[0]?.title || "—"}
             </div>
 
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Stress tolerance: <strong>{sliders.stress}</strong></label>
-              <input type="range" min="0" max="100" value={sliders.stress}
-                onChange={(e) => setSliders(s => ({ ...s, stress: Number(e.target.value) }))} style={{ width: '100%' }} />
-            </div>
-
-            <div style={{ marginBottom: 8 }}>
-              <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>Work-life balance: <strong>{sliders.worklife}</strong></label>
-              <input type="range" min="0" max="100" value={sliders.worklife}
-                onChange={(e) => setSliders(s => ({ ...s, worklife: Number(e.target.value) }))} style={{ width: '100%' }} />
-            </div>
-
-            <div style={{ marginTop: 12, fontSize: 13, color: '#666' }}>
-              <div><strong>Top match</strong>: {sorted[0]?.title || '—'}</div>
-              <div style={{ marginTop: 6 }}>Matches are computed by comparing your sliders against typical role attributes.</div>
-            </div>
+            <button
+              onClick={savePrefs}
+              style={{ marginTop: 14, width: "100%", padding: "12px 0", borderRadius: 10, background: "#1a3c34", color: "#fff", border: "none", cursor: "pointer", fontWeight: 600, fontSize: 14 }}
+            >
+              Save & See Insights →
+            </button>
           </aside>
 
-          {/* RIGHT: matches list */}
+          {/* RIGHT: matches */}
           <main>
-            <section style={{ marginBottom: 12 }}>
-              <h2 style={{ margin: '0 0 8px 0' }}>Top career matches</h2>
-              <div style={{ color: '#444', marginBottom: 6 }}>Results shown below — click a career to view details (if available).</div>
-            </section>
+            <h2 style={{ margin: "0 0 12px 0" }}>Career Happiness Matches</h2>
+            <p style={{ color: "#556b62", margin: "0 0 14px 0" }}>Results ranked by how well each career's typical lifestyle aligns with your preferences.</p>
 
-            <div style={{ display: 'grid', gap: 12 }}>
-              {sorted.length === 0 ? (
-                <div style={panelStyle}>No careers available.</div>
-              ) : (
-                sorted.slice(0, 30).map((c, idx) => (
-                  <div
-                    key={c.id}
-                    style={{
-                      animation: `slideInUp 0.5s ease-out ${idx * 0.06}s both`
-                    }}
-                    onMouseEnter={() => setHoveredCard(c.id)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                  >
-                    <div style={{
-                      background: "#fff",
-                      borderRadius: 16,
-                      padding: 20,
-                      boxShadow: hoveredCard === c.id
-                        ? "0 20px 60px rgba(6, 95, 75, 0.15)"
-                        : "0 8px 20px rgba(6, 10, 12, 0.04)",
-                      transition: "all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                      transform: hoveredCard === c.id ? "translateY(-8px)" : "translateY(0)"
-                    }}>
-                      <div style={{ minWidth: 0 }}>
-                        <h3 style={{ margin: 0, fontSize: 16 }}>{c.title}</h3>
-                        <p style={{ margin: '6px 0', color: '#556' }}>{c.short}</p>
-                        <div style={{ fontSize: 13, color: '#777' }}>{(c.tags || []).join(', ')}</div>
-                      </div>
-
-                      <div style={{ textAlign: 'right', minWidth: 110 }}>
-                        <div style={{ fontWeight: 700 }}>{c.salary || '—'}</div>
-                        <div style={{ marginTop: 8, fontSize: 13, color: c.match >= 75 ? '#14632a' : c.match >= 50 ? '#b76' : '#666' }}>{`Match ${c.match}%`}</div>
-                        <div style={{ marginTop: 8 }}>
-                          {/* optionally link to career detail if route exists */}
-                          <a href={`/careers/${c.slug || c.id}`} style={{ fontSize: 13, color: '#065f4b', textDecoration: 'none' }}>View</a>
-                        </div>
-                      </div>
+            <div style={{ display: "grid", gap: 10 }}>
+              {sorted.slice(0, 25).map((c, idx) => (
+                <div
+                  key={c.id}
+                  style={{ animation: `slideInUp 0.4s ease-out ${idx * 0.04}s both` }}
+                  onMouseEnter={() => setHovered(c.id)}
+                  onMouseLeave={() => setHovered(null)}
+                >
+                  <div style={{
+                    background: "#fff", borderRadius: 14, padding: 18,
+                    boxShadow: hovered === c.id ? "0 16px 48px rgba(6,95,75,0.12)" : "0 4px 14px rgba(6,10,12,0.04)",
+                    transform: hovered === c.id ? "translateY(-4px)" : "translateY(0)",
+                    transition: "all 0.25s ease",
+                    display: "flex", justifyContent: "space-between", alignItems: "center"
+                  }}>
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontWeight: 700, fontSize: 15 }}>{c.title}</div>
+                      <div style={{ color: "#556b62", fontSize: 13, marginTop: 3 }}>{c.short}</div>
+                      <div style={{ fontSize: 12, color: "#7b8b82", marginTop: 4 }}>{(c.tags || []).join(", ")}</div>
+                    </div>
+                    <div style={{ textAlign: "right", minWidth: 100, flexShrink: 0, marginLeft: 16 }}>
+                      <div style={{ fontWeight: 700, color: "#1a3c34" }}>{c.salary}</div>
+                      <div style={{ fontSize: 22, fontWeight: 800, color: c.match >= 75 ? "#14632a" : c.match >= 50 ? "#9a6700" : "#8b1e1e", marginTop: 4 }}>{c.match}%</div>
+                      <a href={`/careers/${c.slug}`} style={{ fontSize: 13, color: "#065f4b", textDecoration: "none" }}>View →</a>
                     </div>
                   </div>
-                ))
-              )}
+                </div>
+              ))}
             </div>
           </main>
         </div>
-      </div>
 
-      {/* Accessibility + small footer note */}
-      <div style={{ marginTop: 18, fontSize: 13, color: '#666' }}>
-        Tip: Use keyboard arrows to move sliders. Matches update instantly.
+        <div style={{ marginTop: 16, fontSize: 13, color: "#888" }}>
+          Tip: Use keyboard arrows to move sliders. Matches update instantly. Saving persists preferences to your Insights page.
+        </div>
       </div>
     </div>
   );

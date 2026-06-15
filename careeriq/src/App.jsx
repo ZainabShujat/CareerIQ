@@ -19,6 +19,7 @@ import SkillTestRunner from "./pages/SkillTestRunner"; // create next
 
 import About from "./pages/About";
 import Profile from "./pages/Profile";
+import Chatbot from "./pages/Chatbot";
 
 /* Category pages (create simple placeholder pages if missing) */
 import Category from "./pages/Category";
@@ -42,6 +43,8 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/personality-test" element={<Quiz />} />
           <Route path="/happiness-index" element={<Results />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/ai-chat" element={<Chatbot />} />
           
 
           {/* Category routes (explicit named pages) */}

@@ -1,5 +1,5 @@
 // src/pages/CareerDetail.jsx
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
 
@@ -19,9 +19,32 @@ export default function CareerDetail() {
   const rawParam = params.slug ?? params.id ?? Object.values(params)[0] ?? "";
   const decoded = decodeURIComponent(rawParam || "");
 
+  const [liveData, setLiveData] = useState(null);
+  const [loadingLive, setLoadingLive] = useState(true);
+  const API_BASE = import.meta.env.VITE_API_BASE || "";
+
   useEffect(() => {
     console.log("LOADED → INLINE CareerDetail.jsx", rawParam, decoded);
   }, [rawParam, decoded]);
+
+  useEffect(() => {
+    if (!career) return;
+    
+    setLoadingLive(true);
+    fetch(`${API_BASE}/api/careers/${encodeURIComponent(career.slug || career.id)}/live-data`)
+      .then(res => {
+        if (!res.ok) throw new Error("API failed");
+        return res.json();
+      })
+      .then(data => {
+        setLiveData(data);
+        setLoadingLive(false);
+      })
+      .catch(err => {
+        console.error("Failed to load live career details:", err);
+        setLoadingLive(false);
+      });
+  }, [career, API_BASE]);
 
   const career = useMemo(() => {
     if (!decoded) return null;
@@ -157,6 +180,112 @@ export default function CareerDetail() {
               </div>
             </>
           )}
+
+          {/* Live AI Market Insights Section */}
+          <div style={{
+            marginTop: 28,
+            padding: 20,
+            borderRadius: 12,
+            background: "linear-gradient(185deg, #f3fbf8, #eef7f2)",
+            border: "1.5px solid #d4ece0",
+            boxShadow: "0 4px 14px rgba(6,95,75,0.02)"
+          }}>
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              background: "#06a77d",
+              color: "#ffffff",
+              padding: "4px 10px",
+              borderRadius: "20px",
+              fontSize: "11px",
+              fontWeight: "800",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+              marginBottom: "14px"
+            }}>
+              ✨ Live AI Market Insights
+            </div>
+
+            {loadingLive ? (
+              <div style={{ color: "#6b7a70", fontSize: "14px", fontStyle: "italic" }}>
+                Fetching live salary scales, hiring trends, and top employers...
+              </div>
+            ) : liveData ? (
+              <div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 18 }}>
+                  <div style={{ background: "#ffffff", padding: 12, borderRadius: 8, border: "1px solid #e2efe8" }}>
+                    <div style={{ fontSize: 11, color: "#6b7a70", textTransform: "uppercase", fontWeight: "700" }}>Junior (0-2 yrs)</div>
+                    <div style={{ fontSize: 18, fontWeight: "800", color: "#072827", marginTop: 4 }}>{liveData.juniorSalary}</div>
+                  </div>
+                  <div style={{ background: "#ffffff", padding: 12, borderRadius: 8, border: "1px solid #e2efe8" }}>
+                    <div style={{ fontSize: 11, color: "#6b7a70", textTransform: "uppercase", fontWeight: "700" }}>Mid-Level (2-5 yrs)</div>
+                    <div style={{ fontSize: 18, fontWeight: "800", color: "#06a77d", marginTop: 4 }}>{liveData.midSalary}</div>
+                  </div>
+                  <div style={{ background: "#ffffff", padding: 12, borderRadius: 8, border: "1px solid #e2efe8" }}>
+                    <div style={{ fontSize: 11, color: "#6b7a70", textTransform: "uppercase", fontWeight: "700" }}>Senior (5+ yrs)</div>
+                    <div style={{ fontSize: 18, fontWeight: "800", color: "#058a68", marginTop: 4 }}>{liveData.seniorSalary}</div>
+                  </div>
+                </div>
+
+                <div style={{ marginBottom: 18 }}>
+                  <div style={{ fontSize: 13, fontWeight: "700", color: "#072827", marginBottom: 6 }}>Hiring Trend & Market Outlook</div>
+                  <div style={{ fontSize: 13, color: "#5b6a67", lineHeight: "1.5" }}>
+                    <span style={{
+                      display: "inline-block",
+                      padding: "2px 8px",
+                      borderRadius: "6px",
+                      background: liveData.demandLevel === "High" || liveData.demandLevel === "High Demand" ? "#ffecec" : "#ecffef",
+                      color: liveData.demandLevel === "High" || liveData.demandLevel === "High Demand" ? "#8b1e1e" : "#14632a",
+                      fontSize: "11px",
+                      fontWeight: "700",
+                      marginRight: "8px"
+                    }}>
+                      {liveData.demandLevel}
+                    </span>
+                    {liveData.demandTrend}
+                  </div>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: window.innerWidth < 600 ? "1fr" : "1fr 1fr", gap: 16 }}>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: "700", color: "#072827", marginBottom: 8 }}>Top Indian Employers</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                      {liveData.topEmployers?.map((emp, i) => (
+                        <span key={i} style={{
+                          padding: "4px 8px",
+                          borderRadius: "6px",
+                          background: "#ffffff",
+                          border: "1px solid #e2efe8",
+                          fontSize: "12px",
+                          color: "#2f3b35"
+                        }}>{emp}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: "700", color: "#072827", marginBottom: 8 }}>Emerging Tools & Skills</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                      {liveData.hotTools?.map((tool, i) => (
+                        <span key={i} style={{
+                          padding: "4px 8px",
+                          borderRadius: "6px",
+                          background: "#ffffff",
+                          border: "1px solid #e2efe8",
+                          fontSize: "12px",
+                          color: "#2f3b35"
+                        }}>{tool}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div style={{ color: "#8b1e1e", fontSize: "13px" }}>
+                Could not connect to live market data feed.
+              </div>
+            )}
+          </div>
         </div>
 
         <aside style={rightCol}>
