@@ -1,10 +1,7 @@
-// src/pages/Profile.jsx
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import BackButton from "../components/BackButton";
 import Header from "../components/Header";
-
 
 export default function Profile() {
   const navigate = useNavigate();

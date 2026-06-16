@@ -3,7 +3,6 @@ import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
 import { AuthContext } from "../contexts/AuthContext";
-import BackButton from "../components/BackButton";
 import Header from "../components/Header";
 import { 
   Brain, Star, TrendingUp, AlertCircle, Award, Compass, 
@@ -93,7 +92,38 @@ function getDemographicBias(career, userProfile) {
   return bias;
 }
 
-function computeCareerScore(career, personality, skillScores, happiness, userProfile) {
+function getCareerCluster(career) {
+  const tags = (career.tags || []).map(t => t.toLowerCase());
+  const title = (career.title || "").toLowerCase();
+  
+  if (tags.some(t => ["software", "engineering", "infrastructure", "ai", "ml", "cloud", "robotics", "hardware", "mobile", "security", "qa", "devops"].includes(t)) || title.includes("developer") || title.includes("engineer") || title.includes("programmer")) {
+    return "technology";
+  }
+  if (tags.some(t => ["medical", "healthcare", "clinical", "pharmacy", "care", "bio", "wellness"].includes(t)) || title.includes("doctor") || title.includes("nurse") || title.includes("dentist") || title.includes("therapist")) {
+    return "healthcare";
+  }
+  if (tags.some(t => ["design", "ux", "ui", "creative", "media", "writing", "art", "content", "copywriter"].includes(t)) || title.includes("designer") || title.includes("writer") || title.includes("artist") || title.includes("animator") || title.includes("illustrator")) {
+    return "creative";
+  }
+  if (tags.some(t => ["marketing", "sales", "branding", "advertising", "growth"].includes(t)) || title.includes("marketing") || title.includes("sales")) {
+    return "marketing";
+  }
+  if (tags.some(t => ["research", "data", "economics", "analytics"].includes(t)) || title.includes("analyst") || title.includes("scientist") || title.includes("researcher")) {
+    return "research";
+  }
+  if (tags.some(t => ["education", "teaching", "ngo", "social", "development", "training"].includes(t)) || title.includes("teacher") || title.includes("instructor") || title.includes("trainer") || title.includes("educator")) {
+    return "education";
+  }
+  if (tags.some(t => ["legal", "law", "compliance", "policy", "governance", "admin"].includes(t)) || title.includes("lawyer") || title.includes("attorney") || title.includes("legal") || title.includes("judge")) {
+    return "law";
+  }
+  if (tags.some(t => ["business", "management", "strategy", "operations", "consulting", "finance"].includes(t)) || title.includes("manager") || title.includes("consultant") || title.includes("finance") || title.includes("accountant")) {
+    return "business";
+  }
+  return "business"; // fallback
+}
+
+function computeCareerScore(career, personality, skillScores, happiness, userProfile, orientation) {
   const personalityScore = personality?.scores
     ? computeWeightedMatch(personality.scores, career.requiredTraits || {})
     : 50;
@@ -116,9 +146,18 @@ function computeCareerScore(career, personality, skillScores, happiness, userPro
     lifestyleScore = computeWeightedMatch(userLifestyle, lp);
   }
 
+  const orientationScore = orientation ? (orientation[getCareerCluster(career)] ?? 50) : 50;
+
   const bias = getDemographicBias(career, userProfile);
-  const finalScore = Math.min(100, Math.round(personalityScore * 0.4 + skillScore * 0.4 + lifestyleScore * 0.2 + bias));
-  return { finalScore, personalityScore, skillScore, lifestyleScore };
+  // Formula: (Personality × 30%) + (Skills × 30%) + (Lifestyle × 15%) + (Career Orientation × 25%)
+  const finalScore = Math.min(100, Math.round(
+    personalityScore * 0.30 +
+    skillScore * 0.30 +
+    lifestyleScore * 0.15 +
+    orientationScore * 0.25 +
+    bias
+  ));
+  return { finalScore, personalityScore, skillScore, lifestyleScore, orientationScore };
 }
 
 // ── Profile-Aware Helper Functions ───────────────────────────────────────────
@@ -288,11 +327,18 @@ export default function Insights() {
   const navigate = useNavigate();
 
   const passedPersonality = location?.state?.personality || null;
-  const personality = passedPersonality || user?.personality || null;
+  const personality = passedPersonality || user?.personality || (() => {
+    try { return JSON.parse(localStorage.getItem("careerIQ_personality")) || null; } catch { return null; }
+  })();
 
   const skillScores = user?.results?.length
     ? user.results.reduce((acc, r) => { acc[r.testId] = r.score * 10; return acc; }, {})
     : null;
+
+  const passedOrientation = location?.state?.orientation || null;
+  const orientation = passedOrientation || user?.careerOrientation || (() => {
+    try { return JSON.parse(localStorage.getItem("careerIQ_orientation")) || null; } catch { return null; }
+  })();
 
   const [happiness, setHappiness] = useState(() => {
     try { return JSON.parse(localStorage.getItem("careerIQ_happiness")) || null; } catch { return null; }
@@ -307,13 +353,13 @@ export default function Insights() {
 
   useEffect(() => {
     const results = careersData.map(c => {
-      const { finalScore, personalityScore, skillScore, lifestyleScore } =
-        computeCareerScore(c, personality, skillScores, happiness, user);
-      return { career: c, finalScore, personalityScore, skillScore, lifestyleScore };
+      const { finalScore, personalityScore, skillScore, lifestyleScore, orientationScore } =
+        computeCareerScore(c, personality, skillScores, happiness, user, orientation);
+      return { career: c, finalScore, personalityScore, skillScore, lifestyleScore, orientationScore };
     });
     results.sort((a, b) => b.finalScore - a.finalScore);
     setRanked(results);
-  }, [personality, skillScores, happiness, user]);
+  }, [personality, skillScores, happiness, user, orientation]);
 
   const explainCareer = useCallback(async (career, scores) => {
     const key = career.slug;
@@ -385,7 +431,6 @@ export default function Insights() {
         <Header />
         <main className="ciq-main" style={{ paddingBottom: 60 }}>
           <div style={styles.page}>
-            <BackButton />
             <div style={{ ...styles.card, textAlign: "center", padding: "60px 20px", marginTop: 40 }}>
               <AlertCircle size={48} style={{ color: "var(--accent)", marginBottom: 16 }} />
               <h2 style={{ fontSize: 26, fontWeight: 800, color: "#072827", margin: "0 0 10px" }}>Career Insights Locked</h2>
@@ -409,7 +454,6 @@ export default function Insights() {
       <Header />
       <main className="ciq-main" style={{ paddingBottom: 80 }}>
         <div style={styles.page}>
-          <BackButton />
           <h1 style={styles.heading}>Your Career Insights</h1>
           <div style={styles.subtitle}>
             Scientific alignment analysis across **Personality**, **Skills**, and **Lifestyle** metrics.

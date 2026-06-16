@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
-import BackButton from "../components/BackButton";
 import Header from "../components/Header";
 
 
@@ -122,7 +121,6 @@ export default function Results() {
       <Header />
       <main className="ciq-main" style={{ paddingBottom: 60 }}>
         <div style={s.container}>
-          <BackButton />
           <h1 style={{ fontSize: 28, marginBottom: 6 }}>Happiness Index</h1>
           <p style={{ color: "#556b62", marginBottom: 20 }}>
             Adjust sliders to reflect your life priorities. Career matches update live. Click "Save & See Insights" to apply these to your recommendations.

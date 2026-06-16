@@ -29,8 +29,11 @@ const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 
   personality: PersonalitySchema,
+  careerOrientation: mongoose.Schema.Types.Mixed,
+  orientationAnswers: [Number],
   results: [SkillResultSchema],
   happinessIndex: HappinessSchema
 });
 
 export default mongoose.model("User", UserSchema);
+
