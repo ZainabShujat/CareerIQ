@@ -99,7 +99,7 @@ function getCareerCluster(career) {
   if (tags.some(t => ["software", "engineering", "infrastructure", "ai", "ml", "cloud", "robotics", "hardware", "mobile", "security", "qa", "devops"].includes(t)) || title.includes("developer") || title.includes("engineer") || title.includes("programmer")) {
     return "technology";
   }
-  if (tags.some(t => ["medical", "healthcare", "clinical", "pharmacy", "care", "bio", "wellness"].includes(t)) || title.includes("doctor") || title.includes("nurse") || title.includes("dentist") || title.includes("therapist")) {
+  if (tags.some(t => ["medical", "healthcare", "clinical", "pharmacy", "care", "bio", "wellness"].includes(t)) || title.includes("doctor") || title.includes("nurse") || title.includes("dentist") || title.includes("therapist") || title.includes("physician") || title.includes("radiologist")) {
     return "healthcare";
   }
   if (tags.some(t => ["design", "ux", "ui", "creative", "media", "writing", "art", "content", "copywriter"].includes(t)) || title.includes("designer") || title.includes("writer") || title.includes("artist") || title.includes("animator") || title.includes("illustrator")) {
@@ -111,7 +111,7 @@ function getCareerCluster(career) {
   if (tags.some(t => ["research", "data", "economics", "analytics"].includes(t)) || title.includes("analyst") || title.includes("scientist") || title.includes("researcher")) {
     return "research";
   }
-  if (tags.some(t => ["education", "teaching", "ngo", "social", "development", "training"].includes(t)) || title.includes("teacher") || title.includes("instructor") || title.includes("trainer") || title.includes("educator")) {
+  if (tags.some(t => ["education", "teaching", "ngo", "social", "development", "training"].includes(t)) || title.includes("teacher") || title.includes("instructor") || title.includes("trainer") || title.includes("educator") || title.includes("counsellor") || title.includes("counselor")) {
     return "education";
   }
   if (tags.some(t => ["legal", "law", "compliance", "policy", "governance", "admin"].includes(t)) || title.includes("lawyer") || title.includes("attorney") || title.includes("legal") || title.includes("judge")) {
@@ -226,10 +226,32 @@ const getTopCareerFamilies = (rankedCareers) => {
     .slice(0, 4);
 };
 
-const getWhyItFits = (c, userPersonality, userSkills, userHappiness) => {
+const getWhyItFits = (c, userPersonality, userSkills, userHappiness, orientationAnswers) => {
   const points = [];
   const traits = c.requiredTraits || {};
   const skills = c.requiredSkills || {};
+  const tags = (c.tags || []).map(t => t.toLowerCase());
+  const title = (c.title || "").toLowerCase();
+
+  // Clinical Medical personalized mapping logic
+  if (tags.some(t => ["medical", "healthcare", "public-health", "pharmacy", "care", "lab", "bio"].includes(t)) || title.includes("physician") || title.includes("nurse") || title.includes("radiologist")) {
+    if (orientationAnswers && (orientationAnswers[12] === 1 || orientationAnswers[5] === 1 || orientationAnswers[7] === 2)) {
+      points.push("Reflects your strong attraction towards clinical diagnosis and patient care in your orientation profile.");
+    }
+    if (userPersonality?.scores?.social >= 70 || userPersonality?.scores?.structure >= 70) {
+      points.push("Your patient-centric care signature combines clinical structure with deep empathy.");
+    }
+  }
+
+  // Psychology / Counselling / Behavioral sciences personalized logic
+  if (title.includes("counsellor") || title.includes("counselor") || title.includes("therapist") || title.includes("behavioural") || title.includes("hr")) {
+    if (orientationAnswers && orientationAnswers[13] === 1) {
+      points.push("Aligns with your chosen preference for helping individuals navigate emotional and mental wellness challenges.");
+    }
+    if (userPersonality?.scores?.social >= 70 || userPersonality?.scores?.curiosity >= 70) {
+      points.push("You possess a natural ability to connect with people's emotional experiences and understand behaviors.");
+    }
+  }
   
   if (userPersonality?.scores) {
     const sortedRequired = Object.entries(traits).sort((a,b) => b[1] - a[1]);
@@ -303,8 +325,17 @@ const getStrengthsAndWeaknesses = (scores) => {
   };
 };
 
-const generateLocalSummary = (archetype, strengths) => {
-  return `As ${archetype.name}, you are driven by strengths like ${strengths.slice(0, 2).join(" and ")}. You naturally thrive in environments that challenge your intellect, valuing team synergy while keeping your creative outputs authentic.`;
+const generateLocalSummary = (archetype, strengths, orientationAnswers) => {
+  let text = `As ${archetype.name}, you are driven by strengths like ${strengths.slice(0, 2).join(" and ")}.`;
+  
+  if (orientationAnswers && orientationAnswers[13] === 1) {
+    text += ` Your profile shows a profound alignment towards counseling, psychology, or advisory roles where understanding human behavior and emotional dynamics is key.`;
+  } else if (orientationAnswers && orientationAnswers[12] === 1) {
+    text += ` Your clinical orientation suggest deep interest in medical diagnosis, health science, and patient care systems.`;
+  } else {
+    text += ` You naturally thrive in environments that challenge your intellect, valuing team synergy while keeping your outputs authentic.`;
+  }
+  return text;
 };
 
 const scoreColor = (s) => s >= 75 ? "#14632a" : s >= 50 ? "#9a6700" : "#8b1e1e";
@@ -329,6 +360,10 @@ export default function Insights() {
   const passedOrientation = location?.state?.orientation || null;
   const orientation = passedOrientation || user?.careerOrientation || (() => {
     try { return JSON.parse(localStorage.getItem("careerIQ_orientation")) || null; } catch { return null; }
+  })();
+
+  const orientationAnswers = (() => {
+    try { return JSON.parse(localStorage.getItem("careerIQ_orientation_answers_raw")) || null; } catch { return null; }
   })();
 
   const [happiness, setHappiness] = useState(() => {
@@ -380,7 +415,7 @@ export default function Insights() {
   const topMatch = ranked[0] || null;
   const { strengths, weaknesses } = getStrengthsAndWeaknesses(personality?.scores);
   const skillGaps = topMatch ? getSkillGap(topMatch.career, skillScores) : ["Technical Literacy", "Communication"];
-  const clientSummary = generateLocalSummary(archetype, strengths);
+  const clientSummary = generateLocalSummary(archetype, strengths, orientationAnswers);
 
   const styles = {
     page: { maxWidth: 840, margin: "0 auto", padding: "30px 20px", fontFamily: "'Inter', sans-serif" },
@@ -573,7 +608,7 @@ export default function Insights() {
           {activeTab === "why" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {ranked.slice(0, 3).map((r, idx) => {
-                const whyItFitsPoints = getWhyItFits(r.career, personality, skillScores, happiness);
+                const whyItFitsPoints = getWhyItFits(r.career, personality, skillScores, happiness, orientationAnswers);
                 const skillGapPoints = getSkillGap(r.career, skillScores);
                 return (
                   <div key={idx} style={styles.card}>

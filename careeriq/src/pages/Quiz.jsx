@@ -5,7 +5,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import Header from "../components/Header";
 import { Brain, Compass, Sparkles, AlertCircle, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
 
-// 12-question Career Orientation questions
+// 14-question Career Orientation questions (with dedicated Medical and Psychology options)
 const ORIENTATION_QUESTIONS = [
   {
     q: "Which type of problem sounds more interesting to tackle?",
@@ -64,14 +64,14 @@ const ORIENTATION_QUESTIONS = [
     mapB: { healthcare: 10, research: 5 }
   },
   {
-    q: "Which subject would you prefer to read about?",
-    optionA: "Constitutional governance, case law, and public administration",
-    optionB: "Branding methodologies, SEO marketing, and target user psychology",
+    q: "What would you prefer to read or study?",
+    optionA: "Constitutional law, governance systems, or public policy",
+    optionB: "Digital marketing strategies, SEO, or branding campaigns",
     mapA: { law: 10 },
     mapB: { marketing: 10 }
   },
   {
-    q: "If you had to write a newsletter, which topic appeals to you?",
+    q: "If you had to write a short article, what topic would you choose?",
     optionA: "Reviewing market metrics, mathematical datasets, or research studies",
     optionB: "Sharing educational tips, learning strategies, or human interest stories",
     mapA: { research: 10 },
@@ -90,6 +90,20 @@ const ORIENTATION_QUESTIONS = [
     optionB: "Providing empathy, teaching instructions, or caring for client needs",
     mapA: { technology: 10, creative: 5 },
     mapB: { healthcare: 5, education: 10 }
+  },
+  {
+    q: "If you could shadow a professional for a week, which appeals to you more?",
+    optionA: "A physician diagnosing complex medical cases and caring for patients in a clinical ward",
+    optionB: "A digital architect designing cloud server logic and application protocols",
+    mapA: { healthcare: 15 },
+    mapB: { technology: 15 }
+  },
+  {
+    q: "Which project would you find more personally rewarding to direct?",
+    optionA: "A wellness support group to counsel individuals navigating emotional and behavioral challenges",
+    optionB: "A startup incubator seminar helping founders optimize sales and corporate models",
+    mapA: { healthcare: 10, education: 15 }, // strongly aligns with Psychology / Counselor fields
+    mapB: { business: 15, marketing: 10 }
   }
 ];
 
@@ -142,13 +156,13 @@ const LIKERT_OPTIONS = [
 ];
 
 const DOMAIN_MAX_POINTS = {
-  technology: 40,
-  business: 35,
-  marketing: 35,
+  technology: 55,
+  business: 50,
+  marketing: 45,
   research: 35,
-  healthcare: 30,
-  creative: 30,
-  education: 40,
+  healthcare: 55,
+  creative: 35,
+  education: 65,
   law: 30
 };
 
@@ -159,18 +173,18 @@ export default function Quiz() {
   const { user } = useContext(AuthContext);
   const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
-  // Guided Steps (0 to 11 = Orientation Questions, 12 to 38 = Personality Questions)
+  // Guided Steps (0 to 13 = Orientation Questions, 14 to 40 = Personality Questions)
   const [currentStep, setCurrentStep] = useState(() => {
     const saved = localStorage.getItem("careerIQ_quiz_current_step");
-    return saved ? Math.max(0, Math.min(38, Number(saved))) : 0;
+    return saved ? Math.max(0, Math.min(40, Number(saved))) : 0;
   });
 
   const [orientationAnswers, setOrientationAnswers] = useState(() => {
     try {
       const saved = localStorage.getItem("careerIQ_orientation_answers");
-      return saved ? JSON.parse(saved) : Array(12).fill(0);
+      return saved ? JSON.parse(saved) : Array(14).fill(0);
     } catch {
-      return Array(12).fill(0);
+      return Array(14).fill(0);
     }
   });
 
@@ -212,18 +226,18 @@ export default function Quiz() {
     
     // Auto-advance with small delay for visual feedback
     setTimeout(() => {
-      setCurrentStep(prev => Math.min(38, prev + 1));
+      setCurrentStep(prev => Math.min(40, prev + 1));
     }, 150);
   };
 
   const handlePersonalitySelect = (val) => {
-    const pIndex = currentStep - 12;
+    const pIndex = currentStep - 14;
     const updated = [...personalityAnswers];
     updated[pIndex] = val;
     setPersonalityAnswers(updated);
     
     // Auto-advance with small delay
-    if (currentStep < 38) {
+    if (currentStep < 40) {
       setTimeout(() => {
         setCurrentStep(prev => prev + 1);
       }, 150);
@@ -235,12 +249,12 @@ export default function Quiz() {
   };
 
   const handleNext = () => {
-    setCurrentStep(prev => Math.min(38, prev + 1));
+    setCurrentStep(prev => Math.min(40, prev + 1));
   };
 
   const handleReset = () => {
     if (window.confirm("Are you sure you want to reset all progress?")) {
-      setOrientationAnswers(Array(12).fill(0));
+      setOrientationAnswers(Array(14).fill(0));
       setPersonalityAnswers(Array(27).fill(0));
       setCurrentStep(0);
       localStorage.removeItem("careerIQ_quiz_current_step");
@@ -254,12 +268,12 @@ export default function Quiz() {
     const simOrientation = ORIENTATION_QUESTIONS.map(() => Math.floor(Math.random() * 2) + 1);
     setOrientationAnswers(simOrientation);
 
-    // Fill Personality (positive responses mostly to keep recommendation engine happy)
+    // Fill Personality (positive responses mostly)
     const simPersonality = PERSONALITY_QUESTIONS.map(() => Math.floor(Math.random() * 3) + 3);
     setPersonalityAnswers(simPersonality);
 
     // Skip to last question to allow immediate submission
-    setCurrentStep(38);
+    setCurrentStep(40);
   };
 
   // Compute final scores
@@ -269,7 +283,6 @@ export default function Quiz() {
     TRAITS.forEach(trait => {
       const indices = PERSONALITY_QUESTIONS.map((q, i) => q.trait === trait ? i : -1).filter(i => i >= 0);
       const vals = indices.map(i => Number(personalityAnswers[i] || 0)).filter(v => v > 0);
-      // Scale 1-5 to 0-100
       pScores[trait] = vals.length ? Math.round((vals.reduce((a, b) => a + b, 0) / vals.length - 1) * 25) : 50;
     });
 
@@ -315,6 +328,7 @@ export default function Quiz() {
     // Save locally
     localStorage.setItem("careerIQ_personality", JSON.stringify({ scores: personalityScores, answers: personalityAnswers, timestamp: payload.timestamp }));
     localStorage.setItem("careerIQ_orientation", JSON.stringify(orientationScores));
+    localStorage.setItem("careerIQ_orientation_answers_raw", JSON.stringify(orientationAnswers));
 
     // Clear progress persistence
     localStorage.removeItem("careerIQ_quiz_current_step");
@@ -358,11 +372,11 @@ export default function Quiz() {
   };
 
   // UI calculations
-  const totalQuestions = 39;
-  const isOrientation = currentStep < 12;
+  const totalQuestions = 41;
+  const isOrientation = currentStep < 14;
   const activeQuestionText = isOrientation
     ? ORIENTATION_QUESTIONS[currentStep].q
-    : PERSONALITY_QUESTIONS[currentStep - 12].q;
+    : PERSONALITY_QUESTIONS[currentStep - 14].q;
 
   const currentProgressPercent = Math.round((currentStep / totalQuestions) * 100);
 
@@ -430,9 +444,9 @@ export default function Quiz() {
           <div style={styles.headerPanel}>
             <div style={styles.progressLabel}>
               {isOrientation ? (
-                <span>Part 1: Career Orientation (Question {currentStep + 1} of 12)</span>
+                <span>Part 1: Career Orientation (Question {currentStep + 1} of 14)</span>
               ) : (
-                <span>Part 2: Personality Assessment (Question {currentStep - 11} of 27)</span>
+                <span>Part 2: Personality Assessment (Question {currentStep - 13} of 27)</span>
               )}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -498,7 +512,7 @@ export default function Quiz() {
                 ) : (
                   <div>
                     {LIKERT_OPTIONS.map((opt) => {
-                      const pIndex = currentStep - 12;
+                      const pIndex = currentStep - 14;
                       const isSelected = personalityAnswers[pIndex] === opt.val;
                       return (
                         <button
@@ -528,7 +542,7 @@ export default function Quiz() {
                   <span>Previous</span>
                 </button>
 
-                {currentStep === 38 ? (
+                {currentStep === 40 ? (
                   <button
                     type="submit"
                     disabled={orientationAnswers.includes(0) || personalityAnswers.includes(0)}
@@ -546,14 +560,14 @@ export default function Quiz() {
                     onClick={handleNext}
                     disabled={
                       (isOrientation && orientationAnswers[currentStep] === 0) ||
-                      (!isOrientation && personalityAnswers[currentStep - 12] === 0)
+                      (!isOrientation && personalityAnswers[currentStep - 14] === 0)
                     }
                     style={{
                       ...styles.btnNext,
                       opacity: (isOrientation && orientationAnswers[currentStep] === 0) ||
-                               (!isOrientation && personalityAnswers[currentStep - 12] === 0) ? 0.5 : 1,
+                               (!isOrientation && personalityAnswers[currentStep - 14] === 0) ? 0.5 : 1,
                       cursor: (isOrientation && orientationAnswers[currentStep] === 0) ||
-                              (!isOrientation && personalityAnswers[currentStep - 12] === 0) ? "not-allowed" : "pointer"
+                              (!isOrientation && personalityAnswers[currentStep - 14] === 0) ? "not-allowed" : "pointer"
                     }}
                   >
                     <span>Next</span>
