@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
 import { AuthContext } from "../contexts/AuthContext";
 import BackButton from "../components/BackButton";
+import Header from "../components/Header";
+
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
@@ -257,14 +259,17 @@ export default function Insights() {
   };
 
   return (
-    <div style={styles.page}>
-      <BackButton />
-      <h1 style={styles.heading}>Your Career Insights</h1>
-      <div style={styles.subtitle}>
-        Scored using the formula: <strong>Personality (40%) + Skills (40%) + Lifestyle (20%)</strong>
-      </div>
+    <div className="ciq-root" style={{ background: "linear-gradient(180deg, #f6fbf9 0%, #edf7f3 100%)", minHeight: "100vh" }}>
+      <Header />
+      <main className="ciq-main" style={{ paddingBottom: 60 }}>
+        <div style={styles.page}>
+          <BackButton />
+          <h1 style={styles.heading}>Your Career Insights</h1>
+          <div style={styles.subtitle}>
+            Scored using the formula: <strong>Personality (40%) + Skills (40%) + Lifestyle (20%)</strong>
+          </div>
 
-      <div style={styles.grid}>
+          <div className="ciq-grid-two">
         {/* LEFT — Career recommendations */}
         <div>
           <div style={styles.card}>
@@ -427,7 +432,9 @@ export default function Insights() {
             )}
           </div>
         </div>
-      </div>
+        </div>
+        </div>
+      </main>
     </div>
   );
 }

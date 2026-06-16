@@ -2,6 +2,8 @@
 import React, { useState, useMemo, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import Header from "../components/Header";
+
 
 /*
  * 27-question Likert quiz — 3 questions per trait.
@@ -54,7 +56,7 @@ const TRAITS = ["curiosity","creativity","structure","leadership","social","inde
 const styles = {
   page: { maxWidth: 1100, margin: "0 auto", padding: 28, fontFamily: "'Inter', sans-serif" },
   stickyHeader: {
-    position: "sticky", top: 12, zIndex: 30,
+    position: "sticky", top: 72, zIndex: 30,
     background: "#f6fbf7", padding: "12px 0", marginBottom: 8,
     display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12
   },
@@ -171,112 +173,121 @@ export default function Quiz() {
   };
 
   return (
-    <div style={styles.page}>
-      {/* Sticky header */}
-      <div style={styles.stickyHeader}>
-        <div style={styles.leftHeader}>
-          <button style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #cfd8d4", background: "#fff", cursor: "pointer" }}
-            onClick={() => navigate(-1)}>← Back</button>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <h1 style={styles.title}>Personality Assessment</h1>
-              <button
-                type="button"
-                onClick={handleAutoFill}
-                style={{
-                  background: "linear-gradient(135deg, #06a77d, #04c48a)",
-                  color: "#fff",
-                  border: "none",
-                  padding: "5px 12px",
-                  borderRadius: 6,
-                  fontSize: 12,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  boxShadow: "0 2px 8px rgba(6,167,125,0.2)",
-                  transition: "transform 0.1s"
-                }}
-                onMouseDown={e => e.currentTarget.style.transform = "scale(0.95)"}
-                onMouseUp={e => e.currentTarget.style.transform = "scale(1)"}
-              >
-                ⚡ Auto-Fill
+    <div className="ciq-root" style={{ background: "linear-gradient(180deg, #f6fbf9 0%, #edf7f3 100%)", minHeight: "100vh" }}>
+      <Header />
+      <main className="ciq-main" style={{ paddingBottom: 60 }}>
+        <div style={styles.page}>
+          {/* Sticky header */}
+          <div style={styles.stickyHeader}>
+            <div style={styles.leftHeader}>
+              <button style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #cfd8d4", background: "#fff", cursor: "pointer" }}
+                onClick={() => navigate(-1)}>← Back</button>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <h1 style={styles.title}>Personality Assessment</h1>
+                  <button
+                    type="button"
+                    onClick={handleAutoFill}
+                    style={{
+                      background: "linear-gradient(135deg, #06a77d, #04c48a)",
+                      color: "#fff",
+                      border: "none",
+                      padding: "5px 12px",
+                      borderRadius: 6,
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                      boxShadow: "0 2px 8px rgba(6,167,125,0.2)",
+                      transition: "transform 0.1s"
+                    }}
+                    onMouseDown={e => e.currentTarget.style.transform = "scale(0.95)"}
+                    onMouseUp={e => e.currentTarget.style.transform = "scale(1)"}
+                  >
+                    ⚡ Auto-Fill
+                  </button>
+                </div>
+                <div style={styles.subtitle}>27 questions · Measures 9 career-relevant traits · ~5 min</div>
+              </div>
+            </div>
+            <div style={styles.progressBlock}>
+              <div style={{ fontSize: 14, color: "#2f5547", fontWeight: 700 }}>{answeredCount} / {TRAIT_QUESTIONS.length}</div>
+              <div style={styles.progressBar}><div style={styles.progressFill(progress)} /></div>
+              <div style={{ marginTop: 4, fontSize: 12, color: "#6b7a70" }}>{progress}% complete</div>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <div style={styles.tableWrap}>
+              <div style={{ padding: "12px 12px 0" }}>
+                <div className="quiz-header-row">
+                  <div style={{ paddingLeft: 8, fontWeight: 700, fontSize: 14 }}>Statement</div>
+                  {OPTION_LABELS.map((label, i) => (
+                    <div key={i} style={styles.headerCell}>{label}</div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ padding: 12 }}>
+                {TRAIT_QUESTIONS.map((item, qi) => {
+                  const isActive = qi === activeIndex;
+                  const isAnswered = answers[qi] > 0;
+                  return (
+                    <React.Fragment key={qi}>
+                      <div className="quiz-grid">
+                        <div
+                          ref={el => (rowRefs.current[qi] = el)}
+                          style={{
+                            ...styles.questionCell,
+                            background: isActive ? "#f0faf4" : isAnswered ? "#fafffe" : "white",
+                            borderRadius: isActive ? 8 : 4,
+                            cursor: "pointer",
+                            borderLeft: isActive ? "3px solid #1a3c34" : "3px solid transparent",
+                            transition: "all 0.2s ease"
+                          }}
+                          onClick={() => { setActiveIndex(qi); scrollToRow(qi); }}
+                        >
+                          <div style={{ fontSize: 11, color: "#6b8a7a", marginBottom: 3 }}>
+                            {qi + 1}. <span style={styles.traitBadge}>{TRAIT_LABELS[item.trait]}</span>
+                          </div>
+                          <div style={{ fontWeight: isActive ? 600 : 400 }}>{item.q}</div>
+                        </div>
+                        <div className="quiz-radio-wrapper">
+                          <span className="quiz-mobile-label mobile-only" style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600 }}>Disagree</span>
+                          {[1,2,3,4,5].map(val => (
+                            <div key={val} style={styles.radioCell} className="quiz-radio-cell">
+                              <input
+                                type="radio"
+                                name={`q-${qi}`}
+                                value={val}
+                                checked={answers[qi] === val}
+                                onChange={e => setAnswer(qi, e.target.value)}
+                                style={styles.radioInput}
+                              />
+                            </div>
+                          ))}
+                          <span className="quiz-mobile-label mobile-only" style={{ fontSize: 11, color: "var(--muted)", fontWeight: 600 }}>Agree</span>
+                        </div>
+                      </div>
+                      <div style={styles.rowSeparator} />
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div style={styles.helpText}>
+              Trait badges show which career trait each question measures. Your scores will be used to match careers.
+            </div>
+
+            <div style={styles.buttonsRow}>
+              <button type="button" onClick={reset} style={styles.resetBtn}>Reset</button>
+              <button type="submit" style={styles.submitBtn} disabled={answeredCount < TRAIT_QUESTIONS.length}>
+                {answeredCount < TRAIT_QUESTIONS.length ? `Answer all (${TRAIT_QUESTIONS.length - answeredCount} left)` : "Submit & See Results →"}
               </button>
             </div>
-            <div style={styles.subtitle}>27 questions · Measures 9 career-relevant traits · ~5 min</div>
-          </div>
+          </form>
         </div>
-        <div style={styles.progressBlock}>
-          <div style={{ fontSize: 14, color: "#2f5547", fontWeight: 700 }}>{answeredCount} / {TRAIT_QUESTIONS.length}</div>
-          <div style={styles.progressBar}><div style={styles.progressFill(progress)} /></div>
-          <div style={{ marginTop: 4, fontSize: 12, color: "#6b7a70" }}>{progress}% complete</div>
-        </div>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <div style={styles.tableWrap}>
-          <div style={{ padding: "12px 12px 0" }}>
-            <div style={styles.grid}>
-              <div style={{ paddingLeft: 8, fontWeight: 700, fontSize: 14 }}>Statement</div>
-              {OPTION_LABELS.map((label, i) => (
-                <div key={i} style={styles.headerCell}>{label}</div>
-              ))}
-            </div>
-          </div>
-
-          <div style={{ padding: 12 }}>
-            {TRAIT_QUESTIONS.map((item, qi) => {
-              const isActive = qi === activeIndex;
-              const isAnswered = answers[qi] > 0;
-              return (
-                <React.Fragment key={qi}>
-                  <div style={styles.grid}>
-                    <div
-                      ref={el => (rowRefs.current[qi] = el)}
-                      style={{
-                        ...styles.questionCell,
-                        background: isActive ? "#f0faf4" : isAnswered ? "#fafffe" : "white",
-                        borderRadius: isActive ? 8 : 4,
-                        cursor: "pointer",
-                        borderLeft: isActive ? "3px solid #1a3c34" : "3px solid transparent",
-                        transition: "all 0.2s ease"
-                      }}
-                      onClick={() => { setActiveIndex(qi); scrollToRow(qi); }}
-                    >
-                      <div style={{ fontSize: 11, color: "#6b8a7a", marginBottom: 3 }}>
-                        {qi + 1}. <span style={styles.traitBadge}>{TRAIT_LABELS[item.trait]}</span>
-                      </div>
-                      <div style={{ fontWeight: isActive ? 600 : 400 }}>{item.q}</div>
-                    </div>
-                    {[1,2,3,4,5].map(val => (
-                      <div key={val} style={styles.radioCell}>
-                        <input
-                          type="radio"
-                          name={`q-${qi}`}
-                          value={val}
-                          checked={answers[qi] === val}
-                          onChange={e => setAnswer(qi, e.target.value)}
-                          style={styles.radioInput}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div style={styles.rowSeparator} />
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </div>
-
-        <div style={styles.helpText}>
-          Trait badges show which career trait each question measures. Your scores will be used to match careers.
-        </div>
-
-        <div style={styles.buttonsRow}>
-          <button type="button" onClick={reset} style={styles.resetBtn}>Reset</button>
-          <button type="submit" style={styles.submitBtn} disabled={answeredCount < TRAIT_QUESTIONS.length}>
-            {answeredCount < TRAIT_QUESTIONS.length ? `Answer all (${TRAIT_QUESTIONS.length - answeredCount} left)` : "Submit & See Results →"}
-          </button>
-        </div>
-      </form>
+      </main>
     </div>
   );
 }

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
 import BackButton from "../components/BackButton";
+import Header from "../components/Header";
+
 
 const SLIDERS = [
   { key: "salaryPriority",     label: "Salary Priority",      desc: "How important is high earnings to you?",           color: "#1a3c34" },
@@ -116,15 +118,17 @@ export default function Results() {
   };
 
   return (
-    <div className="ciq-root">
-      <div style={s.container}>
-        <BackButton />
-        <h1 style={{ fontSize: 28, marginBottom: 6 }}>Happiness Index</h1>
-        <p style={{ color: "#556b62", marginBottom: 20 }}>
-          Adjust sliders to reflect your life priorities. Career matches update live. Click "Save & See Insights" to apply these to your recommendations.
-        </p>
+    <div className="ciq-root" style={{ background: "linear-gradient(180deg, #f6fbf9 0%, #edf7f3 100%)", minHeight: "100vh" }}>
+      <Header />
+      <main className="ciq-main" style={{ paddingBottom: 60 }}>
+        <div style={s.container}>
+          <BackButton />
+          <h1 style={{ fontSize: 28, marginBottom: 6 }}>Happiness Index</h1>
+          <p style={{ color: "#556b62", marginBottom: 20 }}>
+            Adjust sliders to reflect your life priorities. Career matches update live. Click "Save & See Insights" to apply these to your recommendations.
+          </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: 20, alignItems: "start" }}>
+          <div className="results-layout-grid">
           {/* LEFT: 6 sliders */}
           <aside style={s.panel}>
             <h3 style={{ marginTop: 0 }}>Your Preferences</h3>
@@ -193,10 +197,11 @@ export default function Results() {
           </main>
         </div>
 
-        <div style={{ marginTop: 16, fontSize: 13, color: "#888" }}>
-          Tip: Use keyboard arrows to move sliders. Matches update instantly. Saving persists preferences to your Insights page.
+          <div style={{ marginTop: 16, fontSize: 13, color: "#888" }}>
+            Tip: Use keyboard arrows to move sliders. Matches update instantly. Saving persists preferences to your Insights page.
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

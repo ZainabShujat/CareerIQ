@@ -1,0 +1,3303 @@
+{
+  "metadata": {
+    "title": "CareerIQ Job Descriptions (JDs)",
+    "lastUpdated": "June 2026",
+    "totalJobs": 150
+  },
+  "jobs": [
+    {
+      "id": 1,
+      "slug": "software-engineer-1",
+      "title": "Software Engineer",
+      "summary": "Builds backend and frontend systems, collaborates with product and QA, writes tests.",
+      "keyResponsibilities": [
+        "Write code",
+        "Review PRs",
+        "Fix bugs"
+      ],
+      "requiredSkills": [
+        "JavaScript",
+        "Data Structures",
+        "Problem Solving"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "engineering",
+        "software"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 2,
+      "slug": "frontend-developer-2",
+      "title": "Frontend Developer",
+      "summary": "Works with HTML/CSS/JS frameworks to implement UI and UX designs.",
+      "keyResponsibilities": [
+        "Implement UI",
+        "Optimize performance",
+        "Integrate APIs"
+      ],
+      "requiredSkills": [
+        "HTML",
+        "CSS",
+        "React"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "engineering",
+        "software",
+        "design"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 3,
+      "slug": "backend-developer-3",
+      "title": "Backend Developer",
+      "summary": "Designs databases, APIs, and server logic; optimizes for scale.",
+      "keyResponsibilities": [
+        "Design APIs",
+        "Manage DBs",
+        "Deploy services"
+      ],
+      "requiredSkills": [
+        "Node.js",
+        "Databases",
+        "APIs"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "engineering",
+        "software"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 4,
+      "slug": "devops-engineer-4",
+      "title": "DevOps Engineer",
+      "summary": "Builds CI/CD, monitors systems, writes infra as code.",
+      "keyResponsibilities": [
+        "Automate pipelines",
+        "Monitor infra",
+        "Manage releases"
+      ],
+      "requiredSkills": [
+        "Docker",
+        "Kubernetes",
+        "CI/CD"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "engineering",
+        "infrastructure"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 5,
+      "slug": "data-analyst-5",
+      "title": "Data Analyst",
+      "summary": "Gathers data, performs analysis, builds dashboards and insights.",
+      "keyResponsibilities": [
+        "Query data",
+        "Create dashboards",
+        "Support decisions"
+      ],
+      "requiredSkills": [
+        "SQL",
+        "Excel",
+        "Tableau"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "data",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 6,
+      "slug": "data-scientist-6",
+      "title": "Data Scientist",
+      "summary": "Works on ML models, feature engineering, and data pipelines.",
+      "keyResponsibilities": [
+        "Modeling",
+        "Experimentation",
+        "Feature engineering"
+      ],
+      "requiredSkills": [
+        "Python",
+        "ML",
+        "Statistics"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "data",
+        "ai"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 7,
+      "slug": "machine-learning-engineer-7",
+      "title": "Machine Learning Engineer",
+      "summary": "Deploys and monitors ML models, optimizes inference, scales pipelines.",
+      "keyResponsibilities": [
+        "Deploy models",
+        "Monitor performance",
+        "Optimize latency"
+      ],
+      "requiredSkills": [
+        "ML",
+        "Deployment",
+        "Python"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "data",
+        "ai",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 8,
+      "slug": "product-manager-8",
+      "title": "Product Manager",
+      "summary": "Works with engineering, design and stakeholders to deliver product outcomes.",
+      "keyResponsibilities": [
+        "Gather requirements",
+        "Prioritise features",
+        "Measure impact"
+      ],
+      "requiredSkills": [
+        "Roadmapping",
+        "Stakeholder mgmt",
+        "Analytics"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "business",
+        "product"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 9,
+      "slug": "project-manager-9",
+      "title": "Project Manager",
+      "summary": "Manages timelines, coordinates teams, mitigates risks.",
+      "keyResponsibilities": [
+        "Schedule",
+        "Track progress",
+        "Report status"
+      ],
+      "requiredSkills": [
+        "Planning",
+        "Communication",
+        "Risk mgmt"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "business",
+        "management"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 10,
+      "slug": "product-designer-10",
+      "title": "Product Designer",
+      "summary": "Creates prototypes, user research, and interface design.",
+      "keyResponsibilities": [
+        "Design flows",
+        "Prototype",
+        "Conduct research"
+      ],
+      "requiredSkills": [
+        "Figma",
+        "UX research",
+        "Prototyping"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "design",
+        "product"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 11,
+      "slug": "ux-designer-11",
+      "title": "UX Designer",
+      "summary": "Conducts user research and creates interaction designs.",
+      "keyResponsibilities": [
+        "User testing",
+        "Wireframes",
+        "Journey maps"
+      ],
+      "requiredSkills": [
+        "User research",
+        "Wireframing",
+        "Accessibility"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "design"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 12,
+      "slug": "ui-designer-12",
+      "title": "UI Designer",
+      "summary": "Builds visual languages and assets for products.",
+      "keyResponsibilities": [
+        "Design systems",
+        "Create assets",
+        "Handoff to engineers"
+      ],
+      "requiredSkills": [
+        "Visual design",
+        "Typography",
+        "Component design"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "design"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 13,
+      "slug": "graphic-designer-13",
+      "title": "Graphic Designer",
+      "summary": "Designs banners, posters, and brand assets.",
+      "keyResponsibilities": [
+        "Brand assets",
+        "Campaign visuals",
+        "Collaboration"
+      ],
+      "requiredSkills": [
+        "Illustrator",
+        "Photoshop",
+        "Composition"
+      ],
+      "averageSalary": "3.5 LPA",
+      "tags": [
+        "design",
+        "creative"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 14,
+      "slug": "qa-engineer-14",
+      "title": "QA Engineer",
+      "summary": "Writes tests, runs manual and automated test suites.",
+      "keyResponsibilities": [
+        "Test plans",
+        "Automation",
+        "Bug triage"
+      ],
+      "requiredSkills": [
+        "Automation",
+        "Testing",
+        "Scripting"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "engineering",
+        "quality"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 15,
+      "slug": "systems-analyst-15",
+      "title": "Systems Analyst",
+      "summary": "Bridges business and technical teams to define system specs.",
+      "keyResponsibilities": [
+        "Gather specs",
+        "Design systems",
+        "Coordinate teams"
+      ],
+      "requiredSkills": [
+        "Analysis",
+        "UML",
+        "Requirements"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "business",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 16,
+      "slug": "database-administrator-16",
+      "title": "Database Administrator",
+      "summary": "Ensures backups, scaling, and query performance.",
+      "keyResponsibilities": [
+        "Maintain DBs",
+        "Optimize queries",
+        "Ensure uptime"
+      ],
+      "requiredSkills": [
+        "SQL",
+        "DB tuning",
+        "Backups"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "infrastructure",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 17,
+      "slug": "security-engineer-17",
+      "title": "Security Engineer",
+      "summary": "Performs security audits, threat modeling, and incident response.",
+      "keyResponsibilities": [
+        "Assess vulnerabilities",
+        "Monitor incidents",
+        "Improve controls"
+      ],
+      "requiredSkills": [
+        "Pentesting",
+        "Threat modeling",
+        "Network security"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "security",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 18,
+      "slug": "cloud-engineer-18",
+      "title": "Cloud Engineer",
+      "summary": "Implements cloud architecture, optimizes costs, automates infra.",
+      "keyResponsibilities": [
+        "Architecture",
+        "Automation",
+        "Cost optimization"
+      ],
+      "requiredSkills": [
+        "AWS",
+        "Terraform",
+        "Architecture"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "infrastructure",
+        "cloud"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 19,
+      "slug": "business-analyst-19",
+      "title": "Business Analyst",
+      "summary": "Works with stakeholders to define and measure business requirements.",
+      "keyResponsibilities": [
+        "Requirements",
+        "Process mapping",
+        "Reporting"
+      ],
+      "requiredSkills": [
+        "Requirements",
+        "Analytics",
+        "Communication"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 20,
+      "slug": "financial-analyst-20",
+      "title": "Financial Analyst",
+      "summary": "Builds financial models and forecasts to guide decisions.",
+      "keyResponsibilities": [
+        "Model finance",
+        "Budgeting",
+        "Reports"
+      ],
+      "requiredSkills": [
+        "Excel",
+        "Modeling",
+        "Forecasting"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "business",
+        "finance"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 21,
+      "slug": "marketing-manager-21",
+      "title": "Marketing Manager",
+      "summary": "Coordinates campaigns, growth experiments, and messaging.",
+      "keyResponsibilities": [
+        "Campaigns",
+        "Strategy",
+        "Measurement"
+      ],
+      "requiredSkills": [
+        "SEO",
+        "Campaigns",
+        "Analytics"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "business",
+        "marketing"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 22,
+      "slug": "content-writer-22",
+      "title": "Content Writer",
+      "summary": "Writes articles, copy, and documentation.",
+      "keyResponsibilities": [
+        "Write copy",
+        "Edit content",
+        "Research topics"
+      ],
+      "requiredSkills": [
+        "Writing",
+        "SEO",
+        "Research"
+      ],
+      "averageSalary": "3.6 LPA",
+      "tags": [
+        "creative",
+        "marketing"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 23,
+      "slug": "technical-writer-23",
+      "title": "Technical Writer",
+      "summary": "Documents APIs, user guides, and onboarding materials.",
+      "keyResponsibilities": [
+        "Docs",
+        "Tutorials",
+        "Coordination"
+      ],
+      "requiredSkills": [
+        "API docs",
+        "Clarity",
+        "Organization"
+      ],
+      "averageSalary": "4 LPA",
+      "tags": [
+        "technical",
+        "creative"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 24,
+      "slug": "hr-manager-24",
+      "title": "HR Manager",
+      "summary": "Handles recruiting, policies, and employee relations.",
+      "keyResponsibilities": [
+        "Recruit",
+        "Manage policies",
+        "Onboard"
+      ],
+      "requiredSkills": [
+        "Recruiting",
+        "Communication",
+        "Policy"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "business",
+        "people"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 25,
+      "slug": "ux-researcher-25",
+      "title": "UX Researcher",
+      "summary": "Runs studies and usability tests to inform product decisions.",
+      "keyResponsibilities": [
+        "User studies",
+        "Synthesis",
+        "Reports"
+      ],
+      "requiredSkills": [
+        "Interviews",
+        "Surveys",
+        "Usability"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "design",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 26,
+      "slug": "mobile-developer-26",
+      "title": "Mobile Developer",
+      "summary": "Develops mobile apps, optimizes UX and performance.",
+      "keyResponsibilities": [
+        "App dev",
+        "Optimize UX",
+        "Publish releases"
+      ],
+      "requiredSkills": [
+        "Kotlin",
+        "Swift",
+        "React Native"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "engineering",
+        "mobile"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 27,
+      "slug": "embedded-engineer-27",
+      "title": "Embedded Systems Engineer",
+      "summary": "Programs microcontrollers, works on firmware and real-time systems.",
+      "keyResponsibilities": [
+        "Firmware",
+        "Hardware testing",
+        "Optimize footprint"
+      ],
+      "requiredSkills": [
+        "C/C++",
+        "RTOS",
+        "Electronics"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "engineering",
+        "hardware"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 28,
+      "slug": "research-scientist-28",
+      "title": "Research Scientist",
+      "summary": "Publishes papers, builds prototypes, and explores novel methods.",
+      "keyResponsibilities": [
+        "Research",
+        "Prototyping",
+        "Publish"
+      ],
+      "requiredSkills": [
+        "Experimentation",
+        "Math",
+        "Python"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "research",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 29,
+      "slug": "clinical-research-coordinator-29",
+      "title": "Clinical Research Coordinator",
+      "summary": "Manages trials, participants, and data collection.",
+      "keyResponsibilities": [
+        "Run trials",
+        "Record data",
+        "Monitor safety"
+      ],
+      "requiredSkills": [
+        "Protocol",
+        "Coordination",
+        "Data"
+      ],
+      "averageSalary": "4 LPA",
+      "tags": [
+        "medical",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 30,
+      "slug": "nurse-30",
+      "title": "Nurse",
+      "summary": "Assists doctors, administers medication, and monitors patient vitals.",
+      "keyResponsibilities": [
+        "Care",
+        "Medication",
+        "Record keeping"
+      ],
+      "requiredSkills": [
+        "Patient care",
+        "Compassion",
+        "Clinical skills"
+      ],
+      "averageSalary": "3.8 LPA",
+      "tags": [
+        "medical",
+        "care"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 31,
+      "slug": "medical-researcher-31",
+      "title": "Medical Researcher",
+      "summary": "Designs experiments, analyses data, and publishes findings.",
+      "keyResponsibilities": [
+        "Experiment",
+        "Analyze",
+        "Publish"
+      ],
+      "requiredSkills": [
+        "Biostatistics",
+        "Lab work",
+        "Writing"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "medical",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 32,
+      "slug": "public-health-officer-32",
+      "title": "Public Health Officer",
+      "summary": "Works on population health, policy and prevention strategies.",
+      "keyResponsibilities": [
+        "Programs",
+        "Policy",
+        "Monitoring"
+      ],
+      "requiredSkills": [
+        "Epidemiology",
+        "Policy",
+        "Communication"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "public-health",
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 33,
+      "slug": "teacher-33",
+      "title": "School Teacher",
+      "summary": "Plans lessons, assesses students, and supports development.",
+      "keyResponsibilities": [
+        "Teach",
+        "Assess",
+        "Parent comms"
+      ],
+      "requiredSkills": [
+        "Lesson planning",
+        "Classroom mgmt",
+        "Communication"
+      ],
+      "averageSalary": "3.5 LPA",
+      "tags": [
+        "teaching",
+        "education"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 34,
+      "slug": "corporate-trainer-34",
+      "title": "Corporate Trainer",
+      "summary": "Designs workshops and delivers professional training programs.",
+      "keyResponsibilities": [
+        "Train",
+        "Design content",
+        "Evaluate outcomes"
+      ],
+      "requiredSkills": [
+        "Presentation",
+        "Curriculum",
+        "Coaching"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "teaching",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 35,
+      "slug": "instructional-designer-35",
+      "title": "Instructional Designer",
+      "summary": "Designs courses, assessments and multimedia learning artifacts.",
+      "keyResponsibilities": [
+        "Design",
+        "Author content",
+        "Measure learning"
+      ],
+      "requiredSkills": [
+        "Course design",
+        "LMS",
+        "Assessment"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "education",
+        "design"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 36,
+      "slug": "chef-36",
+      "title": "Chef",
+      "summary": "Manages kitchen, creates dishes, and ensures food quality.",
+      "keyResponsibilities": [
+        "Cook",
+        "Plan menus",
+        "Manage kitchen"
+      ],
+      "requiredSkills": [
+        "Cooking",
+        "Menu design",
+        "Time management"
+      ],
+      "averageSalary": "4 LPA",
+      "tags": [
+        "culinary"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 37,
+      "slug": "baker-37",
+      "title": "Baker",
+      "summary": "Works with dough, recipes and ovens.",
+      "keyResponsibilities": [
+        "Bake",
+        "Prep ingredients",
+        "Quality control"
+      ],
+      "requiredSkills": [
+        "Baking techniques",
+        "Scaling recipes",
+        "Timing"
+      ],
+      "averageSalary": "3 LPA",
+      "tags": [
+        "culinary"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 38,
+      "slug": "hr-generalist-38",
+      "title": "HR Generalist",
+      "summary": "Supports recruiting, onboarding and HR admin.",
+      "keyResponsibilities": [
+        "Recruit",
+        "Onboard",
+        "Admin"
+      ],
+      "requiredSkills": [
+        "HR operations",
+        "Communication",
+        "Records"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "business",
+        "people"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 39,
+      "slug": "operations-manager-39",
+      "title": "Operations Manager",
+      "summary": "Optimizes processes, manages teams and ensures delivery.",
+      "keyResponsibilities": [
+        "Plan ops",
+        "Manage teams",
+        "Improve KPIs"
+      ],
+      "requiredSkills": [
+        "Process",
+        "Coordination",
+        "Improvement"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "business",
+        "operations"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 40,
+      "slug": "supply-chain-analyst-40",
+      "title": "Supply Chain Analyst",
+      "summary": "Optimizes inventory, shipping, and supplier relationships.",
+      "keyResponsibilities": [
+        "Forecast",
+        "Coordinate",
+        "Optimize"
+      ],
+      "requiredSkills": [
+        "Excel",
+        "Forecasting",
+        "ERP"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "business",
+        "logistics"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 41,
+      "slug": "civil-engineer-41",
+      "title": "Civil Engineer",
+      "summary": "Works on roads, bridges, and buildings with engineering plans.",
+      "keyResponsibilities": [
+        "Design",
+        "Inspect",
+        "Coordinate"
+      ],
+      "requiredSkills": [
+        "Design",
+        "Statics",
+        "CAD"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "civil",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 42,
+      "slug": "structural-engineer-42",
+      "title": "Structural Engineer",
+      "summary": "Does calculations and design for load-bearing systems.",
+      "keyResponsibilities": [
+        "Design",
+        "Check safety",
+        "Document"
+      ],
+      "requiredSkills": [
+        "Analysis",
+        "Design codes",
+        "CAD"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "civil",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 43,
+      "slug": "mechanical-engineer-43",
+      "title": "Mechanical Engineer",
+      "summary": "Works on machines, thermal systems and manufacturing designs.",
+      "keyResponsibilities": [
+        "Design",
+        "Test",
+        "Manufacture"
+      ],
+      "requiredSkills": [
+        "CAD",
+        "Thermodynamics",
+        "Materials"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "engineering",
+        "mechanical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 44,
+      "slug": "electrical-engineer-44",
+      "title": "Electrical Engineer",
+      "summary": "Works on circuits, power systems and control systems.",
+      "keyResponsibilities": [
+        "Design",
+        "Test",
+        "Document"
+      ],
+      "requiredSkills": [
+        "Circuit design",
+        "Simulations",
+        "PCB"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "engineering",
+        "electrical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 45,
+      "slug": "environmental-scientist-45",
+      "title": "Environmental Scientist",
+      "summary": "Performs field studies, collects samples and analyzes data for environmental projects.",
+      "keyResponsibilities": [
+        "Sampling",
+        "Analyze",
+        "Report"
+      ],
+      "requiredSkills": [
+        "Field work",
+        "Analysis",
+        "Reporting"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "science",
+        "environment"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 46,
+      "slug": "biotech-engineer-46",
+      "title": "Biotech Engineer",
+      "summary": "Applies engineering to biological systems in labs and production.",
+      "keyResponsibilities": [
+        "Experiment",
+        "Scale processes",
+        "Document"
+      ],
+      "requiredSkills": [
+        "Lab skills",
+        "Bioprocess",
+        "Analysis"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "biotech",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 47,
+      "slug": "pharmacist-47",
+      "title": "Pharmacist",
+      "summary": "Works in pharmacies or hospitals ensuring medication safety and counseling patients.",
+      "keyResponsibilities": [
+        "Dispense",
+        "Advise",
+        "Check interactions"
+      ],
+      "requiredSkills": [
+        "Pharmacology",
+        "Attention to detail",
+        "Counseling"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "medical",
+        "pharmacy"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 48,
+      "slug": "radiologist-48",
+      "title": "Radiologist",
+      "summary": "Reads X-rays, CTs and MRIs and advises on diagnosis.",
+      "keyResponsibilities": [
+        "Read scans",
+        "Report",
+        "Consult"
+      ],
+      "requiredSkills": [
+        "Imaging",
+        "Diagnosis",
+        "Detail"
+      ],
+      "averageSalary": "25 LPA",
+      "tags": [
+        "medical",
+        "specialist"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 49,
+      "slug": "physician-49",
+      "title": "Physician",
+      "summary": "Works in hospitals or clinics providing medical care across specialties.",
+      "keyResponsibilities": [
+        "Diagnose",
+        "Treat",
+        "Advise"
+      ],
+      "requiredSkills": [
+        "Clinical judgment",
+        "Diagnosis",
+        "Treatment"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 50,
+      "slug": "clinical-lab-technician-50",
+      "title": "Clinical Lab Technician",
+      "summary": "Prepares samples, runs lab equipment and records results.",
+      "keyResponsibilities": [
+        "Process samples",
+        "Run tests",
+        "Report results"
+      ],
+      "requiredSkills": [
+        "Lab techniques",
+        "Attention to detail",
+        "Reporting"
+      ],
+      "averageSalary": "3.8 LPA",
+      "tags": [
+        "medical",
+        "lab"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 51,
+      "slug": "legal-assistant-51",
+      "title": "Legal Assistant",
+      "summary": "Prepares filings, does legal research and manages documentation.",
+      "keyResponsibilities": [
+        "Research",
+        "Draft docs",
+        "Manage files"
+      ],
+      "requiredSkills": [
+        "Research",
+        "Writing",
+        "Organization"
+      ],
+      "averageSalary": "3.8 LPA",
+      "tags": [
+        "legal",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 52,
+      "slug": "paralegal-52",
+      "title": "Paralegal",
+      "summary": "Conducts research, organizes evidence and drafts legal documents.",
+      "keyResponsibilities": [
+        "Case prep",
+        "Research",
+        "Drafting"
+      ],
+      "requiredSkills": [
+        "Legal research",
+        "Drafting",
+        "Organization"
+      ],
+      "averageSalary": "4 LPA",
+      "tags": [
+        "legal"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 53,
+      "slug": "ux-writer-53",
+      "title": "UX Writer",
+      "summary": "Creates clear, concise copy for interfaces and helps shape tone.",
+      "keyResponsibilities": [
+        "Write copy",
+        "Align tone",
+        "Work with design"
+      ],
+      "requiredSkills": [
+        "Copywriting",
+        "Clarity",
+        "Product thinking"
+      ],
+      "averageSalary": "4.8 LPA",
+      "tags": [
+        "design",
+        "writing"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 54,
+      "slug": "social-media-manager-54",
+      "title": "Social Media Manager",
+      "summary": "Plans content calendars, analyzes engagement and grows community.",
+      "keyResponsibilities": [
+        "Plan content",
+        "Engage audience",
+        "Measure results"
+      ],
+      "requiredSkills": [
+        "Content",
+        "Analytics",
+        "Community"
+      ],
+      "averageSalary": "4.2 LPA",
+      "tags": [
+        "marketing",
+        "creative"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 55,
+      "slug": "seo-specialist-55",
+      "title": "SEO Specialist",
+      "summary": "Works on keywords, technical SEO and content strategy to increase organic reach.",
+      "keyResponsibilities": [
+        "Optimize",
+        "Audit",
+        "Strategy"
+      ],
+      "requiredSkills": [
+        "SEO",
+        "Analytics",
+        "Content"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "marketing",
+        "growth"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 56,
+      "slug": "sales-executive-56",
+      "title": "Sales Executive",
+      "summary": "Builds relationships, pitches solutions and closes deals.",
+      "keyResponsibilities": [
+        "Prospect",
+        "Pitch",
+        "Close deals"
+      ],
+      "requiredSkills": [
+        "Communication",
+        "Negotiation",
+        "CRM"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "sales",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 57,
+      "slug": "account-manager-57",
+      "title": "Account Manager",
+      "summary": "Acts as a point of contact, ensures client success and grows accounts.",
+      "keyResponsibilities": [
+        "Support clients",
+        "Retain accounts",
+        "Expand usage"
+      ],
+      "requiredSkills": [
+        "Relationship",
+        "Upsell",
+        "Support"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "business",
+        "client"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 58,
+      "slug": "customer-success-manager-58",
+      "title": "Customer Success Manager",
+      "summary": "Onboards customers, drives product adoption and minimizes churn.",
+      "keyResponsibilities": [
+        "Onboard",
+        "Drive adoption",
+        "Reduce churn"
+      ],
+      "requiredSkills": [
+        "Onboarding",
+        "Support",
+        "Measurement"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "customer",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 59,
+      "slug": "qa-automation-engineer-59",
+      "title": "QA Automation Engineer",
+      "summary": "Automates regression suites and integrates tests into CI/CD.",
+      "keyResponsibilities": [
+        "Automate tests",
+        "Integrate CI",
+        "Monitor"
+      ],
+      "requiredSkills": [
+        "Selenium",
+        "Scripting",
+        "Testing"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "engineering",
+        "quality"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 60,
+      "slug": "research-analyst-60",
+      "title": "Research Analyst",
+      "summary": "Collects data, summarizes findings and presents recommendations.",
+      "keyResponsibilities": [
+        "Study markets",
+        "Summarize findings",
+        "Recommend actions"
+      ],
+      "requiredSkills": [
+        "Research",
+        "Writing",
+        "Analysis"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "research",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 61,
+      "slug": "data-engineer-61",
+      "title": "Data Engineer",
+      "summary": "Designs reliable pipelines for data storage and processing at scale.",
+      "keyResponsibilities": [
+        "Build pipelines",
+        "Ensure quality",
+        "Optimize jobs"
+      ],
+      "requiredSkills": [
+        "ETL",
+        "Python",
+        "Spark"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "data",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 62,
+      "slug": "analytics-engineer-62",
+      "title": "Analytics Engineer",
+      "summary": "Transforms raw data into analytics-ready models and documentation.",
+      "keyResponsibilities": [
+        "Model data",
+        "Document",
+        "Support analysts"
+      ],
+      "requiredSkills": [
+        "SQL",
+        "DBT",
+        "Modeling"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "data",
+        "analytics"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 63,
+      "slug": "business-intelligence-analyst-63",
+      "title": "Business Intelligence Analyst",
+      "summary": "Designs reports, KPIs and automates regular reporting.",
+      "keyResponsibilities": [
+        "Build dashboards",
+        "Define KPIs",
+        "Automate reports"
+      ],
+      "requiredSkills": [
+        "BI tools",
+        "SQL",
+        "Dashboards"
+      ],
+      "averageSalary": "6.5 LPA",
+      "tags": [
+        "data",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 64,
+      "slug": "robotics-engineer-64",
+      "title": "Robotics Engineer",
+      "summary": "Integrates mechanics, electronics and software for robotics projects.",
+      "keyResponsibilities": [
+        "Design robots",
+        "Test",
+        "Integrate systems"
+      ],
+      "requiredSkills": [
+        "Control",
+        "Embedded",
+        "Calibration"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "engineering",
+        "robotics"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 65,
+      "slug": "game-developer-65",
+      "title": "Game Developer",
+      "summary": "Works on gameplay, physics, and performance for games.",
+      "keyResponsibilities": [
+        "Develop features",
+        "Optimize",
+        "Polish"
+      ],
+      "requiredSkills": [
+        "C#",
+        "Unity",
+        "Optimization"
+      ],
+      "averageSalary": "5.5 LPA",
+      "tags": [
+        "creative",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 66,
+      "slug": "animator-66",
+      "title": "Animator",
+      "summary": "Designs character motion and sequences using animation tools.",
+      "keyResponsibilities": [
+        "Animate",
+        "Refine",
+        "Collaborate"
+      ],
+      "requiredSkills": [
+        "Animation",
+        "Timing",
+        "Storyboarding"
+      ],
+      "averageSalary": "4.2 LPA",
+      "tags": [
+        "creative",
+        "media"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 67,
+      "slug": "sound-engineer-67",
+      "title": "Sound Engineer",
+      "summary": "Records, edits and masters audio for products and productions.",
+      "keyResponsibilities": [
+        "Record",
+        "Edit",
+        "Mix"
+      ],
+      "requiredSkills": [
+        "Audio editing",
+        "Mixing",
+        "Recording"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "creative",
+        "media"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 68,
+      "slug": "film-editor-68",
+      "title": "Film Editor",
+      "summary": "Assembles footage, refines timing and works with directors on final cuts.",
+      "keyResponsibilities": [
+        "Edit",
+        "Polish",
+        "Deliver edits"
+      ],
+      "requiredSkills": [
+        "Editing",
+        "Storytelling",
+        "Software"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "media",
+        "creative"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 69,
+      "slug": "architect-69",
+      "title": "Architect",
+      "summary": "Creates architectural plans and coordinates with engineers for construction.",
+      "keyResponsibilities": [
+        "Design",
+        "Coordinate",
+        "Comply"
+      ],
+      "requiredSkills": [
+        "Design",
+        "CAD",
+        "Regulations"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "design",
+        "civil"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 70,
+      "slug": "interior-designer-70",
+      "title": "Interior Designer",
+      "summary": "Plans layouts, selects materials and coordinates execution.",
+      "keyResponsibilities": [
+        "Plan spaces",
+        "Select finishes",
+        "Oversee fit-out"
+      ],
+      "requiredSkills": [
+        "Space planning",
+        "Materials",
+        "Mood boards"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "design",
+        "creative"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 71,
+      "slug": "ux-research-lead-71",
+      "title": "UX Research Lead",
+      "summary": "Sets research frameworks and mentors junior researchers.",
+      "keyResponsibilities": [
+        "Lead studies",
+        "Mentor",
+        "Strategy"
+      ],
+      "requiredSkills": [
+        "Leadership",
+        "Research",
+        "Synthesis"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "design",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 72,
+      "slug": "ai-researcher-72",
+      "title": "AI Researcher",
+      "summary": "Explores new model architectures and publishes research.",
+      "keyResponsibilities": [
+        "Research",
+        "Prototype",
+        "Publish"
+      ],
+      "requiredSkills": [
+        "Math",
+        "ML",
+        "Python"
+      ],
+      "averageSalary": "18 LPA",
+      "tags": [
+        "ai",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 73,
+      "slug": "ux-engineer-73",
+      "title": "UX Engineer",
+      "summary": "Implements high-fidelity interactions and prototypes in code.",
+      "keyResponsibilities": [
+        "Build prototypes",
+        "Implement UI",
+        "Support design"
+      ],
+      "requiredSkills": [
+        "JS",
+        "Animation",
+        "Interaction"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "design",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 74,
+      "slug": "accessibility-specialist-74",
+      "title": "Accessibility Specialist",
+      "summary": "Audits interfaces and helps teams meet accessibility standards.",
+      "keyResponsibilities": [
+        "Audit",
+        "Advise",
+        "Test"
+      ],
+      "requiredSkills": [
+        "A11y",
+        "Testing",
+        "Guidelines"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "design",
+        "ux"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 75,
+      "slug": "machine-vision-engineer-75",
+      "title": "Machine Vision Engineer",
+      "summary": "Works on image processing and object detection for industrial use.",
+      "keyResponsibilities": [
+        "Build models",
+        "Integrate cameras",
+        "Tune systems"
+      ],
+      "requiredSkills": [
+        "CV",
+        "Python",
+        "Optimization"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "ai",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 76,
+      "slug": "biomedical-engineer-76",
+      "title": "Biomedical Engineer",
+      "summary": "Works at the intersection of medicine and engineering to build devices.",
+      "keyResponsibilities": [
+        "Design devices",
+        "Test",
+        "Comply"
+      ],
+      "requiredSkills": [
+        "Design",
+        "Clinical understanding",
+        "Testing"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "medical",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 77,
+      "slug": "ux-strategist-77",
+      "title": "UX Strategist",
+      "summary": "Sets long-term UX direction and prioritizes initiatives.",
+      "keyResponsibilities": [
+        "Strategy",
+        "Prioritize",
+        "Advocate"
+      ],
+      "requiredSkills": [
+        "Strategy",
+        "Research",
+        "Roadmapping"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "design",
+        "product"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 78,
+      "slug": "sme-consultant-78",
+      "title": "SME Consultant",
+      "summary": "Works with organisations to solve specialised problems in their field.",
+      "keyResponsibilities": [
+        "Advise",
+        "Plan",
+        "Implement"
+      ],
+      "requiredSkills": [
+        "Domain knowledge",
+        "Advisory",
+        "Problem solving"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "consulting",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 79,
+      "slug": "sustainability-specialist-79",
+      "title": "Sustainability Specialist",
+      "summary": "Helps organisations reduce environmental impact and meet standards.",
+      "keyResponsibilities": [
+        "Assess impact",
+        "Advise",
+        "Report"
+      ],
+      "requiredSkills": [
+        "Audits",
+        "Policy",
+        "Reporting"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "environment",
+        "policy"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 80,
+      "slug": "ux-researcher-junior-80",
+      "title": "Junior UX Researcher",
+      "summary": "Helps recruit participants, run tests and synthesize findings.",
+      "keyResponsibilities": [
+        "Help tests",
+        "Transcribe",
+        "Summarize"
+      ],
+      "requiredSkills": [
+        "Testing",
+        "Note taking",
+        "Synthesis"
+      ],
+      "averageSalary": "3.8 LPA",
+      "tags": [
+        "design",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 81,
+      "slug": "biostatistician-81",
+      "title": "Biostatistician",
+      "summary": "Designs studies and analyzes results for clinical research.",
+      "keyResponsibilities": [
+        "Design studies",
+        "Analyze",
+        "Report"
+      ],
+      "requiredSkills": [
+        "Statistics",
+        "R",
+        "Clinical trials"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "medical",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 82,
+      "slug": "ux-research-consultant-82",
+      "title": "UX Research Consultant",
+      "summary": "Designs independent research and synthesizes insights for projects.",
+      "keyResponsibilities": [
+        "Consult",
+        "Design studies",
+        "Deliver reports"
+      ],
+      "requiredSkills": [
+        "Research",
+        "Communication",
+        "Recommendations"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "design",
+        "consulting"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 83,
+      "slug": "bioinformatician-83",
+      "title": "Bioinformatician",
+      "summary": "Analyzes genomic data and builds pipelines for biological data processing.",
+      "keyResponsibilities": [
+        "Process data",
+        "Analyze",
+        "Automate"
+      ],
+      "requiredSkills": [
+        "Python",
+        "Genomics",
+        "Pipelines"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "bio",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 84,
+      "slug": "ux-ops-84",
+      "title": "UX Operations Manager",
+      "summary": "Scales UX practice through operations, strategy and tooling.",
+      "keyResponsibilities": [
+        "Improve processes",
+        "Manage tools",
+        "Support teams"
+      ],
+      "requiredSkills": [
+        "Operations",
+        "Tooling",
+        "Coordination"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "design",
+        "ops"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 85,
+      "slug": "qa-lead-85",
+      "title": "QA Lead",
+      "summary": "Sets test strategy, mentors QA engineers and ensures product quality.",
+      "keyResponsibilities": [
+        "Lead QA",
+        "Mentor",
+        "Strategy"
+      ],
+      "requiredSkills": [
+        "Leadership",
+        "Testing",
+        "Strategy"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "quality",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 86,
+      "slug": "ux-content-strategist-86",
+      "title": "Content Strategist",
+      "summary": "Defines content strategy, taxonomy and voice across user journeys.",
+      "keyResponsibilities": [
+        "Define content",
+        "Align voice",
+        "Measure impact"
+      ],
+      "requiredSkills": [
+        "Strategy",
+        "Taxonomy",
+        "Research"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "content",
+        "ux"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 87,
+      "slug": "clinical-data-manager-87",
+      "title": "Clinical Data Manager",
+      "summary": "Ensures data integrity, compliance and reporting for clinical studies.",
+      "keyResponsibilities": [
+        "Manage datasets",
+        "Validate",
+        "Report"
+      ],
+      "requiredSkills": [
+        "CDMS",
+        "Compliance",
+        "QC"
+      ],
+      "averageSalary": "6.5 LPA",
+      "tags": [
+        "medical",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 88,
+      "slug": "medtech-product-manager-88",
+      "title": "MedTech Product Manager",
+      "summary": "Works with clinicians and engineers to deliver compliant medical devices.",
+      "keyResponsibilities": [
+        "Plan product",
+        "Coordinate trials",
+        "Comply"
+      ],
+      "requiredSkills": [
+        "Regulatory",
+        "Stakeholder",
+        "Product"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "medical",
+        "product"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 89,
+      "slug": "robotics-researcher-89",
+      "title": "Robotics Researcher",
+      "summary": "Publishes research and prototypes in robotics and automation.",
+      "keyResponsibilities": [
+        "Research",
+        "Prototype",
+        "Publish"
+      ],
+      "requiredSkills": [
+        "Robotics",
+        "Control",
+        "Research"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "research",
+        "robotics"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 90,
+      "slug": "sme-analyst-90",
+      "title": "SME Analyst",
+      "summary": "Focuses on SME products and business analytics.",
+      "keyResponsibilities": [
+        "Analyze SMEs",
+        "Create reports",
+        "Advise"
+      ],
+      "requiredSkills": [
+        "Analysis",
+        "Communication",
+        "Reporting"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "business",
+        "analysis"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 91,
+      "slug": "technical-product-manager-91",
+      "title": "Technical Product Manager",
+      "summary": "Builds roadmaps and works closely with engineering on complex features.",
+      "keyResponsibilities": [
+        "Roadmap",
+        "Coordinate",
+        "Measure"
+      ],
+      "requiredSkills": [
+        "Tech understanding",
+        "Planning",
+        "Communication"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "product",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 92,
+      "slug": "entrepreneur-92",
+      "title": "Entrepreneur / Founder",
+      "summary": "Defines vision, raises funds and leads a small team to create products.",
+      "keyResponsibilities": [
+        "Lead",
+        "Fundraise",
+        "Build"
+      ],
+      "requiredSkills": [
+        "Strategy",
+        "Execution",
+        "Resilience"
+      ],
+      "averageSalary": "Varies",
+      "tags": [
+        "startup",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 93,
+      "slug": "ux-engineer-junior-93",
+      "title": "Junior UX Engineer",
+      "summary": "Implements small interactions and supports designers in prototyping.",
+      "keyResponsibilities": [
+        "Implement prototypes",
+        "Support design",
+        "Polish"
+      ],
+      "requiredSkills": [
+        "HTML/CSS",
+        "JS",
+        "Prototyping"
+      ],
+      "averageSalary": "4.2 LPA",
+      "tags": [
+        "design",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 94,
+      "slug": "ai-product-manager-94",
+      "title": "AI Product Manager",
+      "summary": "Defines ML feature roadmaps, evaluation and deployment for AI products.",
+      "keyResponsibilities": [
+        "Define AI features",
+        "Measure models",
+        "Coordinate"
+      ],
+      "requiredSkills": [
+        "ML literacy",
+        "Product",
+        "Metrics"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "product",
+        "ai"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 95,
+      "slug": "fullstack-developer-95",
+      "title": "Fullstack Developer",
+      "summary": "Implements product features end-to-end, from UI to DB and APIs.",
+      "keyResponsibilities": [
+        "Build features",
+        "Ship releases",
+        "Support code"
+      ],
+      "requiredSkills": [
+        "JS",
+        "APIs",
+        "DB"
+      ],
+      "averageSalary": "6.5 LPA",
+      "tags": [
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 96,
+      "slug": "innovation-manager-96",
+      "title": "Innovation Manager",
+      "summary": "Runs experiments and pilots to find new value for the business.",
+      "keyResponsibilities": [
+        "Run pilots",
+        "Measure",
+        "Scale"
+      ],
+      "requiredSkills": [
+        "Experimentation",
+        "Strategy",
+        "Stakeholder mgmt"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "product",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 97,
+      "slug": "data-privacy-officer-97",
+      "title": "Data Privacy Officer",
+      "summary": "Designs policies and ensures legal compliance with data laws.",
+      "keyResponsibilities": [
+        "Policy",
+        "Audit",
+        "Train"
+      ],
+      "requiredSkills": [
+        "Policy",
+        "Compliance",
+        "Audit"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "legal",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 98,
+      "slug": "cloud-architect-98",
+      "title": "Cloud Architect",
+      "summary": "Defines cloud strategy, cost and architecture for large systems.",
+      "keyResponsibilities": [
+        "Design cloud",
+        "Governance",
+        "Optimize"
+      ],
+      "requiredSkills": [
+        "Architecture",
+        "AWS/GCP",
+        "Security"
+      ],
+      "averageSalary": "15 LPA",
+      "tags": [
+        "cloud",
+        "architecture"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 99,
+      "slug": "research-engineer-99",
+      "title": "Research Engineer",
+      "summary": "Bridges research and production by building reproducible prototypes.",
+      "keyResponsibilities": [
+        "Prototype",
+        "Benchmark",
+        "Document"
+      ],
+      "requiredSkills": [
+        "Coding",
+        "Experimentation",
+        "Benchmarking"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "research",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 100,
+      "slug": "innovation-designer-100",
+      "title": "Innovation Designer",
+      "summary": "Combines design and research to craft novel product directions.",
+      "keyResponsibilities": [
+        "Ideate",
+        "Prototype",
+        "Test"
+      ],
+      "requiredSkills": [
+        "Design thinking",
+        "Prototyping",
+        "Research"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "design",
+        "product"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 101,
+      "slug": "health-economist-101",
+      "title": "Health Economist",
+      "summary": "Studies costs, access, and outcomes to advise policy and investment decisions in healthcare.",
+      "keyResponsibilities": [
+        "Cost-effectiveness analysis",
+        "Policy briefs",
+        "Data modelling"
+      ],
+      "requiredSkills": [
+        "Econometrics",
+        "Health policy",
+        "Data analysis"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "healthcare",
+        "economics"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 102,
+      "slug": "clinical-trial-manager-102",
+      "title": "Clinical Trial Manager",
+      "summary": "Plans, runs and monitors clinical trials ensuring compliance, timelines and quality.",
+      "keyResponsibilities": [
+        "Run trials",
+        "Monitor compliance",
+        "Manage vendors"
+      ],
+      "requiredSkills": [
+        "GCP",
+        "Project management",
+        "Regulatory knowledge"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "medical",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 103,
+      "slug": "pharmacovigilance-specialist-103",
+      "title": "Pharmacovigilance Specialist",
+      "summary": "Collects safety data, evaluates risk profiles and reports to regulators.",
+      "keyResponsibilities": [
+        "Collect ADRs",
+        "Report to regulators",
+        "Assess signals"
+      ],
+      "requiredSkills": [
+        "Safety reporting",
+        "Regulation",
+        "Signal detection"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "medical",
+        "safety"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 104,
+      "slug": "health-data-engineer-104",
+      "title": "Health Data Engineer",
+      "summary": "Designs ETL, ensures patient data quality, and supports analytics for healthcare teams.",
+      "keyResponsibilities": [
+        "Build pipelines",
+        "Ensure data quality",
+        "Support analysts"
+      ],
+      "requiredSkills": [
+        "ETL",
+        "FHIR",
+        "SQL"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "data",
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 105,
+      "slug": "telemedicine-coordinator-105",
+      "title": "Telemedicine Coordinator",
+      "summary": "Coordinates telehealth services, schedules providers and optimizes virtual patient journeys.",
+      "keyResponsibilities": [
+        "Schedule teleconsults",
+        "Onboard clinicians",
+        "Monitor KPIs"
+      ],
+      "requiredSkills": [
+        "Coordination",
+        "Platform ops",
+        "Patient experience"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "medical",
+        "operations"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 106,
+      "slug": "healthcare-ux-researcher-106",
+      "title": "Healthcare UX Researcher",
+      "summary": "Runs studies with patients and clinicians to improve usability and safety of health products.",
+      "keyResponsibilities": [
+        "Run interviews",
+        "Synthesize insights",
+        "Recommend changes"
+      ],
+      "requiredSkills": [
+        "User research",
+        "Contextual inquiry",
+        "Synthesis"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "design",
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 107,
+      "slug": "genetic-counsellor-107",
+      "title": "Genetic Counsellor",
+      "summary": "Explains test results, supports family planning and liaises with clinicians.",
+      "keyResponsibilities": [
+        "Counsel patients",
+        "Explain results",
+        "Coordinate tests"
+      ],
+      "requiredSkills": [
+        "Genetics",
+        "Communication",
+        "Counselling"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "medical",
+        "counselling"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 108,
+      "slug": "medical-illustrator-108",
+      "title": "Medical Illustrator",
+      "summary": "Produces accurate anatomical and procedural illustrations for learning and publications.",
+      "keyResponsibilities": [
+        "Create visuals",
+        "Collaborate with clinicians",
+        "Revise per feedback"
+      ],
+      "requiredSkills": [
+        "Anatomy",
+        "Illustration",
+        "3D modeling"
+      ],
+      "averageSalary": "4.5 LPA",
+      "tags": [
+        "medical",
+        "creative"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 109,
+      "slug": "nutrition-epidemiologist-109",
+      "title": "Nutrition Epidemiologist",
+      "summary": "Designs surveys, analyses dietary data and links nutrition to outcomes for public health.",
+      "keyResponsibilities": [
+        "Design studies",
+        "Analyze data",
+        "Publish reports"
+      ],
+      "requiredSkills": [
+        "Epidemiology",
+        "Statistics",
+        "Nutrition"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "public-health",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 110,
+      "slug": "rehabilitation-therapist-110",
+      "title": "Rehabilitation Therapist",
+      "summary": "Provides physical or occupational therapy to restore function after injury or illness.",
+      "keyResponsibilities": [
+        "Deliver therapy",
+        "Assess progress",
+        "Plan treatment"
+      ],
+      "requiredSkills": [
+        "Therapeutic techniques",
+        "Assessment",
+        "Patient education"
+      ],
+      "averageSalary": "4 LPA",
+      "tags": [
+        "medical",
+        "care"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 111,
+      "slug": "healthcare-operations-analyst-111",
+      "title": "Healthcare Operations Analyst",
+      "summary": "Analyzes workflows, improves throughput and reduces bottlenecks in healthcare settings.",
+      "keyResponsibilities": [
+        "Map processes",
+        "Recommend changes",
+        "Measure impact"
+      ],
+      "requiredSkills": [
+        "Process improvement",
+        "Analytics",
+        "Excel"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "healthcare",
+        "operations"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 112,
+      "slug": "medical-device-quality-engineer-112",
+      "title": "Medical Device Quality Engineer",
+      "summary": "Implements quality systems, runs validation and ensures regulatory compliance for devices.",
+      "keyResponsibilities": [
+        "Create protocols",
+        "Perform validation",
+        "Manage documents"
+      ],
+      "requiredSkills": [
+        "Validation",
+        "Regulatory",
+        "QA"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "medical",
+        "engineering"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 113,
+      "slug": "community-health-coordinator-113",
+      "title": "Community Health Coordinator",
+      "summary": "Coordinates outreach, vaccination drives and community education programs.",
+      "keyResponsibilities": [
+        "Plan outreach",
+        "Coordinate volunteers",
+        "Monitor outcomes"
+      ],
+      "requiredSkills": [
+        "Program management",
+        "Communication",
+        "Monitoring"
+      ],
+      "averageSalary": "4 LPA",
+      "tags": [
+        "public-health",
+        "community"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 114,
+      "slug": "medical-ethicist-114",
+      "title": "Medical Ethicist",
+      "summary": "Reviews complex cases, offers ethics guidance for policy or clinical practice.",
+      "keyResponsibilities": [
+        "Review cases",
+        "Advise committees",
+        "Draft guidance"
+      ],
+      "requiredSkills": [
+        "Bioethics",
+        "Analysis",
+        "Advising"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "medical",
+        "policy"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 115,
+      "slug": "healthcare-product-manager-115",
+      "title": "Healthcare Product Manager",
+      "summary": "Defines product requirements for healthcare tools, works with clinicians and engineers to deliver safe products.",
+      "keyResponsibilities": [
+        "Gather requirements",
+        "Coordinate trials",
+        "Prioritise features"
+      ],
+      "requiredSkills": [
+        "Clinical workflows",
+        "Roadmapping",
+        "Stakeholder mgmt"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "product",
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 116,
+      "slug": "occupational-health-specialist-116",
+      "title": "Occupational Health Specialist",
+      "summary": "Assesses workplace risks, advises employers and manages occupational health programs.",
+      "keyResponsibilities": [
+        "Assess workplace",
+        "Train staff",
+        "Monitor health trends"
+      ],
+      "requiredSkills": [
+        "Risk assessment",
+        "Policy",
+        "Clinical knowledge"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "healthcare",
+        "safety"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 117,
+      "slug": "medical-robotics-engineer-117",
+      "title": "Medical Robotics Engineer",
+      "summary": "Designs, tests and integrates robots used in surgery, rehab or diagnostics.",
+      "keyResponsibilities": [
+        "Design robots",
+        "Test systems",
+        "Integrate with devices"
+      ],
+      "requiredSkills": [
+        "Control systems",
+        "Embedded",
+        "Validation"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "robotics",
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 118,
+      "slug": "digital-health-analyst-118",
+      "title": "Digital Health Analyst",
+      "summary": "Measures engagement, retention and clinical impact of digital interventions.",
+      "keyResponsibilities": [
+        "Run analytics",
+        "Define metrics",
+        "Recommend optimisations"
+      ],
+      "requiredSkills": [
+        "Analytics",
+        "A/B testing",
+        "Healthcare metrics"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "data",
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 119,
+      "slug": "health-policy-analyst-119",
+      "title": "Health Policy Analyst",
+      "summary": "Evaluates programs, compares models and writes policy briefs for governments or NGOs.",
+      "keyResponsibilities": [
+        "Research policies",
+        "Draft briefs",
+        "Advise stakeholders"
+      ],
+      "requiredSkills": [
+        "Policy analysis",
+        "Research",
+        "Writing"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "policy",
+        "public-health"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 120,
+      "slug": "elder-care-manager-120",
+      "title": "Elder Care Manager",
+      "summary": "Manages care plans, coordinates therapists and family, and assesses long-term care needs.",
+      "keyResponsibilities": [
+        "Plan care",
+        "Coordinate services",
+        "Monitor wellbeing"
+      ],
+      "requiredSkills": [
+        "Care coordination",
+        "Assessment",
+        "Communication"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "care",
+        "medical"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 121,
+      "slug": "fintech-analyst-121",
+      "title": "Fintech Analyst",
+      "summary": "Studies payment systems, digital banking products and builds models to support product decisions.",
+      "keyResponsibilities": [
+        "Market research",
+        "Model finance",
+        "Recommend product changes"
+      ],
+      "requiredSkills": [
+        "Financial modelling",
+        "Data analysis",
+        "Payments"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "finance",
+        "product"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 122,
+      "slug": "asset-management-analyst-122",
+      "title": "Asset Management Analyst",
+      "summary": "Builds financial models, tracks securities and prepares investment reports.",
+      "keyResponsibilities": [
+        "Research assets",
+        "Model portfolios",
+        "Monitor performance"
+      ],
+      "requiredSkills": [
+        "Excel",
+        "Valuation",
+        "Research"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "finance",
+        "investment"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 123,
+      "slug": "risk-operations-analyst-123",
+      "title": "Risk Operations Analyst",
+      "summary": "Implements risk controls, prepares reports and supports compliance teams.",
+      "keyResponsibilities": [
+        "Monitor risk",
+        "Report incidents",
+        "Support audits"
+      ],
+      "requiredSkills": [
+        "Controls",
+        "SQL",
+        "Reporting"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "finance",
+        "risk"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 124,
+      "slug": "payments-product-manager-124",
+      "title": "Payments Product Manager",
+      "summary": "Designs checkout, payouts and reconciliations; works with engineering to deploy scalable payments features.",
+      "keyResponsibilities": [
+        "Define flows",
+        "Coordinate engineering",
+        "Measure success"
+      ],
+      "requiredSkills": [
+        "Payments",
+        "APIs",
+        "Roadmapping"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "product",
+        "finance"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 125,
+      "slug": "regulatory-analyst-125",
+      "title": "Regulatory Analyst (Finance)",
+      "summary": "Interprets new regulations, advises product and compliance teams on requirements.",
+      "keyResponsibilities": [
+        "Monitor rules",
+        "Draft guidance",
+        "Train teams"
+      ],
+      "requiredSkills": [
+        "Regulation",
+        "Writing",
+        "Research"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "finance",
+        "compliance"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 126,
+      "slug": "credit-analyst-126",
+      "title": "Credit Analyst",
+      "summary": "Evaluates financial statements, builds credit models and recommends lending decisions.",
+      "keyResponsibilities": [
+        "Analyse applicants",
+        "Model risk",
+        "Recommend limits"
+      ],
+      "requiredSkills": [
+        "Financial analysis",
+        "Modelling",
+        "Due diligence"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "finance",
+        "credit"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 127,
+      "slug": "quant-researcher-127",
+      "title": "Quantitative Researcher",
+      "summary": "Researches statistical models and implements prototypes for quantitative trading or risk systems.",
+      "keyResponsibilities": [
+        "Research strategies",
+        "Backtest",
+        "Deploy models"
+      ],
+      "requiredSkills": [
+        "Statistics",
+        "Python",
+        "Time series"
+      ],
+      "averageSalary": "14 LPA",
+      "tags": [
+        "finance",
+        "quant"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 128,
+      "slug": "payments-operations-128",
+      "title": "Payments Operations Specialist",
+      "summary": "Handles exceptions, reconciles transactions and improves payments reliability.",
+      "keyResponsibilities": [
+        "Resolve exceptions",
+        "Reconcile accounts",
+        "Improve processes"
+      ],
+      "requiredSkills": [
+        "Reconciliation",
+        "Scripting",
+        "Banking ops"
+      ],
+      "averageSalary": "6 LPA",
+      "tags": [
+        "finance",
+        "operations"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 129,
+      "slug": "wealth-advisor-129",
+      "title": "Wealth Advisor",
+      "summary": "Builds tailored investment plans, advises on tax and long-term goals.",
+      "keyResponsibilities": [
+        "Meet clients",
+        "Create plans",
+        "Monitor portfolios"
+      ],
+      "requiredSkills": [
+        "Advisory",
+        "Portfolio construction",
+        "Communication"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "finance",
+        "advisory"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 130,
+      "slug": "corporate-treasury-analyst-130",
+      "title": "Corporate Treasury Analyst",
+      "summary": "Forecasts cash needs, optimises working capital and manages banking relationships.",
+      "keyResponsibilities": [
+        "Forecast cash",
+        "Manage liquidity",
+        "Report metrics"
+      ],
+      "requiredSkills": [
+        "Cash forecasting",
+        "Excel",
+        "Bank relations"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "finance",
+        "treasury"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 131,
+      "slug": "credit-risk-modeler-131",
+      "title": "Credit Risk Modeler",
+      "summary": "Creates statistical and ML models to estimate credit risk and supports validation.",
+      "keyResponsibilities": [
+        "Develop models",
+        "Validate",
+        "Deploy controls"
+      ],
+      "requiredSkills": [
+        "Statistics",
+        "Python",
+        "Model validation"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "finance",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 132,
+      "slug": "financial-crime-analyst-132",
+      "title": "Financial Crime Analyst",
+      "summary": "Monitors alerts, investigates suspicious activity and supports KYC/AML processes.",
+      "keyResponsibilities": [
+        "Investigate alerts",
+        "Report SARs",
+        "Support compliance"
+      ],
+      "requiredSkills": [
+        "Investigations",
+        "KYC",
+        "Data analysis"
+      ],
+      "averageSalary": "7 LPA",
+      "tags": [
+        "compliance",
+        "finance"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 133,
+      "slug": "valuation-analyst-133",
+      "title": "Valuation Analyst",
+      "summary": "Builds DCFs, comparables and support M&A or fundraising pricing decisions.",
+      "keyResponsibilities": [
+        "Model valuations",
+        "Prepare memos",
+        "Support deals"
+      ],
+      "requiredSkills": [
+        "DCF",
+        "Excel",
+        "Comps"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "finance",
+        "valuation"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 134,
+      "slug": "portfolio-operations-134",
+      "title": "Portfolio Operations Associate",
+      "summary": "Handles trade settlement, performance reporting and operational risk for portfolios.",
+      "keyResponsibilities": [
+        "Reconcile trades",
+        "Prepare reports",
+        "Resolve breaks"
+      ],
+      "requiredSkills": [
+        "Reporting",
+        "Reconciliation",
+        "Excel"
+      ],
+      "averageSalary": "6.5 LPA",
+      "tags": [
+        "operations",
+        "finance"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 135,
+      "slug": "management-consultant-135",
+      "title": "Management Consultant",
+      "summary": "Solves client problems, builds recommendations and supports implementation across industries.",
+      "keyResponsibilities": [
+        "Diagnose issues",
+        "Propose solutions",
+        "Support rollout"
+      ],
+      "requiredSkills": [
+        "Problem solving",
+        "Presentation",
+        "Stakeholder mgmt"
+      ],
+      "averageSalary": "12 LPA",
+      "tags": [
+        "consulting",
+        "business"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 136,
+      "slug": "strategy-analyst-136",
+      "title": "Strategy Analyst",
+      "summary": "Conducts market analysis, competitive benchmarking and synthesizes insights for leadership.",
+      "keyResponsibilities": [
+        "Research markets",
+        "Build models",
+        "Present recommendations"
+      ],
+      "requiredSkills": [
+        "Market research",
+        "Modeling",
+        "Synthesis"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "consulting",
+        "strategy"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 137,
+      "slug": "change-management-consultant-137",
+      "title": "Change Management Consultant",
+      "summary": "Designs communication, training and change plans to ensure successful adoption of new programs.",
+      "keyResponsibilities": [
+        "Plan change",
+        "Design comms",
+        "Train staff"
+      ],
+      "requiredSkills": [
+        "Communication",
+        "Training design",
+        "Stakeholder engagement"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "consulting",
+        "people"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 138,
+      "slug": "operational-excellence-consultant-138",
+      "title": "Operational Excellence Consultant",
+      "summary": "Implements lean/six-sigma methods to reduce waste and improve KPIs.",
+      "keyResponsibilities": [
+        "Map processes",
+        "Implement improvements",
+        "Measure impact"
+      ],
+      "requiredSkills": [
+        "LEAN",
+        "Process mapping",
+        "KPI design"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "consulting",
+        "operations"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 139,
+      "slug": "digital-transformation-consultant-139",
+      "title": "Digital Transformation Consultant",
+      "summary": "Helps companies adopt digital products, modernise tech stacks and realise transformation benefits.",
+      "keyResponsibilities": [
+        "Assess tech",
+        "Build roadmaps",
+        "Manage pilots"
+      ],
+      "requiredSkills": [
+        "Product strategy",
+        "Tech understanding",
+        "Roadmapping"
+      ],
+      "averageSalary": "13 LPA",
+      "tags": [
+        "consulting",
+        "digital"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 140,
+      "slug": "m-and-a-consultant-140",
+      "title": "M&A Consultant",
+      "summary": "Conducts due diligence, advises on deal structure and supports post-merger integration.",
+      "keyResponsibilities": [
+        "Perform dd",
+        "Advise clients",
+        "Lead integration"
+      ],
+      "requiredSkills": [
+        "Due diligence",
+        "Integration",
+        "Financial analysis"
+      ],
+      "averageSalary": "14 LPA",
+      "tags": [
+        "consulting",
+        "deals"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 141,
+      "slug": "sme-business-advisor-141",
+      "title": "SME Business Advisor",
+      "summary": "Works with local businesses on strategy, finance and growth plans.",
+      "keyResponsibilities": [
+        "Assess businesses",
+        "Recommend actions",
+        "Support implementations"
+      ],
+      "requiredSkills": [
+        "Advisory",
+        "Finance",
+        "Operations"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "consulting",
+        "sme"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 142,
+      "slug": "customer-insight-consultant-142",
+      "title": "Customer Insight Consultant",
+      "summary": "Studies behaviour data and runs research to recommend product changes for retention and growth.",
+      "keyResponsibilities": [
+        "Analyse customers",
+        "Recommend features",
+        "Measure change"
+      ],
+      "requiredSkills": [
+        "Analytics",
+        "User research",
+        "Strategy"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "consulting",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 143,
+      "slug": "sustainability-consultant-143",
+      "title": "Sustainability Consultant",
+      "summary": "Helps companies measure emissions, set targets and implement sustainability initiatives.",
+      "keyResponsibilities": [
+        "Measure emissions",
+        "Create plans",
+        "Advise leadership"
+      ],
+      "requiredSkills": [
+        "Sustainability",
+        "Reporting",
+        "Stakeholder mgmt"
+      ],
+      "averageSalary": "10 LPA",
+      "tags": [
+        "consulting",
+        "environment"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 144,
+      "slug": "pricing-consultant-144",
+      "title": "Pricing Consultant",
+      "summary": "Builds pricing models, runs experiments and advises on revenue optimisation.",
+      "keyResponsibilities": [
+        "Build models",
+        "Run experiments",
+        "Advise pricing"
+      ],
+      "requiredSkills": [
+        "Modeling",
+        "A/B testing",
+        "Strategy"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "consulting",
+        "pricing"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 145,
+      "slug": "health-insurance-underwriter-145",
+      "title": "Health Insurance Underwriter",
+      "summary": "Evaluates applications, pricing risk and ensures portfolio profitability for health insurers.",
+      "keyResponsibilities": [
+        "Assess risk",
+        "Price policies",
+        "Monitor portfolios"
+      ],
+      "requiredSkills": [
+        "Actuarial basics",
+        "Risk assessment",
+        "Policy knowledge"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "finance",
+        "healthcare"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 146,
+      "slug": "behavioural-economics-consultant-146",
+      "title": "Behavioural Economics Consultant",
+      "summary": "Designs nudges, tests interventions and helps teams use behavioral science to improve outcomes.",
+      "keyResponsibilities": [
+        "Design nudges",
+        "Run trials",
+        "Report insights"
+      ],
+      "requiredSkills": [
+        "Experiment design",
+        "Behavioural theory",
+        "Analysis"
+      ],
+      "averageSalary": "11 LPA",
+      "tags": [
+        "consulting",
+        "research"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 147,
+      "slug": "private-equity-analyst-147",
+      "title": "Private Equity Analyst",
+      "summary": "Performs financial modelling, screens investments and helps manage portfolio companies.",
+      "keyResponsibilities": [
+        "Model deals",
+        "Support dd",
+        "Monitor portfolio"
+      ],
+      "requiredSkills": [
+        "Modelling",
+        "Due diligence",
+        "Presentation"
+      ],
+      "averageSalary": "15 LPA",
+      "tags": [
+        "finance",
+        "investment"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 148,
+      "slug": "microfinance-officer-148",
+      "title": "Microfinance Officer",
+      "summary": "Evaluates borrowers, manages loan portfolios and supports community outreach for MFIs.",
+      "keyResponsibilities": [
+        "Assess borrowers",
+        "Manage portfolios",
+        "Report outcomes"
+      ],
+      "requiredSkills": [
+        "Credit assessment",
+        "Community engagement",
+        "Reporting"
+      ],
+      "averageSalary": "5 LPA",
+      "tags": [
+        "finance",
+        "social"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 149,
+      "slug": "digital-payments-analyst-149",
+      "title": "Digital Payments Analyst",
+      "summary": "Measures checkout performance, fraud rates and works with product to improve payments funnels.",
+      "keyResponsibilities": [
+        "Measure funnels",
+        "Recommend fixes",
+        "Track fraud"
+      ],
+      "requiredSkills": [
+        "Analytics",
+        "SQL",
+        "Payments domain"
+      ],
+      "averageSalary": "8 LPA",
+      "tags": [
+        "finance",
+        "data"
+      ],
+      "lastUpdated": "June 2026"
+    },
+    {
+      "id": 150,
+      "slug": "client-integration-consultant-150",
+      "title": "Client Integration Consultant",
+      "summary": "Works with clients to integrate new systems, mapping requirements and delivering technical onboarding.",
+      "keyResponsibilities": [
+        "Map requirements",
+        "Run integrations",
+        "Train client teams"
+      ],
+      "requiredSkills": [
+        "Integration",
+        "Project management",
+        "Technical comms"
+      ],
+      "averageSalary": "9 LPA",
+      "tags": [
+        "consulting",
+        "implementation"
+      ],
+      "lastUpdated": "June 2026"
+    }
+  ]
+}

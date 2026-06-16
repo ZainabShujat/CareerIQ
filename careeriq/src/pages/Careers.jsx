@@ -1,8 +1,9 @@
-// src/pages/Careers.jsx (replace existing file — keep your CSS/classes)
+// src/pages/Careers.jsx
 import React, { useState, useMemo } from "react";
 import careersData from "../data/careers.json";
 import CareerCard from "../components/CareerCard";
-import BackButton from "../components/BackButton";
+import Header from "../components/Header";
+import { Search, Filter, RefreshCw, Briefcase, Tag } from "lucide-react";
 
 const SALARY_BUCKETS = [
   { id: "lt5", label: "Less than ₹5 LPA", min: 0, max: 5 },
@@ -66,102 +67,229 @@ export default function Careers() {
   }
 
   return (
-    <div className="ciq-container" style={{ paddingTop: 28 }}>
-      <BackButton />
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
-        <div>
-          <h1 style={{ margin: 0 }}>Explore Careers</h1>
-          <div className="muted" style={{ marginTop: 6 }}>
-            Curated roles with salary insight, tags and typical responsibilities.
+    <div className="ciq-root" style={{ background: "linear-gradient(180deg, #f6fbf9 0%, #edf7f3 100%)", minHeight: "100vh" }}>
+      {/* Dynamic Header */}
+      <Header />
+
+      <main className="ciq-main" style={{ paddingBottom: 80 }}>
+        <div className="ciq-container" style={{ maxWidth: 1200, margin: "0 auto" }}>
+          
+          {/* Header Title Section / Banner */}
+          <div 
+            style={{ 
+              marginTop: 40, 
+              marginBottom: 32,
+              padding: "28px 24px",
+              borderRadius: 16,
+              background: "linear-gradient(135deg, #072827, #0d3d3a)",
+              boxShadow: "0 10px 30px rgba(7, 40, 39, 0.15)",
+              color: "#ffffff",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 20
+            }}
+          >
+            <div style={{ flex: "1 1 500px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                <div style={{ background: "rgba(6, 167, 125, 0.2)", padding: 6, borderRadius: 8, color: "#06a77d" }}>
+                  <Briefcase size={20} />
+                </div>
+                <span style={{ fontSize: 12, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", color: "#06a77d" }}>
+                  Discover Pathways
+                </span>
+              </div>
+              <h1 style={{ margin: 0, fontSize: 32, fontWeight: 900, color: "#ffffff", letterSpacing: "-0.5px" }}>
+                Career Exploration Database
+              </h1>
+              <p style={{ margin: "10px 0 0 0", color: "#9eb2ae", fontSize: 14, lineHeight: 1.5, maxWidth: 650 }}>
+                Filter through 150+ curated careers in India. Search by role, tags, or baseline salary packages. Click on a card to see AI-powered salary tiers and market outlooks.
+              </p>
+            </div>
+
+            {/* Search Box on Banner */}
+            <div style={{ position: "relative", minWidth: 280, flex: "1 1 300px" }}>
+              <Search 
+                size={18} 
+                style={{ 
+                  position: "absolute", 
+                  left: 14, 
+                  top: "50%", 
+                  transform: "translateY(-50%)", 
+                  color: "#9eb2ae" 
+                }} 
+              />
+              <input
+                placeholder="Search careers, skills or tags..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                style={{ 
+                  width: "100%", 
+                  padding: "12px 16px 12px 42px", 
+                  borderRadius: 12, 
+                  border: "1px solid rgba(255,255,255,0.15)", 
+                  background: "rgba(255, 255, 255, 0.08)", 
+                  color: "#ffffff",
+                  fontSize: 14,
+                  outline: "none",
+                  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.1)"
+                }}
+                className="banner-search-input"
+                aria-label="Search careers"
+              />
+            </div>
           </div>
-        </div>
 
-        <div style={{ minWidth: 240, display: "flex", gap: 8, alignItems: "center" }}>
-          <input
-            placeholder="Search careers, skills or tags"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="search-input"
-            aria-label="Search careers"
-            style={{ minWidth: 220 }}
-          />
-          <button className="small-cta" onClick={() => clearFilters()}>
-            Clear
-          </button>
-        </div>
-      </div>
-
-      <div style={{ marginTop: 20, display: "grid", gridTemplateColumns: "260px 1fr", gap: 20 }}>
-        <aside className="card" style={{ padding: 16 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <strong style={{ fontSize: 15 }}>Filters</strong>
-            <button className="small-cta" onClick={() => clearFilters()}>
-              Reset
-            </button>
-          </div>
-
-          <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 13, color: "var(--muted)" }}>Salary</div>
-            <select
-              value={salaryBucket}
-              onChange={(e) => setSalaryBucket(e.target.value)}
-              className="small-select"
-              style={{ marginTop: 8 }}
+          {/* Grid Layout (Sidebar Filters + Career Grid) */}
+          <div style={{ display: "grid", gridTemplateColumns: window.innerWidth < 850 ? "1fr" : "260px 1fr", gap: 24 }}>
+            
+            {/* Sidebar Filter Panel */}
+            <aside 
+              style={{ 
+                background: "#ffffff", 
+                borderRadius: 16, 
+                padding: 20, 
+                border: "1px solid rgba(6, 160, 120, 0.06)",
+                boxShadow: "0 8px 20px rgba(6, 95, 75, 0.03)",
+                height: "fit-content"
+              }}
             >
-              <option value="">All salaries</option>
-              {SALARY_BUCKETS.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div style={{ marginBottom: 8 }}>
-            <div style={{ fontSize: 13, color: "var(--muted)", marginBottom: 8 }}>Tags</div>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              {allTags.map((t) => {
-                const active = activeTags.includes(t);
-                return (
-                  <button key={t} onClick={() => toggleTag(t)} className={`tag ${active ? "tag--active" : ""}`} style={{ cursor: "pointer" }}>
-                    {t}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18, borderBottom: "1px solid #f1f6f4", paddingBottom: 10 }}>
+                <span style={{ display: "flex", alignItems: "center", gap: 6, fontWeight: 700, color: "#072827", fontSize: 15 }}>
+                  <Filter size={16} color="#06a77d" />
+                  Filters
+                </span>
+                {(salaryBucket || activeTags.length > 0 || query) && (
+                  <button 
+                    onClick={clearFilters}
+                    style={{ 
+                      background: "transparent", 
+                      border: "none", 
+                      color: "#d93838", 
+                      fontSize: 12, 
+                      fontWeight: 700, 
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4
+                    }}
+                  >
+                    <RefreshCw size={12} />
+                    Reset
                   </button>
-                );
-              })}
-            </div>
-          </div>
-        </aside>
-
-        <main>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div className="section-head">
-              <h2 style={{ margin: 0 }}>{filtered.length} careers</h2>
-              <div className="muted" style={{ fontSize: 13, marginLeft: 12 }}>
-                {activeTags.length > 0 ? activeTags.join(", ") : ""}
+                )}
               </div>
-            </div>
 
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <div className="muted" style={{ fontSize: 13 }}>
-                Sort
+              {/* Salary Filter */}
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ fontSize: 13, fontWeight: 700, color: "#5b6a67", display: "block", marginBottom: 8 }}>
+                  Baseline Salary
+                </label>
+                <select
+                  value={salaryBucket}
+                  onChange={(e) => setSalaryBucket(e.target.value)}
+                  style={{ 
+                    width: "100%",
+                    padding: "10px 12px",
+                    borderRadius: 10,
+                    border: "1px solid #e2efe8",
+                    background: "#ffffff",
+                    fontSize: 13,
+                    color: "#072827",
+                    cursor: "pointer",
+                    outline: "none"
+                  }}
+                  className="small-select"
+                >
+                  <option value="">All Salaries</option>
+                  {SALARY_BUCKETS.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.label}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <select className="small-select" value={"relevance"} readOnly>
-                <option value="relevance">Relevance</option>
-              </select>
-            </div>
+
+              {/* Tags Filter */}
+              <div>
+                <label style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 13, fontWeight: 700, color: "#5b6a67", marginBottom: 10 }}>
+                  <Tag size={13} color="#06a77d" />
+                  Career Tags
+                </label>
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  {allTags.map((t) => {
+                    const active = activeTags.includes(t);
+                    return (
+                      <button 
+                        key={t} 
+                        onClick={() => toggleTag(t)} 
+                        style={{ 
+                          padding: "6px 12px",
+                          borderRadius: 8,
+                          fontSize: 12,
+                          fontWeight: 700,
+                          cursor: "pointer",
+                          border: active ? "1px solid #06a77d" : "1px solid #e2efe8",
+                          background: active ? "linear-gradient(135deg, #eefbf7, #e2f7ef)" : "#ffffff",
+                          color: active ? "#06a77d" : "#5b6a67",
+                          transition: "all 0.15s ease-in-out"
+                        }}
+                      >
+                        {t}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </aside>
+
+            {/* Main Careers Grid */}
+            <main>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <div>
+                  <span style={{ fontSize: 18, fontWeight: 800, color: "#072827" }}>
+                    {filtered.length} {filtered.length === 1 ? "Career Match" : "Career Matches"}
+                  </span>
+                  {activeTags.length > 0 && (
+                    <div style={{ fontSize: 12, color: "#5b6a67", marginTop: 4 }}>
+                      Selected: <strong style={{ color: "#06a77d" }}>{activeTags.join(", ")}</strong>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Career Cards Grid */}
+              <div 
+                style={{ 
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                  gap: 20
+                }}
+              >
+                {filtered.length === 0 ? (
+                  <div 
+                    style={{ 
+                      padding: 40, 
+                      background: "#ffffff", 
+                      borderRadius: 16, 
+                      border: "1px solid #e2efe8", 
+                      color: "#6b7a70", 
+                      gridColumn: "1/-1", 
+                      textAlign: "center" 
+                    }}
+                  >
+                    No careers match your search criteria. Try adjusting your filters or search terms.
+                  </div>
+                ) : (
+                  filtered.map((c) => <CareerCard key={c.id || c.slug} career={c} />)
+                )}
+              </div>
+            </main>
           </div>
 
-          <div className="cards-grid" style={{ marginTop: 8 }}>
-            {filtered.length === 0 ? (
-              <div className="card">
-                <div className="muted">No careers match those filters. Try clearing filters.</div>
-              </div>
-            ) : (
-              filtered.map((c) => <CareerCard key={c.id || c.slug} career={c} />)
-            )}
-          </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

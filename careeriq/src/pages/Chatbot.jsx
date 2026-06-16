@@ -2,6 +2,8 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import Header from "../components/Header";
+
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
@@ -275,13 +277,9 @@ export default function Chatbot() {
   const isFirstMessage = messages.length === 1;
 
   return (
-    <div style={{
-      position: "fixed", inset: 0,
-      background: "linear-gradient(160deg, #0d1f1a 0%, #0a1c17 50%, #091510 100%)",
-      display: "flex", flexDirection: "column",
-      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      color: "#e8f0ec",
-    }}>
+    <div className="ciq-root">
+      <Header />
+      <div className="chatbot-page-root">
 
       {/* ── Top Bar ── */}
       <div style={{
@@ -651,6 +649,7 @@ export default function Chatbot() {
           }
         }
       `}</style>
+      </div>
     </div>
   );
 }

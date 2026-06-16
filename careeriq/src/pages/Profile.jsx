@@ -3,6 +3,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
+import Header from "../components/Header";
+
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -136,9 +138,9 @@ async function handleSave(e) {
 
   if (!user) {
     return (
-      <div className="ciq-root">
-        <BackButton />
-        <main className="ciq-main" style={{ padding: "60px 20px", textAlign: "center" }}>
+      <div className="ciq-root" style={{ background: "linear-gradient(180deg, #f6fbf9 0%, #edf7f3 100%)", minHeight: "100vh" }}>
+        <Header />
+        <main className="ciq-main" style={{ padding: "80px 20px", textAlign: "center" }}>
           <h1 style={{ fontSize: 44, marginBottom: 8, color: "var(--ciq-dark)" }}>Profile</h1>
           <p style={{ color: "var(--ciq-muted)", marginBottom: 28 }}>You are not signed in.</p>
 
@@ -170,7 +172,8 @@ async function handleSave(e) {
   }
 
   return (
-    <div className="ciq-root">
+    <div className="ciq-root" style={{ background: "linear-gradient(180deg, #f6fbf9 0%, #edf7f3 100%)", minHeight: "100vh" }}>
+      <Header />
       <main className="ciq-main" style={{ padding: "40px 20px" }}>
         <div className="ciq-container" style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ marginBottom: 18 }}>
@@ -221,7 +224,7 @@ async function handleSave(e) {
           </header>
 
           {/* layout grid: form (left) | summary (right) */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 20, alignItems: "start" }}>
+          <div className="ciq-grid-two">
             {/* Form card */}
             <form onSubmit={handleSave} style={{
               background: "#fff",
@@ -230,12 +233,7 @@ async function handleSave(e) {
               boxShadow: "0 10px 30px rgba(6, 95, 75, 0.06)",
               border: "1px solid rgba(6, 95, 75, 0.04)"
             }}>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 12,
-                alignItems: "start"
-              }}>
+              <div className="profile-form-grid">
                 <label style={{ display: "block" }}>
                   <div className="muted">Name</div>
                   <input name="name" value={profile.name} onChange={handleChange} className="text-input" />
