@@ -1,4 +1,4 @@
-// src/pages/Insights.jsx — Proper scoring: Personality(40%) + Skills(40%) + Lifestyle(20%)
+// src/pages/Insights.jsx — Guided Storytelling Layout
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import { 
   Brain, Star, TrendingUp, AlertCircle, Award, Compass, 
   Map, ShieldAlert, CheckCircle2, ChevronRight, HelpCircle, 
-  ListTodo, Layers, Landmark, ShieldCheck, UserCheck 
+  ListTodo, Layers, Landmark, ShieldCheck, UserCheck, Eye, EyeOff
 } from "lucide-react";
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
@@ -84,7 +84,7 @@ function getDemographicBias(career, userProfile) {
   }
 
   if (profileText.match(/(design|ux|ui|creative|art|media|graphics|animation|writer)/)) {
-    if (tags.some(t => ["design", "ux", "creative", "media"].includes(t)) || title.includes("designer") || title.includes("writer")) {
+    if (tags.some(t => ["design", "ux", "ui", "creative", "media"].includes(t)) || title.includes("designer") || title.includes("writer")) {
       bias += 10;
     }
   }
@@ -223,7 +223,7 @@ const getTopCareerFamilies = (rankedCareers) => {
   return Object.values(families)
     .map(f => ({ name: f.name, avgScore: Math.round(f.total / f.count) }))
     .sort((a,b) => b.avgScore - a.avgScore)
-    .slice(0, 3);
+    .slice(0, 4);
 };
 
 const getWhyItFits = (c, userPersonality, userSkills, userHappiness) => {
@@ -287,7 +287,7 @@ const getSkillGap = (c, userSkills) => {
 const getStrengthsAndWeaknesses = (scores) => {
   if (!scores) {
     return {
-      strengths: ["Curiosity", "Creativity"],
+      strengths: ["Curiosity", "Creativity", "Analytical Thinking"],
       weaknesses: ["Structure", "Risk Tolerance"]
     };
   }
@@ -298,25 +298,13 @@ const getStrengthsAndWeaknesses = (scores) => {
   };
   const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
   return {
-    strengths: [labels[sorted[0][0]], labels[sorted[1][0]]],
+    strengths: [labels[sorted[0][0]], labels[sorted[1][0]], labels[sorted[2][0]]],
     weaknesses: [labels[sorted[sorted.length - 1][0]], labels[sorted[sorted.length - 2][0]]]
   };
 };
 
-const generateLocalSummary = (archetype, strengths, topFamilies, topMatch) => {
-  return `As ${archetype.name}, you excel at leveraging your dominant strengths in ${strengths.join(" and ")}. Your cognitive and personality vectors show exceptional alignment with ${topFamilies.map(f => f.name).join(", ")} careers, particularly leading roles like ${topMatch?.career?.title || "your top matches"}. Developing skills in your gap areas will further elevate your compatibility and prepare you for hiring trends with top Indian employers.`;
-};
-
-const TRAIT_LABELS = {
-  curiosity: "Curiosity", creativity: "Creativity", structure: "Structure",
-  leadership: "Leadership", social: "Social", independence: "Independence",
-  riskTolerance: "Risk Tolerance", collaboration: "Collaboration", analytical: "Analytical"
-};
-
-const SKILL_LABELS = {
-  analytical: "Analytical", verbal: "Verbal", quantitative: "Quantitative",
-  attentionToDetail: "Attention to Detail", communication: "Communication",
-  creativity: "Creativity", technicalLiteracy: "Tech Literacy"
+const generateLocalSummary = (archetype, strengths) => {
+  return `As ${archetype.name}, you are driven by strengths like ${strengths.slice(0, 2).join(" and ")}. You naturally thrive in environments that challenge your intellect, valuing team synergy while keeping your creative outputs authentic.`;
 };
 
 const scoreColor = (s) => s >= 75 ? "#14632a" : s >= 50 ? "#9a6700" : "#8b1e1e";
@@ -325,6 +313,9 @@ export default function Insights() {
   const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Tab State: "who" | "what" | "matches" | "why" | "roadmap"
+  const [activeTab, setActiveTab] = useState("who");
 
   const passedPersonality = location?.state?.personality || null;
   const personality = passedPersonality || user?.personality || (() => {
@@ -347,9 +338,9 @@ export default function Insights() {
   const [ranked, setRanked] = useState([]);
   const [explaining, setExplaining] = useState(null);
   const [explanations, setExplanations] = useState({});
-  const [showStrengths, setShowStrengths] = useState(false);
-  const [strengthsText, setStrengthsText] = useState("");
-  const [loadingStrengths, setLoadingStrengths] = useState(false);
+  const [showDeepDive, setShowDeepDive] = useState(false);
+  const [deepDiveText, setDeepDiveText] = useState("");
+  const [loadingDeepDive, setLoadingDeepDive] = useState(false);
 
   useEffect(() => {
     const results = careersData.map(c => {
@@ -361,68 +352,52 @@ export default function Insights() {
     setRanked(results);
   }, [personality, skillScores, happiness, user, orientation]);
 
-  const explainCareer = useCallback(async (career, scores) => {
-    const key = career.slug;
-    if (explanations[key]) return;
-    setExplaining(key);
-    try {
-      const res = await fetch(`${API_BASE}/api/ai/explain`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          career: { title: career.title, requiredTraits: career.requiredTraits, requiredSkills: career.requiredSkills, lifestyleProfile: career.lifestyleProfile },
-          userProfile: { personality: personality?.scores, skills: skillScores, happiness },
-          scores
-        })
-      });
-      const data = await res.json();
-      setExplanations(prev => ({ ...prev, [key]: data.explanation }));
-    } catch {
-      setExplanations(prev => ({ ...prev, [key]: "Could not load explanation. Stale API key." }));
-    } finally {
-      setExplaining(null);
+  const fetchDeepDive = async () => {
+    if (deepDiveText || loadingDeepDive) {
+      setShowDeepDive(!showDeepDive);
+      return;
     }
-  }, [explanations, personality, skillScores, happiness]);
-
-  const analyseStrengths = async () => {
-    if (!personality?.scores) return;
-    setLoadingStrengths(true);
-    setShowStrengths(true);
+    setLoadingDeepDive(true);
+    setShowDeepDive(true);
     try {
       const res = await fetch(`${API_BASE}/api/ai/strengths`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ personality: personality.scores, skills: skillScores })
+        body: JSON.stringify({ personality: personality?.scores, skills: skillScores })
       });
       const data = await res.json();
-      setStrengthsText(data.analysis);
+      setDeepDiveText(data.analysis || "Deep analysis generated successfully.");
     } catch {
-      setStrengthsText("Could not load analysis. Check your API key on Render.");
+      setDeepDiveText("Could not connect to live AI insights. Please check API settings or try again later.");
     } finally {
-      setLoadingStrengths(false);
+      setLoadingDeepDive(false);
     }
   };
 
-  // ── Compute custom profile metrics ─────────────────────────────────────────
   const hasTakenQuiz = !!personality?.scores;
   const archetype = getArchetype(personality?.scores);
   const topFamilies = getTopCareerFamilies(ranked);
   const topMatch = ranked[0] || null;
-  const almostMatches = ranked.slice(5, 8);
   const { strengths, weaknesses } = getStrengthsAndWeaknesses(personality?.scores);
   const skillGaps = topMatch ? getSkillGap(topMatch.career, skillScores) : ["Technical Literacy", "Communication"];
-  const clientSummary = generateLocalSummary(archetype, strengths, topFamilies, topMatch);
+  const clientSummary = generateLocalSummary(archetype, strengths);
 
   const styles = {
-    page: { maxWidth: 1100, margin: "0 auto", padding: "28px 20px", fontFamily: "'Inter', sans-serif" },
-    heading: { fontSize: 32, fontWeight: 700, marginBottom: 6 },
-    subtitle: { color: "#556b62", marginBottom: 24 },
-    card: { padding: 22, borderRadius: 16, background: "#fff", border: "1px solid #eef5f1", boxShadow: "0 10px 30px rgba(6, 95, 75, 0.03)", marginBottom: 20 },
-    cardTitle: { fontSize: 18, fontWeight: 800, color: "#072827", marginBottom: 14, display: "flex", alignItems: "center", gap: 10 },
-    bar: (pct, color) => ({ width: `${pct}%`, height: 8, background: color, borderRadius: 8, transition: "width 0.5s ease" }),
-    barWrap: { height: 8, background: "#edf6ef", borderRadius: 8, overflow: "hidden" },
+    page: { maxWidth: 840, margin: "0 auto", padding: "30px 20px", fontFamily: "'Inter', sans-serif" },
+    heading: { fontSize: 30, fontWeight: 800, color: "#072827", marginBottom: 6, textAlign: "center" },
+    subtitle: { color: "#556b62", marginBottom: 30, textAlign: "center", fontSize: 14.5 },
+    tabsContainer: { display: "flex", borderBottom: "2px solid #eef5f1", marginBottom: 24, overflowX: "auto", gap: 6, scrollbarWidth: "none" },
+    tabButton: (active) => ({
+      padding: "12px 18px", border: "none", background: "none", cursor: "pointer", fontSize: 14.5, fontWeight: active ? 700 : 500,
+      color: active ? "var(--accent)" : "#5b6a67", borderBottom: active ? "3px solid var(--accent)" : "3px solid transparent",
+      transition: "all 0.2s ease", whiteSpace: "nowrap"
+    }),
+    card: { padding: 26, borderRadius: 16, background: "#fff", border: "1px solid #eef5f1", boxShadow: "0 8px 25px rgba(6, 95, 75, 0.03)", marginBottom: 20 },
+    cardTitle: { fontSize: 18, fontWeight: 800, color: "#072827", marginBottom: 16, display: "flex", alignItems: "center", gap: 10 },
+    barWrap: { height: 8, background: "#edf6ef", borderRadius: 8, overflow: "hidden", marginTop: 4 },
+    barFill: (pct, color) => ({ width: `${pct}%`, height: "100%", background: color, borderRadius: 8, transition: "width 0.5s ease" }),
     badge: { display: "inline-block", padding: "4px 10px", borderRadius: 12, fontSize: 12, fontWeight: 700, background: "#e6f9f1", color: "#065f4b" },
-    bullet: { display: "flex", gap: 10, fontSize: 14, color: "#2f3b35", marginBottom: 8 }
+    bullet: { display: "flex", gap: 10, fontSize: 14.5, color: "#2f3b35", marginBottom: 8 }
   };
 
   if (!hasTakenQuiz) {
@@ -435,10 +410,10 @@ export default function Insights() {
               <AlertCircle size={48} style={{ color: "var(--accent)", marginBottom: 16 }} />
               <h2 style={{ fontSize: 26, fontWeight: 800, color: "#072827", margin: "0 0 10px" }}>Career Insights Locked</h2>
               <p style={{ color: "#5b6a67", maxWidth: 600, margin: "0 auto 28px", lineHeight: 1.6 }}>
-                You haven't completed the personality assessment yet. Take our quick 5-minute quiz to map your trait vector and unlock a detailed career archetype, skill gaps, roadmaps, and custom matches!
+                You haven't completed the assessment yet. Take our quick guided quiz to map your traits and career orientation to unlock a personalized career story.
               </p>
               <button onClick={() => navigate("/quiz")} className="ciq-primary" style={{ padding: "14px 32px", fontSize: 15 }}>
-                Take Personality Quiz Now
+                Start Guided Assessment
               </button>
             </div>
           </div>
@@ -454,233 +429,50 @@ export default function Insights() {
       <Header />
       <main className="ciq-main" style={{ paddingBottom: 80 }}>
         <div style={styles.page}>
-          <h1 style={styles.heading}>Your Career Insights</h1>
+          <h1 style={styles.heading}>Your Career Story</h1>
           <div style={styles.subtitle}>
-            Scientific alignment analysis across **Personality**, **Skills**, and **Lifestyle** metrics.
+            Explore who you are, what fields align with you, and how to reach them.
           </div>
 
-          <div className="ciq-grid-two">
-            {/* LEFT COLUMN */}
-            <div>
-              {/* 1. PERSONALITY SNAPSHOT */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <Brain size={20} style={{ color: "var(--accent)" }} />
-                  <span>1. Personality Snapshot</span>
-                </div>
-                <p style={{ fontSize: 14, color: "#4a5a54", lineHeight: 1.6, margin: "0 0 16px" }}>
-                  Your primary personality traits are highly developed. Here is the distribution of your trait scores from your assessment:
-                </p>
-                <div style={{ display: "grid", gap: 12 }}>
-                  {Object.entries(personality.scores).map(([trait, val]) => (
-                    <div key={trait}>
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 4, fontWeight: 600 }}>
-                        <span>{TRAIT_LABELS[trait] || trait}</span>
-                        <span style={{ color: scoreColor(val) }}>{val}/100</span>
-                      </div>
-                      <div style={styles.barWrap}>
-                        <div style={styles.bar(val, "linear-gradient(90deg, var(--accent), var(--accent-light))")} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Navigation Tabs */}
+          <div style={styles.tabsContainer}>
+            <button style={styles.tabButton(activeTab === "who")} onClick={() => setActiveTab("who")}>1. Who You Are</button>
+            <button style={styles.tabButton(activeTab === "what")} onClick={() => setActiveTab("what")}>2. What Fits You</button>
+            <button style={styles.tabButton(activeTab === "matches")} onClick={() => setActiveTab("matches")}>3. Career Matches</button>
+            <button style={styles.tabButton(activeTab === "why")} onClick={() => setActiveTab("why")}>4. Why They Fit</button>
+            <button style={styles.tabButton(activeTab === "roadmap")} onClick={() => setActiveTab("roadmap")}>5. Growth Roadmap</button>
+          </div>
 
-              {/* 2. CAREER ARCHETYPE */}
+          {/* TAB CONTENT: 1. WHO YOU ARE */}
+          {activeTab === "who" && (
+            <div>
+              {/* Archetype Summary Card */}
               <div style={{ ...styles.card, background: "linear-gradient(135deg, #072827, #0b4a47)", color: "#ffffff" }}>
-                <div style={{ ...styles.cardTitle, color: "#ffffff" }}>
-                  <ArchetypeIcon size={22} style={{ color: "var(--accent)" }} />
-                  <span>2. Career Archetype</span>
+                <div style={{ ...styles.cardTitle, color: "#ffffff", marginBottom: 12 }}>
+                  <ArchetypeIcon size={24} style={{ color: "var(--accent)" }} />
+                  <span>Your Archetype</span>
                 </div>
-                <div style={{ display: "flex", gap: 16, alignItems: "center", marginTop: 10 }}>
-                  <div style={{
-                    width: 56, height: 56, borderRadius: "50%", background: "rgba(6,167,125,0.15)",
-                    display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0
-                  }}>
-                    <ArchetypeIcon size={28} style={{ color: "var(--accent)" }} />
-                  </div>
+                <h3 style={{ fontSize: 24, margin: "0 0 6px", fontWeight: 900, color: "#fff" }}>{archetype.name}</h3>
+                <p style={{ margin: 0, fontSize: 15, color: "#a8d4bc", lineHeight: 1.6 }}>{archetype.desc}</p>
+              </div>
+
+              {/* Strengths & Growth Areas */}
+              <div style={styles.card}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
                   <div>
-                    <h3 style={{ fontSize: 22, margin: "0 0 4px", fontWeight: 900, color: "#e8f0ec" }}>{archetype.name}</h3>
-                    <p style={{ margin: 0, fontSize: 13.5, color: "#a8d4bc", lineHeight: 1.5 }}>{archetype.desc}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 3. TOP CAREER FAMILIES */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <Layers size={20} style={{ color: "var(--accent)" }} />
-                  <span>3. Top Career Families</span>
-                </div>
-                <p style={{ fontSize: 14, color: "#4a5a54", margin: "0 0 16px" }}>
-                  We categorized all 100+ options by industry sectors to find where your profile matches strongest overall:
-                </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {topFamilies.map((fam, idx) => (
-                    <div key={idx} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: "#f8faf8", borderRadius: 8, border: "1px solid #edf2ee" }}>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: "#072827" }}>{fam.name}</div>
-                      <div style={{ fontWeight: 800, color: "var(--accent)", fontSize: 16 }}>{fam.avgScore}% Match</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 4. TOP CAREER MATCHES */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <Compass size={20} style={{ color: "var(--accent)" }} />
-                  <span>4. Top Career Matches</span>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                  {ranked.slice(0, 5).map((r, idx) => (
-                    <div key={r.career.id} style={{ padding: 14, borderRadius: 12, background: "#fdfefe", border: "1.5px solid #edf6ef" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                        <div>
-                          <div style={{ fontWeight: 800, fontSize: 16, color: "#072827" }}>{r.career.title}</div>
-                          <div style={{ fontSize: 12, color: "#5b6a67" }}>{r.career.short}</div>
-                        </div>
-                        <div style={{ fontSize: 20, fontWeight: 900, color: scoreColor(r.finalScore) }}>{r.finalScore}%</div>
-                      </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginTop: 10 }}>
-                        <div>
-                          <div style={{ fontSize: 10, color: "#6b7a70", marginBottom: 2 }}>Personality</div>
-                          <div style={styles.barWrap}><div style={styles.bar(r.personalityScore, "#06a77d")} /></div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: 10, color: "#6b7a70", marginBottom: 2 }}>Skills</div>
-                          <div style={styles.barWrap}><div style={styles.bar(r.skillScore, "#0a6b55")} /></div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: 10, color: "#6b7a70", marginBottom: 2 }}>Lifestyle</div>
-                          <div style={styles.barWrap}><div style={styles.bar(r.lifestyleScore, "#4caf7d")} /></div>
-                        </div>
-                      </div>
-                      <div style={{ marginTop: 12, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <a href={`/careers/${r.career.slug}`} style={{ fontSize: 12, fontWeight: 700, color: "var(--accent)" }}>View Role details →</a>
-                        <button 
-                          onClick={() => explainCareer(r.career, { personality: r.personalityScore, skills: r.skillScore, lifestyle: r.lifestyleScore, final: r.finalScore })}
-                          style={{ background: "transparent", border: "none", color: "#065f4b", cursor: "pointer", fontSize: 12, fontWeight: 700 }}
-                        >
-                          {explaining === r.career.slug ? "Analysing..." : "✨ AI Insight"}
-                        </button>
-                      </div>
-                      {explanations[r.career.slug] && (
-                        <div style={{ marginTop: 10, padding: 10, background: "#f6fff9", border: "1px solid #c8efd8", borderRadius: 8, fontSize: 12.5, color: "#234c43", lineHeight: 1.5 }}>
-                          {explanations[r.career.slug]}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 5. WHY EACH MATCH FITS */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <CheckCircle2 size={20} style={{ color: "var(--accent)" }} />
-                  <span>5. Why Each Match Fits</span>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {ranked.slice(0, 3).map((r, idx) => (
-                    <div key={idx} style={{ padding: "10px 14px", background: "#f8faf8", borderRadius: 10, border: "1px solid #edf2ee" }}>
-                      <div style={{ fontWeight: 800, fontSize: 14, color: "#072827", marginBottom: 6 }}>{r.career.title}</div>
-                      {getWhyItFits(r.career, personality, skillScores, happiness).map((pt, i) => (
-                        <div key={i} style={styles.bullet}>
-                          <span style={{ color: "var(--accent)" }}>✓</span>
-                          <span>{pt}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 6. CAREERS YOU ALMOST MATCHED */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <HelpCircle size={20} style={{ color: "var(--accent)" }} />
-                  <span>6. Careers You Almost Matched</span>
-                </div>
-                <p style={{ fontSize: 13.5, color: "#5b6a67", margin: "0 0 14px" }}>
-                  These opportunities missed the top matches list slightly but still represent solid alternatives:
-                </p>
-                <div style={{ display: "grid", gap: 10 }}>
-                  {almostMatches.map((r, idx) => (
-                    <div key={idx} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", background: "#fbfcfb", borderRadius: 8, border: "1px solid #edf3ee" }}>
-                      <div>
-                        <div style={{ fontWeight: 700, fontSize: 14, color: "#2f3b35" }}>{r.career.title}</div>
-                        <div style={{ fontSize: 11, color: "#6b7a70" }}>{r.career.short}</div>
-                      </div>
-                      <div style={{ fontWeight: 800, color: "#5b6a67" }}>{r.finalScore}%</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT COLUMN */}
-            <div>
-              {/* 10. AI SUMMARY (Moved to top right for prominent presentation) */}
-              <div style={{ ...styles.card, background: "linear-gradient(180deg, #ffffff, #f7fcf9)", border: "1.5px solid #d4ece0" }}>
-                <div style={styles.cardTitle}>
-                  <Brain size={20} style={{ color: "var(--accent)" }} />
-                  <span>10. AI Career Profile Summary</span>
-                </div>
-                <div style={{ fontStyle: "italic", fontSize: 14.5, color: "#065f4b", lineHeight: 1.7, background: "rgba(6,167,125,0.03)", padding: 16, borderRadius: 10, borderLeft: "4px solid var(--accent)" }}>
-                  "{clientSummary}"
-                </div>
-              </div>
-
-              {/* 7. SKILL GAP ANALYSIS */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <ShieldAlert size={20} style={{ color: "var(--accent)" }} />
-                  <span>7. Skill Gap Analysis</span>
-                </div>
-                {topMatch && (
-                  <div>
-                    <p style={{ fontSize: 14, color: "#4a5a54", margin: "0 0 12px" }}>
-                      Comparing your scores against requirements for **{topMatch.career.title}**:
-                    </p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                      {skillGaps.length === 0 ? (
-                        <div style={{ display: "flex", gap: 8, color: "#14632a", fontSize: 13.5, fontWeight: 600 }}>
-                          <CheckCircle2 size={16} /> Minimal skill gaps detected! You are fully qualified.
-                        </div>
-                      ) : (
-                        skillGaps.map((gap, i) => (
-                          <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "#fffefe", border: "1px solid #ffecec", borderRadius: 8 }}>
-                            <ShieldAlert size={16} style={{ color: "#8b1e1e", flexShrink: 0 }} />
-                            <span style={{ fontSize: 13.5, color: "#8b1e1e", fontWeight: 600 }}>{gap} development required</span>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* 8. STRENGTHS & WEAKNESSES */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <Star size={20} style={{ color: "var(--accent)" }} />
-                  <span>8. Strengths & Weaknesses</span>
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                  <div>
-                    <h4 style={{ margin: "0 0 8px", fontSize: 13, textTransform: "uppercase", color: "#14632a", fontWeight: 700 }}>Core Strengths</h4>
+                    <h4 style={{ margin: "0 0 12px", fontSize: 13, textTransform: "uppercase", color: "#14632a", fontWeight: 700 }}>Core Strengths</h4>
                     {strengths.map((s, idx) => (
-                      <div key={idx} style={{ display: "flex", gap: 6, fontSize: 13.5, color: "#14632a", marginBottom: 6, fontWeight: 600 }}>
+                      <div key={idx} style={{ display: "flex", gap: 8, fontSize: 14.5, color: "#14632a", marginBottom: 8, fontWeight: 600 }}>
                         <span>✓</span>
                         <span>{s}</span>
                       </div>
                     ))}
                   </div>
                   <div>
-                    <h4 style={{ margin: "0 0 8px", fontSize: 13, textTransform: "uppercase", color: "#8b1e1e", fontWeight: 700 }}>Work Areas</h4>
+                    <h4 style={{ margin: "0 0 12px", fontSize: 13, textTransform: "uppercase", color: "#8b1e1e", fontWeight: 700 }}>Growth Areas</h4>
                     {weaknesses.map((w, idx) => (
-                      <div key={idx} style={{ display: "flex", gap: 6, fontSize: 13.5, color: "#8b1e1e", marginBottom: 6, fontWeight: 600 }}>
-                        <span>⚠</span>
+                      <div key={idx} style={{ display: "flex", gap: 8, fontSize: 14.5, color: "#8b1e1e", marginBottom: 8, fontWeight: 600 }}>
+                        <span>•</span>
                         <span>{w}</span>
                       </div>
                     ))}
@@ -688,61 +480,191 @@ export default function Insights() {
                 </div>
               </div>
 
-              {/* 9. GROWTH ROADMAP */}
-              <div style={styles.card}>
+              {/* AI Brief Summary */}
+              <div style={{ ...styles.card, borderLeft: "4px solid var(--accent)", background: "#fcfdfe" }}>
                 <div style={styles.cardTitle}>
-                  <Map size={20} style={{ color: "var(--accent)" }} />
-                  <span>9. Growth Roadmap</span>
+                  <Brain size={18} style={{ color: "var(--accent)" }} />
+                  <span>Profile Overview</span>
                 </div>
-                {topMatch && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 10 }}>
-                    <div style={{ borderLeft: "2px solid #edf2ee", paddingLeft: 14, position: "relative" }}>
-                      <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", position: "absolute", left: -7, top: 2 }} />
-                      <h4 style={{ margin: "0 0 4px", fontSize: 14, color: "#072827", fontWeight: 700 }}>Phase 1: Foundations</h4>
-                      <p style={{ margin: 0, fontSize: 12.5, color: "#5b6a67" }}>
-                        Close the skill gaps in **{skillGaps.join(" & ")}** by taking structured courses or completing validating skill tests.
-                      </p>
-                    </div>
-
-                    <div style={{ borderLeft: "2px solid #edf2ee", paddingLeft: 14, position: "relative" }}>
-                      <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", position: "absolute", left: -7, top: 2 }} />
-                      <h4 style={{ margin: "0 0 4px", fontSize: 14, color: "#072827", fontWeight: 700 }}>Phase 2: Project Building</h4>
-                      <p style={{ margin: 0, fontSize: 12.5, color: "#5b6a67" }}>
-                        Develop a portfolio of 3 unique projects targeting **{topMatch.career.skills?.slice(0, 2).join(" & ") || "core competencies"}**.
-                      </p>
-                    </div>
-
-                    <div style={{ paddingLeft: 14, position: "relative" }}>
-                      <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", position: "absolute", left: -5, top: 2 }} />
-                      <h4 style={{ margin: "0 0 4px", fontSize: 14, color: "#072827", fontWeight: 700 }}>Phase 3: Target Applications</h4>
-                      <p style={{ margin: 0, fontSize: 12.5, color: "#5b6a67" }}>
-                        Prepare applications for target employers like **{topMatch.career.title === "Baker" ? "Taj Hotels or Oberoi" : "top Indian companies"}**.
-                      </p>
-                    </div>
-                  </div>
-                )}
+                <p style={{ fontStyle: "italic", fontSize: 15, color: "#065f4b", lineHeight: 1.6, margin: 0 }}>
+                  "{clientSummary}"
+                </p>
               </div>
 
-              {/* AI STRENGTHS DETAIL TOGGLE */}
-              <div style={styles.card}>
-                <div style={styles.cardTitle}>
-                  <Brain size={20} style={{ color: "var(--accent)" }} />
-                  <span>Deep AI Personality Analysis</span>
-                </div>
-                <p style={{ fontSize: 13.5, color: "#5b6a67", margin: "0 0 12px" }}>
-                  Unlock a personalized breakdown of your top strengths and areas for growth.
-                </p>
-                <button style={styles.aiBtn || { padding: "10px 18px", borderRadius: 8, background: "#1a3c34", color: "#fff", border: "none", cursor: "pointer", fontSize: 13.5 }} onClick={analyseStrengths} disabled={loadingStrengths}>
-                  {loadingStrengths ? "Analysing..." : "✨ Analyse Top Strengths"}
+              {/* Deep Analysis Expandable */}
+              <div style={{ textAlign: "center", marginTop: 24 }}>
+                <button 
+                  onClick={fetchDeepDive}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 20px", borderRadius: 20,
+                    background: "#072827", color: "#fff", border: "none", cursor: "pointer", fontSize: 13.5, fontWeight: 600
+                  }}
+                >
+                  {showDeepDive ? <EyeOff size={16} /> : <Eye size={16} />}
+                  <span>{showDeepDive ? "Hide Full Analysis" : "View Full Analysis"}</span>
                 </button>
-                {showStrengths && strengthsText && (
-                  <div style={{ marginTop: 12, padding: 14, borderRadius: 10, background: "#f4fff8", border: "1px solid #b6e9c8", fontSize: 13, color: "#1a3c34", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>
-                    {strengthsText}
+
+                {showDeepDive && (
+                  <div style={{
+                    marginTop: 18, textAlign: "left", padding: 22, borderRadius: 12, background: "#f4fff8",
+                    border: "1px solid #b6e9c8", fontSize: 14, color: "#1a3c34", lineHeight: 1.6, whiteSpace: "pre-wrap"
+                  }}>
+                    {loadingDeepDive ? "Analyzing your strengths..." : deepDiveText}
                   </div>
                 )}
               </div>
             </div>
-          </div>
+          )}
+
+          {/* TAB CONTENT: 2. WHAT FITS YOU */}
+          {activeTab === "what" && (
+            <div style={styles.card}>
+              <div style={styles.cardTitle}>
+                <Layers size={20} style={{ color: "var(--accent)" }} />
+                <span>Broad Sectors Alignment</span>
+              </div>
+              <p style={{ fontSize: 14.5, color: "#4a5a54", lineHeight: 1.6, marginBottom: 20 }}>
+                Based on your interest domains, here are the sectors that align strongest with your overall tendencies:
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                {topFamilies.map((fam, idx) => (
+                  <div key={idx} style={{ padding: "14px 18px", background: "#f8faf8", borderRadius: 10, border: "1px solid #edf2ee" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14.5, fontWeight: 700, color: "#072827", marginBottom: 6 }}>
+                      <span>{fam.name}</span>
+                      <span style={{ color: "var(--accent)" }}>{fam.avgScore}% Match</span>
+                    </div>
+                    <div style={styles.barWrap}>
+                      <div style={styles.barFill(fam.avgScore, "linear-gradient(90deg, var(--accent), var(--accent-light))")} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB CONTENT: 3. CAREER MATCHES */}
+          {activeTab === "matches" && (
+            <div>
+              <div style={{ marginBottom: 18, fontSize: 14.5, color: "#5b6a67" }}>
+                Here are the specific job matches customized for your profile:
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {ranked.slice(0, 5).map((r) => (
+                  <div key={r.career.id} style={{ ...styles.card, marginBottom: 0 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div>
+                        <h3 style={{ fontSize: 17, fontWeight: 800, color: "#072827", margin: "0 0 4px" }}>{r.career.title}</h3>
+                        <p style={{ margin: 0, fontSize: 13.5, color: "#5b6a67" }}>{r.career.short}</p>
+                      </div>
+                      <div style={{ fontSize: 20, fontWeight: 900, color: scoreColor(r.finalScore), flexShrink: 0, marginLeft: 16 }}>
+                        {r.finalScore}%
+                      </div>
+                    </div>
+                    <div style={{ marginTop: 12, textAlign: "right" }}>
+                      <a href={`/careers/${r.career.slug}`} style={{ fontSize: 12.5, fontWeight: 700, color: "var(--accent)" }}>View Role details →</a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB CONTENT: 4. WHY THEY FIT */}
+          {activeTab === "why" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {ranked.slice(0, 3).map((r, idx) => {
+                const whyItFitsPoints = getWhyItFits(r.career, personality, skillScores, happiness);
+                const skillGapPoints = getSkillGap(r.career, skillScores);
+                return (
+                  <div key={idx} style={styles.card}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <h3 style={{ fontSize: 17, fontWeight: 800, color: "#072827", margin: 0 }}>{r.career.title}</h3>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: scoreColor(r.finalScore) }}>{r.finalScore}% Alignment</span>
+                    </div>
+
+                    <div style={{ marginTop: 10 }}>
+                      <h4 style={{ margin: "0 0 6px", fontSize: 12, textTransform: "uppercase", color: "var(--accent)", fontWeight: 700 }}>Why it fits</h4>
+                      {whyItFitsPoints.map((pt, i) => (
+                        <div key={i} style={styles.bullet}>
+                          <span style={{ color: "var(--accent)" }}>✓</span>
+                          <span>{pt}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div style={{ marginTop: 14 }}>
+                      <h4 style={{ margin: "0 0 6px", fontSize: 12, textTransform: "uppercase", color: "#8b1e1e", fontWeight: 700 }}>Potential Challenge</h4>
+                      {skillGapPoints.length > 0 ? (
+                        <div style={styles.bullet}>
+                          <span style={{ color: "#8b1e1e" }}>•</span>
+                          <span>Focus on developing: {skillGapPoints.slice(0, 2).join(", ")}</span>
+                        </div>
+                      ) : (
+                        <div style={styles.bullet}>
+                          <span style={{ color: "#14632a" }}>✓</span>
+                          <span>No major skill gaps detected!</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* TAB CONTENT: 5. GROWTH ROADMAP */}
+          {activeTab === "roadmap" && topMatch && (
+            <div>
+              {/* Readiness Score Card */}
+              <div style={styles.card}>
+                <div style={styles.cardTitle}>
+                  <ShieldCheck size={20} style={{ color: "var(--accent)" }} />
+                  <span>Readiness Indicator</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: "var(--accent)" }}>{topMatch.finalScore}%</div>
+                  <div>
+                    <div style={{ fontSize: 14.5, fontWeight: 700, color: "#072827" }}>Current Job Readiness</div>
+                    <div style={{ fontSize: 12.5, color: "#5b6a67" }}>Weighted average across cognitive traits, skills, and lifestyle priorities.</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Roadmap Phases */}
+              <div style={styles.card}>
+                <div style={styles.cardTitle}>
+                  <Map size={20} style={{ color: "var(--accent)" }} />
+                  <span>Suggested Action Roadmap</span>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 18, marginTop: 10 }}>
+                  <div style={{ borderLeft: "2px solid #edf2ee", paddingLeft: 14, position: "relative" }}>
+                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", position: "absolute", left: -7, top: 2 }} />
+                    <h4 style={{ margin: "0 0 4px", fontSize: 14, color: "#072827", fontWeight: 700 }}>Phase 1: Build Skills</h4>
+                    <p style={{ margin: 0, fontSize: 13, color: "#5b6a67" }}>
+                      Focus on improving: **{skillGaps.join(", ")}** through structured online resources or validation tests.
+                    </p>
+                  </div>
+
+                  <div style={{ borderLeft: "2px solid #edf2ee", paddingLeft: 14, position: "relative" }}>
+                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", position: "absolute", left: -7, top: 2 }} />
+                    <h4 style={{ margin: "0 0 4px", fontSize: 14, color: "#072827", fontWeight: 700 }}>Phase 2: Project Work</h4>
+                    <p style={{ margin: 0, fontSize: 13, color: "#5b6a67" }}>
+                      Construct a portfolio containing 2-3 unique projects showcasing key qualifications.
+                    </p>
+                  </div>
+
+                  <div style={{ paddingLeft: 14, position: "relative" }}>
+                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", position: "absolute", left: -5, top: 2 }} />
+                    <h4 style={{ margin: "0 0 4px", fontSize: 14, color: "#072827", fontWeight: 700 }}>Phase 3: Industry Reach</h4>
+                    <p style={{ margin: 0, fontSize: 13, color: "#5b6a67" }}>
+                      Target applications at prominent sector employers matching your profile criteria.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </main>
     </div>
