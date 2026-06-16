@@ -1,4 +1,4 @@
-// src/pages/Insights.jsx — Guided Storytelling Layout
+// src/pages/Insights.jsx — Guided Storytelling Layout with Human Model Matchmaking
 import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import careersData from "../data/careers.json";
@@ -7,10 +7,29 @@ import Header from "../components/Header";
 import { 
   Brain, Star, TrendingUp, AlertCircle, Award, Compass, 
   Map, ShieldAlert, CheckCircle2, ChevronRight, HelpCircle, 
-  ListTodo, Layers, Landmark, ShieldCheck, UserCheck, Eye, EyeOff
+  Layers, Landmark, ShieldCheck, UserCheck, Eye, EyeOff
 } from "lucide-react";
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
+
+const TRAIT_LABELS = {
+  analyticalThinking: "Analytical Thinking",
+  systemsThinking: "Systems Thinking",
+  empathy: "Empathy",
+  persuasion: "Persuasion",
+  communication: "Communication",
+  collaboration: "Collaboration",
+  leadership: "Leadership",
+  curiosity: "Curiosity",
+  serviceOrientation: "Service Orientation",
+  wealthOrientation: "Wealth Orientation",
+  structurePreference: "Structure Preference",
+  riskTolerance: "Risk Tolerance",
+  independence: "Independence",
+  attentionToDetail: "Attention to Detail",
+  creativity: "Creativity",
+  designThinking: "Design Thinking"
+};
 
 // ── Scoring helpers ───────────────────────────────────────────────────────────
 
@@ -123,14 +142,36 @@ function getCareerCluster(career) {
   return "business"; // fallback
 }
 
-function computeCareerScore(career, personality, skillScores, happiness, userProfile, orientation) {
-  const personalityScore = personality?.scores
-    ? computeWeightedMatch(personality.scores, career.requiredTraits || {})
-    : 50;
+function getCareer16Traits(career) {
+  return {
+    analyticalThinking: career.requiredTraits?.analytical ?? 50,
+    systemsThinking: career.requiredSkills?.technicalLiteracy ?? 50,
+    empathy: career.requiredTraits?.social ?? 50,
+    persuasion: career.requiredSkills?.communication ?? 50,
+    communication: career.requiredSkills?.communication ?? 50,
+    collaboration: career.requiredTraits?.collaboration ?? 50,
+    leadership: career.requiredTraits?.leadership ?? 50,
+    curiosity: career.requiredTraits?.curiosity ?? 50,
+    serviceOrientation: career.requiredTraits?.social ?? 50,
+    wealthOrientation: (career.lifestyleProfile?.salaryPotential || 12) * 4, // scale 1-25 -> 4-100
+    structurePreference: career.requiredTraits?.structure ?? 50,
+    riskTolerance: career.requiredTraits?.riskTolerance ?? 50,
+    independence: career.requiredTraits?.independence ?? 50,
+    attentionToDetail: career.requiredSkills?.attentionToDetail ?? 50,
+    creativity: career.requiredTraits?.creativity ?? 50,
+    designThinking: career.requiredSkills?.creativity ?? 50
+  };
+}
 
-  const skillScore = skillScores
-    ? computeWeightedMatch(skillScores, career.requiredSkills || {})
-    : 50;
+function scoreColor(score) {
+  return score >= 75 ? "#14632a" : score >= 50 ? "#9a6700" : "#8b1e1e";
+}
+
+function computeCareerScore(career, userTraits, happiness, userProfile) {
+  if (!userTraits) return { finalScore: 50, traitsScore: 50, lifestyleScore: 50 };
+
+  const careerTraits = getCareer16Traits(career);
+  const traitsScore = computeWeightedMatch(userTraits, careerTraits);
 
   let lifestyleScore = 50;
   if (happiness && career.lifestyleProfile) {
@@ -146,18 +187,11 @@ function computeCareerScore(career, personality, skillScores, happiness, userPro
     lifestyleScore = computeWeightedMatch(userLifestyle, lp);
   }
 
-  const orientationScore = orientation ? (orientation[getCareerCluster(career)] ?? 50) : 50;
-
   const bias = getDemographicBias(career, userProfile);
-  // Formula: (Personality × 30%) + (Skills × 30%) + (Lifestyle × 15%) + (Career Orientation × 25%)
-  const finalScore = Math.min(100, Math.round(
-    personalityScore * 0.30 +
-    skillScore * 0.30 +
-    lifestyleScore * 0.15 +
-    orientationScore * 0.25 +
-    bias
-  ));
-  return { finalScore, personalityScore, skillScore, lifestyleScore, orientationScore };
+  // Match score is 85% human profile compatibility + 15% lifestyle priority + bias
+  const finalScore = Math.min(100, Math.round(traitsScore * 0.85 + lifestyleScore * 0.15 + bias));
+  
+  return { finalScore, traitsScore, lifestyleScore };
 }
 
 // ── Profile-Aware Helper Functions ───────────────────────────────────────────
@@ -165,7 +199,24 @@ function computeCareerScore(career, personality, skillScores, happiness, userPro
 const getArchetype = (scores) => {
   if (!scores) return { name: "The Explorer", icon: Compass, desc: "You are driven by discovery, questioning, and learning. You thrive in open-ended environments that reward investigation." };
   
-  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  // Use mapping to standard traits for archetype extraction
+  const curVal = scores.curiosity ?? 50;
+  const creVal = scores.creativity ?? 50;
+  const strVal = scores.structurePreference ?? 50;
+  const leaVal = scores.leadership ?? 50;
+  const empVal = scores.empathy ?? 50;
+  const indVal = scores.independence ?? 50;
+  const rskVal = scores.riskTolerance ?? 50;
+  const colVal = scores.collaboration ?? 50;
+  const anaVal = scores.analyticalThinking ?? 50;
+
+  const standardScores = {
+    curiosity: curVal, creativity: creVal, structure: strVal,
+    leadership: leaVal, social: empVal, independence: indVal,
+    riskTolerance: rskVal, collaboration: colVal, analytical: anaVal
+  };
+
+  const sorted = Object.entries(standardScores).sort((a,b) => b[1] - a[1]);
   const topTrait = sorted[0][0];
   
   const archetypes = {
@@ -226,79 +277,109 @@ const getTopCareerFamilies = (rankedCareers) => {
     .slice(0, 4);
 };
 
-const getWhyItFits = (c, userPersonality, userSkills, userHappiness, orientationAnswers) => {
-  const points = [];
-  const traits = c.requiredTraits || {};
-  const skills = c.requiredSkills || {};
-  const tags = (c.tags || []).map(t => t.toLowerCase());
+const getWhyItFits = (c, userTraits) => {
   const title = (c.title || "").toLowerCase();
+  const tags = (c.tags || []).map(t => t.toLowerCase());
 
-  // Clinical Medical personalized mapping logic
+  if (title.includes("market") || title.includes("sales") || title.includes("brand") || title.includes("success")) {
+    return [
+      "You appear energized by influencing ideas and understanding how people think.",
+      "Your responses suggest a combination of curiosity, communication strength, and comfort working with both people and strategy.",
+      "You enjoy exploring patterns in human behavior while still wanting measurable outcomes.",
+      "Driven primarily by your social influence and persuasive tendencies rather than technical coding."
+    ];
+  }
+
   if (tags.some(t => ["medical", "healthcare", "public-health", "pharmacy", "care", "lab", "bio"].includes(t)) || title.includes("physician") || title.includes("nurse") || title.includes("radiologist")) {
-    if (orientationAnswers && (orientationAnswers[12] === 1 || orientationAnswers[5] === 1 || orientationAnswers[7] === 2)) {
-      points.push("Reflects your strong attraction towards clinical diagnosis and patient care in your orientation profile.");
-    }
-    if (userPersonality?.scores?.social >= 70 || userPersonality?.scores?.structure >= 70) {
-      points.push("Your patient-centric care signature combines clinical structure with deep empathy.");
-    }
+    return [
+      "Your profile indicates deep service orientation and clinical attention to detail.",
+      "You demonstrate the structured persistence, emotional stability, and empathy required to navigate high-stakes healthcare scenarios.",
+      "Your attraction to patient wellness and medical diagnosis suggests a highly dedicated clinical footprint.",
+      "Driven by your structural precision and service mindset under critical pressure."
+    ];
   }
 
-  // Psychology / Counselling / Behavioral sciences personalized logic
   if (title.includes("counsellor") || title.includes("counselor") || title.includes("therapist") || title.includes("behavioural") || title.includes("hr")) {
-    if (orientationAnswers && orientationAnswers[13] === 1) {
-      points.push("Aligns with your chosen preference for helping individuals navigate emotional and mental wellness challenges.");
-    }
-    if (userPersonality?.scores?.social >= 70 || userPersonality?.scores?.curiosity >= 70) {
-      points.push("You possess a natural ability to connect with people's emotional experiences and understand behaviors.");
-    }
-  }
-  
-  if (userPersonality?.scores) {
-    const sortedRequired = Object.entries(traits).sort((a,b) => b[1] - a[1]);
-    const topRequiredTrait = sortedRequired[0]?.[0];
-    if (topRequiredTrait && userPersonality.scores[topRequiredTrait] >= 65) {
-      points.push(`Matches your strong '${topRequiredTrait}' trait signature.`);
-    }
-  }
-  
-  if (userSkills) {
-    const sortedSkills = Object.entries(skills).sort((a,b) => b[1] - a[1]);
-    const topRequiredSkill = sortedSkills[0]?.[0];
-    if (topRequiredSkill && userSkills[topRequiredSkill] >= 65) {
-      points.push(`Aligns with your verified strength in '${topRequiredSkill}' skills.`);
-    }
+    return [
+      "You appear motivated by active listening, human counseling, and understanding behavioral motivations.",
+      "Your responses indicate strong empathy, social intelligence, and patience when addressing interpersonal concerns.",
+      "You are naturally drawn to helping individuals unpack complex emotional or behavioral challenges.",
+      "Driven by your relational support capacity and curiosity about human motives."
+    ];
   }
 
-  if (userHappiness && c.lifestyleProfile) {
-    const lp = c.lifestyleProfile;
-    if (userHappiness.workLifeBalance >= 70 && lp.workLifeBalance >= 60) {
-      points.push("Meets your high work-life balance preferences.");
-    } else if (userHappiness.salaryPriority >= 70 && lp.salaryPotential >= 60) {
-      points.push("Aligns with your salary expectation targets.");
-    }
+  if (tags.some(t => ["software", "engineering", "infrastructure", "ai", "ml", "cloud", "robotics", "hardware", "mobile", "security", "qa", "devops"].includes(t)) || title.includes("developer") || title.includes("engineer") || title.includes("programmer")) {
+    return [
+      "You appear motivated by logical construction, systems thinking, and structured programming paradigms.",
+      "Your profile highlights a preference for independent problem-solving, cognitive reasoning, and attention to detail.",
+      "You enjoy breaking down complex technical loops into organized, scalable codebases.",
+      "Driven by your system design skills and logical analytical execution."
+    ];
   }
 
-  if (points.length === 0) {
-    points.push("Solid general alignment with your personality & lifestyle vectors.");
+  if (tags.some(t => ["design", "ux", "ui", "creative", "media", "writing", "art", "content"].includes(t)) || title.includes("designer") || title.includes("writer") || title.includes("artist")) {
+    return [
+      "You appear energized by translating abstract ideas into intuitive visual designs or expressive stories.",
+      "Your responses suggest a balance of design thinking, empathy for human experience, and creative innovation.",
+      "You enjoy structuring original templates to capture attention and communicate message flows.",
+      "Driven by your aesthetic creativity and user-centered conceptualization."
+    ];
   }
-  return points.slice(0, 2);
+
+  if (tags.some(t => ["education", "teaching", "ngo", "social", "development", "training"].includes(t)) || title.includes("teacher") || title.includes("instructor") || title.includes("trainer") || title.includes("educator")) {
+    return [
+      "You appear motivated by sharing insights, guiding progress, and seeing others grow.",
+      "Your profile demonstrates strong verbal communication, collaboration, and high service orientation.",
+      "You enjoy structuring learning roadmaps to break down complex topics for students or teams.",
+      "Driven by your instructional passion and community growth mindset."
+    ];
+  }
+
+  if (tags.some(t => ["legal", "law", "compliance", "policy", "governance", "admin"].includes(t)) || title.includes("lawyer") || title.includes("attorney") || title.includes("legal") || title.includes("judge")) {
+    return [
+      "You appear energized by analytical precision, rules interpretation, and principles-based advocacy.",
+      "Your responses suggest a combination of structure preference, verbal persuasion, and detailed reading agility.",
+      "You enjoy resolving conflicts by navigating policy frameworks and protecting individual rights.",
+      "Driven by your rule-based structure and logical argument competencies."
+    ];
+  }
+
+  if (tags.some(t => ["business", "management", "strategy", "operations", "consulting", "finance"].includes(t)) || title.includes("manager") || title.includes("consultant") || title.includes("finance") || title.includes("accountant") || title.includes("entrepreneur") || title.includes("founder")) {
+    return [
+      "You appear energized by corporate orchestration, organizational systems, and strategic leadership.",
+      "Your profile indicates a combination of achievement orientation, persuasion, and systems thinking.",
+      "You enjoy setting operational goals, analyzing market gaps, and guiding teams toward commercial outcomes.",
+      "Driven by strategic business acumen and leadership ambition."
+    ];
+  }
+
+  return [
+    "Your profile matches the specialized workflow requirements and responsibilities of this role.",
+    "Your cognitive traits and work style values show solid alignment with the daily tasks of the profession.",
+    "The role matches your lifestyle preferences (work-life balance, stress levels, and remote possibilities).",
+    "Driven by balanced general compatibility across your overall human profile."
+  ];
 };
 
-const getSkillGap = (c, userSkills) => {
-  const required = c.requiredSkills || {};
+const getSkillGap = (c, userTraits) => {
+  const careerTraits = getCareer16Traits(c);
   const gaps = [];
   
-  Object.entries(required).forEach(([skill, val]) => {
-    const userVal = userSkills ? (userSkills[skill] ?? 50) : 0;
-    if (userVal < val) {
-      const label = skill === "analytical" ? "Analytical Thinking" :
-                    skill === "verbal" ? "Verbal & English" :
-                    skill === "quantitative" ? "Quantitative Reasoning" :
-                    skill === "attentionToDetail" ? "Attention to Detail" :
-                    skill === "communication" ? "Communication" :
-                    skill === "creativity" ? "Creative Thinking" :
-                    skill === "technicalLiteracy" ? "Technical Literacy" : skill;
-      gaps.push({ skill: label, diff: val - userVal });
+  const skillKeys = [
+    "analyticalThinking",
+    "systemsThinking",
+    "persuasion",
+    "communication",
+    "attentionToDetail",
+    "creativity",
+    "designThinking"
+  ];
+  
+  skillKeys.forEach(k => {
+    const reqVal = careerTraits[k];
+    const userVal = userTraits ? (userTraits[k] ?? 50) : 50;
+    if (userVal < reqVal) {
+      gaps.push({ skill: TRAIT_LABELS[k], diff: reqVal - userVal });
     }
   });
 
@@ -309,36 +390,37 @@ const getSkillGap = (c, userSkills) => {
 const getStrengthsAndWeaknesses = (scores) => {
   if (!scores) {
     return {
-      strengths: ["Curiosity", "Creativity", "Analytical Thinking"],
-      weaknesses: ["Structure", "Risk Tolerance"]
+      strengths: ["Curiosity", "Empathy", "Analytical Thinking"],
+      weaknesses: ["Structure Preference", "Risk Tolerance"]
     };
   }
-  const labels = {
-    curiosity: "Curiosity", creativity: "Creativity", structure: "Structure",
-    leadership: "Leadership", social: "Social", independence: "Independence",
-    riskTolerance: "Risk Tolerance", collaboration: "Collaboration", analytical: "Analytical"
-  };
   const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
   return {
-    strengths: [labels[sorted[0][0]], labels[sorted[1][0]], labels[sorted[2][0]]],
-    weaknesses: [labels[sorted[sorted.length - 1][0]], labels[sorted[sorted.length - 2][0]]]
+    strengths: [TRAIT_LABELS[sorted[0][0]], TRAIT_LABELS[sorted[1][0]], TRAIT_LABELS[sorted[2][0]]],
+    weaknesses: [TRAIT_LABELS[sorted[sorted.length - 1][0]], TRAIT_LABELS[sorted[sorted.length - 2][0]]]
   };
 };
 
-const generateLocalSummary = (archetype, strengths, orientationAnswers) => {
-  let text = `As ${archetype.name}, you are driven by strengths like ${strengths.slice(0, 2).join(" and ")}.`;
-  
-  if (orientationAnswers && orientationAnswers[13] === 1) {
-    text += ` Your profile shows a profound alignment towards counseling, psychology, or advisory roles where understanding human behavior and emotional dynamics is key.`;
-  } else if (orientationAnswers && orientationAnswers[12] === 1) {
-    text += ` Your clinical orientation suggest deep interest in medical diagnosis, health science, and patient care systems.`;
-  } else {
-    text += ` You naturally thrive in environments that challenge your intellect, valuing team synergy while keeping your outputs authentic.`;
-  }
-  return text;
-};
+const generateLocalSummary = (archetype, strengths, scores) => {
+  if (!scores) return `As ${archetype.name}, you excel at leveraging your dominant strengths.`;
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  const primaryTrait = sorted[0][0];
 
-const scoreColor = (s) => s >= 75 ? "#14632a" : s >= 50 ? "#9a6700" : "#8b1e1e";
+  let summary = `As ${archetype.name}, you are primarily driven by your highly developed trait of ${strengths[0]}.`;
+
+  if (primaryTrait === "empathy" || primaryTrait === "serviceOrientation") {
+    summary += ` You show a natural ability to connect with others' experiences and motivations, making you exceptionally well-suited for counseling, patient care, or coaching pathways.`;
+  } else if (primaryTrait === "analyticalThinking" || primaryTrait === "systemsThinking") {
+    summary += ` Your cognitive profile excels at logical architectures, pattern investigation, and detail-oriented problem-solving.`;
+  } else if (primaryTrait === "creativity" || primaryTrait === "designThinking") {
+    summary += ` You approach the world with a user-centered creative eye, enjoying the translation of abstract themes into innovative concepts.`;
+  } else if (primaryTrait === "persuasion" || primaryTrait === "communication") {
+    summary += ` You are energized by influencing ideas, strategic dialogue, and navigating organizational relationships.`;
+  } else {
+    summary += ` You thrive in environments that challenge your intellect, valuing team synergy while keeping your outputs authentic.`;
+  }
+  return summary;
+};
 
 export default function Insights() {
   const { user } = useContext(AuthContext);
@@ -362,10 +444,6 @@ export default function Insights() {
     try { return JSON.parse(localStorage.getItem("careerIQ_orientation")) || null; } catch { return null; }
   })();
 
-  const orientationAnswers = (() => {
-    try { return JSON.parse(localStorage.getItem("careerIQ_orientation_answers_raw")) || null; } catch { return null; }
-  })();
-
   const [happiness, setHappiness] = useState(() => {
     try { return JSON.parse(localStorage.getItem("careerIQ_happiness")) || null; } catch { return null; }
   });
@@ -378,14 +456,16 @@ export default function Insights() {
   const [loadingDeepDive, setLoadingDeepDive] = useState(false);
 
   useEffect(() => {
-    const results = careersData.map(c => {
-      const { finalScore, personalityScore, skillScore, lifestyleScore, orientationScore } =
-        computeCareerScore(c, personality, skillScores, happiness, user, orientation);
-      return { career: c, finalScore, personalityScore, skillScore, lifestyleScore, orientationScore };
-    });
-    results.sort((a, b) => b.finalScore - a.finalScore);
-    setRanked(results);
-  }, [personality, skillScores, happiness, user, orientation]);
+    if (personality?.scores) {
+      const results = careersData.map(c => {
+        const { finalScore, traitsScore, lifestyleScore } =
+          computeCareerScore(c, personality.scores, happiness, user);
+        return { career: c, finalScore, traitsScore, lifestyleScore };
+      });
+      results.sort((a, b) => b.finalScore - a.finalScore);
+      setRanked(results);
+    }
+  }, [personality, happiness, user]);
 
   const fetchDeepDive = async () => {
     if (deepDiveText || loadingDeepDive) {
@@ -414,8 +494,8 @@ export default function Insights() {
   const topFamilies = getTopCareerFamilies(ranked);
   const topMatch = ranked[0] || null;
   const { strengths, weaknesses } = getStrengthsAndWeaknesses(personality?.scores);
-  const skillGaps = topMatch ? getSkillGap(topMatch.career, skillScores) : ["Technical Literacy", "Communication"];
-  const clientSummary = generateLocalSummary(archetype, strengths, orientationAnswers);
+  const skillGaps = topMatch ? getSkillGap(topMatch.career, personality.scores) : ["Technical Literacy", "Communication"];
+  const clientSummary = generateLocalSummary(archetype, strengths, personality?.scores);
 
   const styles = {
     page: { maxWidth: 840, margin: "0 auto", padding: "30px 20px", fontFamily: "'Inter', sans-serif" },
@@ -536,15 +616,35 @@ export default function Insights() {
                   }}
                 >
                   {showDeepDive ? <EyeOff size={16} /> : <Eye size={16} />}
-                  <span>{showDeepDive ? "Hide Full Analysis" : "View Full Analysis"}</span>
+                  <span>{showDeepDive ? "Hide Full Profile" : "View Full Profile"}</span>
                 </button>
 
                 {showDeepDive && (
                   <div style={{
-                    marginTop: 18, textAlign: "left", padding: 22, borderRadius: 12, background: "#f4fff8",
-                    border: "1px solid #b6e9c8", fontSize: 14, color: "#1a3c34", lineHeight: 1.6, whiteSpace: "pre-wrap"
+                    marginTop: 18, textAlign: "left", padding: 22, borderRadius: 12, background: "#f8faf9",
+                    border: "1px solid #c8ebd7", fontSize: 14, color: "#1a3c34", lineHeight: 1.6
                   }}>
-                    {loadingDeepDive ? "Analyzing your strengths..." : deepDiveText}
+                    {loadingDeepDive ? (
+                      "Loading detailed analysis..."
+                    ) : (
+                      <div>
+                        <div style={{ fontWeight: 800, marginBottom: 12, color: "#072827" }}>Detailed 16-Dimensional Human Profile:</div>
+                        <div style={{ display: "grid", gap: 10 }}>
+                          {Object.entries(personality.scores).map(([t, val]) => (
+                            <div key={t}>
+                              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, fontWeight: 600 }}>
+                                <span>{TRAIT_LABELS[t] || t}</span>
+                                <span>{val}/100</span>
+                              </div>
+                              <div style={styles.barWrap}>
+                                <div style={styles.barFill(val, "linear-gradient(90deg, var(--accent), var(--accent-light))")} />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        {deepDiveText && <div style={{ marginTop: 16, borderTop: "1px solid #b6e9c8", paddingTop: 12, fontStyle: "italic" }}>{deepDiveText}</div>}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -608,38 +708,19 @@ export default function Insights() {
           {activeTab === "why" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {ranked.slice(0, 3).map((r, idx) => {
-                const whyItFitsPoints = getWhyItFits(r.career, personality, skillScores, happiness, orientationAnswers);
-                const skillGapPoints = getSkillGap(r.career, skillScores);
+                const whyItFitsNarratives = getWhyItFits(r.career, personality.scores);
                 return (
                   <div key={idx} style={styles.card}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                       <h3 style={{ fontSize: 17, fontWeight: 800, color: "#072827", margin: 0 }}>{r.career.title}</h3>
                       <span style={{ fontSize: 14, fontWeight: 700, color: scoreColor(r.finalScore) }}>{r.finalScore}% Alignment</span>
                     </div>
 
-                    <div style={{ marginTop: 10 }}>
-                      <h4 style={{ margin: "0 0 6px", fontSize: 12, textTransform: "uppercase", color: "var(--accent)", fontWeight: 700 }}>Why it fits</h4>
-                      {whyItFitsPoints.map((pt, i) => (
-                        <div key={i} style={styles.bullet}>
-                          <span style={{ color: "var(--accent)" }}>✓</span>
-                          <span>{pt}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div style={{ marginTop: 14 }}>
-                      <h4 style={{ margin: "0 0 6px", fontSize: 12, textTransform: "uppercase", color: "#8b1e1e", fontWeight: 700 }}>Potential Challenge</h4>
-                      {skillGapPoints.length > 0 ? (
-                        <div style={styles.bullet}>
-                          <span style={{ color: "#8b1e1e" }}>•</span>
-                          <span>Focus on developing: {skillGapPoints.slice(0, 2).join(", ")}</span>
-                        </div>
-                      ) : (
-                        <div style={styles.bullet}>
-                          <span style={{ color: "#14632a" }}>✓</span>
-                          <span>No major skill gaps detected!</span>
-                        </div>
-                      )}
+                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      <p style={{ margin: 0, fontSize: 14.5, color: "#123326", lineHeight: 1.6 }}>{whyItFitsNarratives[0]}</p>
+                      <p style={{ margin: 0, fontSize: 14.5, color: "#1a3c34", lineHeight: 1.6 }}>{whyItFitsNarratives[1]}</p>
+                      <p style={{ margin: 0, fontSize: 14.5, color: "#1a3c34", lineHeight: 1.6 }}>{whyItFitsNarratives[2]}</p>
+                      <p style={{ margin: 0, fontSize: 13.5, color: "#6b7a70", fontStyle: "italic", marginTop: 4 }}>{whyItFitsNarratives[3]}</p>
                     </div>
                   </div>
                 );

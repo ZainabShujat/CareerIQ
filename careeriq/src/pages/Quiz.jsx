@@ -1,109 +1,109 @@
-// src/pages/Quiz.jsx — Guided multi-step assessment
+// src/pages/Quiz.jsx — Guided multi-step assessment with Human Profile Scoring
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import Header from "../components/Header";
 import { Brain, Compass, Sparkles, AlertCircle, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
 
-// 14-question Career Orientation questions (with dedicated Medical and Psychology options)
+// 14-question Career Orientation questions (measuring cognitive, social, motivation, work style, and creative traits)
 const ORIENTATION_QUESTIONS = [
   {
     q: "Which type of problem sounds more interesting to tackle?",
     optionA: "Fixing a technical bug or optimization issue in a software app",
     optionB: "Negotiating a deal, pitch, or convincing people of an innovative idea",
-    mapA: { technology: 10 },
-    mapB: { marketing: 10, business: 5 }
+    mapA: { systemsThinking: 15, analyticalThinking: 10 },
+    mapB: { persuasion: 15, communication: 10 }
   },
   {
     q: "Which project would you rather work on?",
     optionA: "Analyzing statistical trends, charts, or financial numbers in detail",
     optionB: "Designing a marketing launch campaign or visual branding concepts",
-    mapA: { research: 10 },
-    mapB: { marketing: 10, creative: 5 }
+    mapA: { analyticalThinking: 15, curiosity: 10 },
+    mapB: { creativity: 15, designThinking: 10 }
   },
   {
     q: "Which work setting feels more appealing to you?",
     optionA: "A quiet, focused laboratory or database environment",
     optionB: "A dynamic, collaborative startup office or corporate boardroom",
-    mapA: { research: 10 },
-    mapB: { business: 10 }
+    mapA: { independence: 15, curiosity: 10 },
+    mapB: { riskTolerance: 15, collaboration: 10 }
   },
   {
     q: "How would you prefer to spend your day working?",
     optionA: "Writing code, configuring systems, or designing physical structures",
     optionB: "Coaching people, resolving personal queries, or advising clients",
-    mapA: { technology: 10 },
-    mapB: { education: 10, healthcare: 5 }
+    mapA: { systemsThinking: 15, analyticalThinking: 10 },
+    mapB: { empathy: 15, serviceOrientation: 15, communication: 10 }
   },
   {
     q: "Which professional assignment sounds more satisfying?",
     optionA: "Resolving a legal policy debate or writing compliance standards",
     optionB: "Sketching interface screens, storyboard designs, or creating digital art",
-    mapA: { law: 10 },
-    mapB: { creative: 10 }
+    mapA: { analyticalThinking: 15, structurePreference: 15 },
+    mapB: { creativity: 15, designThinking: 15 }
   },
   {
     q: "Where would you feel most accomplished making an impact?",
     optionA: "Improving public health and helping patients in a clinical setting",
     optionB: "Building secure networks, databases, and cybersecurity firewalls",
-    mapA: { healthcare: 10 },
-    mapB: { technology: 10 }
+    mapA: { serviceOrientation: 15, empathy: 15 },
+    mapB: { systemsThinking: 15, attentionToDetail: 15 }
   },
   {
     q: "Which project sounds most exciting to lead?",
     optionA: "Creating visual branding assets, logos, and UI layout grids",
     optionB: "Developing curriculum plans or orchestrating social impact NGO projects",
-    mapA: { creative: 10 },
-    mapB: { education: 10 }
+    mapA: { creativity: 15, persuasion: 10 },
+    mapB: { serviceOrientation: 15, empathy: 15 }
   },
   {
     q: "What would capture your attention more?",
     optionA: "Launching a business model, tracking sales, and optimizing systems",
     optionB: "Investigating biological mechanisms, genomics, or medical research",
-    mapA: { business: 10 },
-    mapB: { healthcare: 10, research: 5 }
+    mapA: { wealthOrientation: 15, leadership: 15 },
+    mapB: { curiosity: 15, analyticalThinking: 15 }
   },
   {
     q: "What would you prefer to read or study?",
     optionA: "Constitutional law, governance systems, or public policy",
     optionB: "Digital marketing strategies, SEO, or branding campaigns",
-    mapA: { law: 10 },
-    mapB: { marketing: 10 }
+    mapA: { analyticalThinking: 15, structurePreference: 10 },
+    mapB: { communication: 15, persuasion: 15 }
   },
   {
     q: "If you had to write a short article, what topic would you choose?",
     optionA: "Reviewing market metrics, mathematical datasets, or research studies",
     optionB: "Sharing educational tips, learning strategies, or human interest stories",
-    mapA: { research: 10 },
-    mapB: { education: 10 }
+    mapA: { analyticalThinking: 15, systemsThinking: 10 },
+    mapB: { serviceOrientation: 15, communication: 15 }
   },
   {
     q: "Which corporate task would you rather own?",
     optionA: "Crafting business strategies and operations plans for expansion",
     optionB: "Representing clients in legal contracts and corporate governance",
-    mapA: { business: 10, marketing: 5 },
-    mapB: { law: 10 }
+    mapA: { systemsThinking: 15, wealthOrientation: 15 },
+    mapB: { analyticalThinking: 15, persuasion: 10 }
   },
   {
     q: "Which role is more aligned with your default contribution style?",
     optionA: "Building, programming, or designing the product architecture",
     optionB: "Providing empathy, teaching instructions, or caring for client needs",
-    mapA: { technology: 10, creative: 5 },
-    mapB: { healthcare: 5, education: 10 }
+    mapA: { systemsThinking: 15, independence: 10 },
+    mapB: { empathy: 15, serviceOrientation: 15 }
   },
   {
     q: "If you could shadow a professional for a week, which appeals to you more?",
     optionA: "A physician diagnosing complex medical cases and caring for patients in a clinical ward",
     optionB: "A digital architect designing cloud server logic and application protocols",
-    mapA: { healthcare: 15 },
-    mapB: { technology: 15 }
+    mapA: { serviceOrientation: 20, attentionToDetail: 20, empathy: 15 },
+    mapB: { systemsThinking: 20, analyticalThinking: 20 }
   },
   {
     q: "Which project would you find more personally rewarding to direct?",
     optionA: "A wellness support group to counsel individuals navigating emotional and behavioral challenges",
     optionB: "A startup incubator seminar helping founders optimize sales and corporate models",
-    mapA: { healthcare: 10, education: 15 }, // strongly aligns with Psychology / Counselor fields
-    mapB: { business: 15, marketing: 10 }
+    mapA: { empathy: 20, serviceOrientation: 20, communication: 15 },
+    mapB: { wealthOrientation: 20, persuasion: 20, leadership: 15 }
   }
 ];
 
@@ -154,19 +154,6 @@ const LIKERT_OPTIONS = [
   { val: 4, label: "Agree" },
   { val: 5, label: "Strongly Agree" }
 ];
-
-const DOMAIN_MAX_POINTS = {
-  technology: 55,
-  business: 50,
-  marketing: 45,
-  research: 35,
-  healthcare: 55,
-  creative: 35,
-  education: 65,
-  law: 30
-};
-
-const TRAITS = ["curiosity", "creativity", "structure", "leadership", "social", "independence", "riskTolerance", "collaboration", "analytical"];
 
 export default function Quiz() {
   const navigate = useNavigate();
@@ -276,35 +263,70 @@ export default function Quiz() {
     setCurrentStep(40);
   };
 
-  // Compute final scores
+  // Compute final 16-dimensional Human Profile scores
   const computeScores = () => {
-    // 1. Personality
-    const pScores = {};
-    TRAITS.forEach(trait => {
-      const indices = PERSONALITY_QUESTIONS.map((q, i) => q.trait === trait ? i : -1).filter(i => i >= 0);
-      const vals = indices.map(i => Number(personalityAnswers[i] || 0)).filter(v => v > 0);
-      pScores[trait] = vals.length ? Math.round((vals.reduce((a, b) => a + b, 0) / vals.length - 1) * 25) : 50;
-    });
+    const traitPoints = {
+      analyticalThinking: 45, systemsThinking: 45, empathy: 45, persuasion: 45,
+      communication: 45, collaboration: 45, leadership: 45, curiosity: 45,
+      serviceOrientation: 45, wealthOrientation: 45, structurePreference: 45,
+      riskTolerance: 45, independence: 45, attentionToDetail: 45, creativity: 45, designThinking: 45
+    };
 
-    // 2. Career Orientation
-    const oPoints = { technology: 0, business: 0, marketing: 0, research: 0, healthcare: 0, creative: 0, education: 0, law: 0 };
+    // 1. Accumulate Orientation points
     orientationAnswers.forEach((ans, index) => {
       const q = ORIENTATION_QUESTIONS[index];
       if (ans === 1 && q.mapA) {
-        Object.entries(q.mapA).forEach(([c, pts]) => { oPoints[c] = (oPoints[c] || 0) + pts; });
+        Object.entries(q.mapA).forEach(([trait, pts]) => {
+          traitPoints[trait] = (traitPoints[trait] || 45) + pts;
+        });
       } else if (ans === 2 && q.mapB) {
-        Object.entries(q.mapB).forEach(([c, pts]) => { oPoints[c] = (oPoints[c] || 0) + pts; });
+        Object.entries(q.mapB).forEach(([trait, pts]) => {
+          traitPoints[trait] = (traitPoints[trait] || 45) + pts;
+        });
       }
     });
 
-    const oScores = {};
-    Object.keys(DOMAIN_MAX_POINTS).forEach(cluster => {
-      const pts = oPoints[cluster] || 0;
-      const maxPts = DOMAIN_MAX_POINTS[cluster];
-      oScores[cluster] = Math.max(20, Math.round((pts / maxPts) * 100)); // base minimum score of 20%
+    // 2. Accumulate Personality points (Neutral adds 0, Agree adds 10, Disagree subtracts 10)
+    personalityAnswers.forEach((ansVal, index) => {
+      const q = PERSONALITY_QUESTIONS[index];
+      const val = Number(ansVal || 3);
+      const score = (val - 3) * 8; // range: -16 to +16
+
+      if (q.trait === "curiosity") {
+        traitPoints.curiosity += score;
+        traitPoints.analyticalThinking += score * 0.5;
+      } else if (q.trait === "creativity") {
+        traitPoints.creativity += score;
+        traitPoints.designThinking += score * 0.5;
+      } else if (q.trait === "structure") {
+        traitPoints.structurePreference += score;
+        traitPoints.attentionToDetail += score * 0.5;
+      } else if (q.trait === "leadership") {
+        traitPoints.leadership += score;
+        traitPoints.persuasion += score * 0.5;
+      } else if (q.trait === "social") {
+        traitPoints.empathy += score;
+        traitPoints.communication += score;
+        traitPoints.serviceOrientation += score * 0.5;
+      } else if (q.trait === "independence") {
+        traitPoints.independence += score;
+      } else if (q.trait === "riskTolerance") {
+        traitPoints.riskTolerance += score;
+      } else if (q.trait === "collaboration") {
+        traitPoints.collaboration += score;
+      } else if (q.trait === "analytical") {
+        traitPoints.analyticalThinking += score;
+        traitPoints.systemsThinking += score * 0.5;
+      }
     });
 
-    return { personalityScores: pScores, orientationScores: oScores };
+    // 3. Normalize scores between 20 and 100
+    const finalScores = {};
+    Object.keys(traitPoints).forEach(t => {
+      finalScores[t] = Math.max(20, Math.min(100, Math.round(traitPoints[t])));
+    });
+
+    return finalScores;
   };
 
   const handleSubmit = async (e) => {
@@ -316,18 +338,16 @@ export default function Quiz() {
 
     setIsSubmitting(true);
 
-    const { personalityScores, orientationScores } = computeScores();
+    const humanTraits = computeScores();
     const payload = {
-      scores: personalityScores,
+      scores: humanTraits, // 16 traits mapping
       answers: personalityAnswers,
-      careerOrientation: orientationScores,
       orientationAnswers: orientationAnswers,
       timestamp: new Date().toISOString()
     };
 
     // Save locally
-    localStorage.setItem("careerIQ_personality", JSON.stringify({ scores: personalityScores, answers: personalityAnswers, timestamp: payload.timestamp }));
-    localStorage.setItem("careerIQ_orientation", JSON.stringify(orientationScores));
+    localStorage.setItem("careerIQ_personality", JSON.stringify({ scores: humanTraits, answers: personalityAnswers, timestamp: payload.timestamp }));
     localStorage.setItem("careerIQ_orientation_answers_raw", JSON.stringify(orientationAnswers));
 
     // Clear progress persistence
@@ -367,7 +387,7 @@ export default function Quiz() {
     }
 
     setTimeout(() => {
-      navigate("/insights", { state: { personality: { scores: personalityScores }, orientation: orientationScores } });
+      navigate("/insights", { state: { personality: { scores: humanTraits } } });
     }, 2900);
   };
 
