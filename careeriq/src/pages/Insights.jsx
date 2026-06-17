@@ -167,6 +167,98 @@ function scoreColor(score) {
   return score >= 75 ? "#14632a" : score >= 50 ? "#9a6700" : "#8b1e1e";
 }
 
+function MarkdownText({ text }) {
+  if (!text) return null;
+  const lines = text.split("\n");
+  const elements = [];
+  let i = 0;
+  let tableBuffer = [];
+  let inTable = false;
+
+  const renderInline = (str) => {
+    const parts = str.split(/(\*\*[^*]+\*\*|`[^`]+`|_[^_]+_)/g);
+    return parts.map((part, pi) => {
+      if (part.startsWith("**") && part.endsWith("**"))
+        return <strong key={pi} style={{ fontWeight: 700 }}>{part.slice(2, -2)}</strong>;
+      if (part.startsWith("`") && part.endsWith("`"))
+        return <code key={pi} style={{ background: "rgba(0,0,0,0.06)", padding: "1px 6px", borderRadius: 4, fontSize: "0.88em", fontFamily: "monospace", color: "#b91c1c" }}>{part.slice(1, -1)}</code>;
+      if (part.startsWith("_") && part.endsWith("_"))
+        return <em key={pi}>{part.slice(1, -1)}</em>;
+      return part;
+    });
+  };
+
+  const flushTable = () => {
+    const rows = tableBuffer.filter(r => !r.match(/^\|[-| :]+\|$/));
+    if (rows.length > 0) {
+      elements.push(
+        <div key={`tbl-${elements.length}`} style={{ overflowX: "auto", margin: "12px 0", borderRadius: 8, border: "1px solid rgba(0,0,0,0.08)" }}>
+          <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13 }}>
+            <tbody>
+              {rows.map((row, ri) => {
+                const cells = row.split("|").slice(1, -1);
+                const Tag = ri === 0 ? "th" : "td";
+                return (
+                  <tr key={ri} style={{ background: ri === 0 ? "rgba(0,0,0,0.04)" : ri % 2 === 0 ? "rgba(0,0,0,0.02)" : "transparent" }}>
+                    {cells.map((cell, ci) => (
+                      <Tag key={ci} style={{ padding: "8px 14px", borderBottom: "1px solid rgba(0,0,0,0.05)", textAlign: "left", fontWeight: ri === 0 ? 700 : 400, color: "inherit", whiteSpace: "nowrap" }}>
+                        {renderInline(cell.trim())}
+                      </Tag>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+    tableBuffer = [];
+    inTable = false;
+  };
+
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.startsWith("|")) {
+      inTable = true;
+      tableBuffer.push(line);
+      i++;
+      continue;
+    } else if (inTable) {
+      flushTable();
+    }
+
+    if (line.startsWith("## ")) {
+      elements.push(<h2 key={`h2-${i}`} style={{ fontSize: 16, fontWeight: 800, margin: "18px 0 8px", color: "inherit", borderBottom: "1px solid rgba(0,0,0,0.08)", paddingBottom: 6 }}>{renderInline(line.slice(3))}</h2>);
+    } else if (line.startsWith("### ")) {
+      elements.push(<h3 key={`h3-${i}`} style={{ fontSize: 14.5, fontWeight: 700, margin: "14px 0 6px", color: "inherit" }}>{renderInline(line.slice(4))}</h3>);
+    } else if (line.startsWith("---")) {
+      elements.push(<hr key={`hr-${i}`} style={{ border: "none", borderTop: "1px solid rgba(0,0,0,0.08)", margin: "14px 0" }} />);
+    } else if (/^\d+\.\s/.test(line)) {
+      elements.push(
+        <div key={`ol-${i}`} style={{ display: "flex", gap: 10, margin: "4px 0" }}>
+          <span style={{ minWidth: 20, fontWeight: 700, opacity: 0.6, flexShrink: 0, fontSize: 13.5 }}>{line.match(/^(\d+)\./)?.[1]}.</span>
+          <span style={{ fontSize: 14, lineHeight: 1.7 }}>{renderInline(line.replace(/^\d+\.\s/, ""))}</span>
+        </div>
+      );
+    } else if (line.startsWith("- ") || line.startsWith("• ")) {
+      elements.push(
+        <div key={`ul-${i}`} style={{ display: "flex", gap: 10, margin: "3px 0", paddingLeft: 4 }}>
+          <span style={{ opacity: 0.5, marginTop: 2, flexShrink: 0, fontSize: 13.5 }}>•</span>
+          <span style={{ fontSize: 14, lineHeight: 1.7 }}>{renderInline(line.slice(2))}</span>
+        </div>
+      );
+    } else if (line.trim() === "") {
+      elements.push(<div key={`sp-${i}`} style={{ height: 6 }} />);
+    } else {
+      elements.push(<p key={`p-${i}`} style={{ margin: "4px 0", fontSize: 14, lineHeight: 1.7 }}>{renderInline(line)}</p>);
+    }
+    i++;
+  }
+  if (inTable) flushTable();
+  return <div>{elements}</div>;
+}
+
 function computeCareerScore(career, userTraits, happiness, userProfile) {
   if (!userTraits) return { finalScore: 50, traitsScore: 50, lifestyleScore: 50 };
 
@@ -642,7 +734,7 @@ export default function Insights() {
                             </div>
                           ))}
                         </div>
-                        {deepDiveText && <div style={{ marginTop: 16, borderTop: "1px solid #b6e9c8", paddingTop: 12, fontStyle: "italic" }}>{deepDiveText}</div>}
+                        {deepDiveText && <div style={{ marginTop: 16, borderTop: "1px solid #b6e9c8", paddingTop: 12, fontStyle: "normal" }}><MarkdownText text={deepDiveText} /></div>}
                       </div>
                     )}
                   </div>
@@ -757,7 +849,7 @@ export default function Insights() {
                     <div style={{ width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", position: "absolute", left: -7, top: 2 }} />
                     <h4 style={{ margin: "0 0 4px", fontSize: 14, color: "#072827", fontWeight: 700 }}>Phase 1: Build Skills</h4>
                     <p style={{ margin: 0, fontSize: 13, color: "#5b6a67" }}>
-                      Focus on improving: **{skillGaps.join(", ")}** through structured online resources or validation tests.
+                      Focus on improving: <strong style={{ color: "var(--accent)" }}>{skillGaps.join(", ")}</strong> through structured online resources or validation tests.
                     </p>
                   </div>
 
